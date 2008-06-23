@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taeDescription xmlns="http://uima.apache.org/resourceSpecifier">
-<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-<primitive>false</primitive>
-<delegateAnalysisEngineSpecifiers>
-<delegateAnalysisEngine key="ConceptMapper">
-<import location="../primitive/ConceptMapperOffsetTokenizer.xml"/>
-</delegateAnalysisEngine>
-<delegateAnalysisEngine key="Tokenizer">
-<import location="../primitive/OffsetTokenizer.xml"/>
-</delegateAnalysisEngine>
-</delegateAnalysisEngineSpecifiers>
-<analysisEngineMetaData>
-<name>DictMatcher</name>
-<configurationParameters/>
-<configurationParameterSettings/>
-<flowConstraints>
-<fixedFlow>
-<node>Tokenizer</node>
-<node>ConceptMapper</node>
-</fixedFlow>
-</flowConstraints>
-<fsIndexCollection/>
-<capabilities>
-<capability>
-<inputs/>
-<outputs>
-<type allAnnotatorFeatures="true">uima.tt.TokenAnnotation</type>
-<type allAnnotatorFeatures="true">uima.tt.SentenceAnnotation</type>
-<type allAnnotatorFeatures="true">uima.tt.ParagraphAnnotation</type>
-<type allAnnotatorFeatures="true">org.apache.uima.conceptMapper.DictTerm</type>
-</outputs>
-<languagesSupported/>
-</capability>
-</capabilities>
-<operationalProperties>
-<modifiesCas>true</modifiesCas>
-<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
-</operationalProperties>
-</analysisEngineMetaData>
+	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+	<primitive>false</primitive>
+	<delegateAnalysisEngineSpecifiers>
+		<delegateAnalysisEngine key="ConceptMapper">
+			<import location="../primitive/ConceptMapperOffsetTokenizer.xml" />
+		</delegateAnalysisEngine>
+		<delegateAnalysisEngine key="Tokenizer">
+			<import location="../primitive/OffsetTokenizer.xml" />
+		</delegateAnalysisEngine>
+	</delegateAnalysisEngineSpecifiers>
+	<analysisEngineMetaData>
+		<name>DictMatcher</name>
+		<configurationParameters />
+		<configurationParameterSettings />
+		<flowConstraints>
+			<fixedFlow>
+				<node>Tokenizer</node>
+				<node>ConceptMapper</node>
+			</fixedFlow>
+		</flowConstraints>
+		<fsIndexCollection />
+		<capabilities>
+			<capability>
+				<inputs />
+				<outputs>
+					<type allAnnotatorFeatures="true">uima.tt.TokenAnnotation</type>
+					<type allAnnotatorFeatures="true">uima.tt.SentenceAnnotation</type>
+					<type allAnnotatorFeatures="true">uima.tt.ParagraphAnnotation</type>
+					<type allAnnotatorFeatures="true">org.apache.uima.conceptMapper.DictTerm</type>
+				</outputs>
+				<languagesSupported />
+			</capability>
+		</capabilities>
+		<operationalProperties>
+			<modifiesCas>true</modifiesCas>
+			<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+		</operationalProperties>
+	</analysisEngineMetaData>
 </taeDescription>
