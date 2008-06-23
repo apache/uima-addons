@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY imgroot "./images/" >
+<!ENTITY % xinclude SYSTEM "../../../uima-docbook-tool/xinclude.mod">
+  %xinclude;
+]>
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+
+<book lang="en">
+
+	<title>
+		Apache UIMA ConceptMapper Annotator Documentation
+	</title>
+
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="../../../SandboxDocs/src/docbook/book_info.xml" />
+
+	<preface>
+		<title>Introduction</title>
+		<para>
+			ConceptMapper is a token-based dictionary lookup UIMA component. It was
+			designed specifically to allow any external tokenizer that is a UIMA
+			component to be used to tokenize its dictionary. Using the same tokenizer
+			on both the dictionary and for subsequent text processing prevents
+			situations where a particular dictionary entry is not found, though it
+			exists, because it was tokenized differently than the text being processed.
+			
+			ConceptMapper is highly configurable, in terms of:
+			<itemizedlist>
+				<listitem>
+					<para>
+						the way dictionary entries are mapped to resultant annotations
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the way input documents are processed
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the availability of multiple lookup strategies
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						its various output options
+					</para>
+				</listitem>
+			</itemizedlist>			
+			Additionally, a set of post-processing filters are supplied, as well as an
+			interface to easily create new filters. This allows for overgenerating
+			results during the lookup phase, if so desired, then reducing the result
+			set according to particular rules. 
+		</para>
+	</preface>
+
+
+</book>

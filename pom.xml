@@ -142,7 +142,7 @@
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<ant antfile="build_documentation.xml" target="copyDocs"/>
+								<ant antfile="build_documentation.xml"/>
 							</tasks>
 						</configuration>
 						<goals>
