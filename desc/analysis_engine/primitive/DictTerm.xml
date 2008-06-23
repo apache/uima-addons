@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
-<name>DictTerm</name>
-<version>1</version>
-<vendor>IBM</vendor>
-<types>
-<typeDescription>
-<name>org.apache.uima.conceptMapper.DictTerm</name>
-<description>Annotation for dictionary lookup matches</description>
-<supertypeName>uima.tcas.Annotation</supertypeName>
-<features>
-<featureDescription>
-<name>DictCanon</name>
-<description>canonical form</description>
-<rangeTypeName>uima.cas.String</rangeTypeName>
-</featureDescription>
-<featureDescription>
-<name>enclosingSpan</name>
-<description>span that this NoTerm is contained within (i.e. its sentence)</description>
-<rangeTypeName>uima.tcas.Annotation</rangeTypeName>
-</featureDescription>
-<featureDescription>
-<name>matchedText</name>
-<description></description>
-<rangeTypeName>uima.cas.String</rangeTypeName>
-</featureDescription>
-<featureDescription>
-<name>matchedTokens</name>
-<description></description>
-<rangeTypeName>uima.cas.FSArray</rangeTypeName>
-</featureDescription>
-</features>
-</typeDescription>
-</types>
+	<name>DictTerm</name>
+	<version>1</version>
+	<vendor>IBM</vendor>
+	<types>
+		<typeDescription>
+			<name>org.apache.uima.conceptMapper.DictTerm</name>
+			<description>Annotation for dictionary lookup matches</description>
+			<supertypeName>uima.tcas.Annotation</supertypeName>
+			<features>
+				<featureDescription>
+					<name>DictCanon</name>
+					<description>canonical form</description>
+					<rangeTypeName>uima.cas.String</rangeTypeName>
+				</featureDescription>
+				<featureDescription>
+					<name>enclosingSpan</name>
+					<description>span that this NoTerm is contained within (i.e. its sentence)</description>
+					<rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+				</featureDescription>
+				<featureDescription>
+					<name>matchedText</name>
+					<description></description>
+					<rangeTypeName>uima.cas.String</rangeTypeName>
+				</featureDescription>
+				<featureDescription>
+					<name>matchedTokens</name>
+					<description></description>
+					<rangeTypeName>uima.cas.FSArray</rangeTypeName>
+				</featureDescription>
+			</features>
+		</typeDescription>
+	</types>
 </typeSystemDescription>
