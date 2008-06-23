@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<synonym>
+<token canonical="United States" DOCNO="276145">
+<variant base="United States"/>
+<variant base="United States of America"/>
+<variant base="the United States of America"/>
+</token>
+<token canonical="New York City" DOCNO="10000">
+<variant base = "New York City"/>
+<variant base = "NYC"/>
+<variant base = "Big Apple"/>
+</token>
+<token canonical="Britain" DOCNO="276148">
+<variant base="Britain"/>
+</token>
+<token canonical="Britain" DOCNO="276148,276148a">
+<variant base="Brit'ain"/>
+</token>
+<token canonical=".AT" DOCNO="sdfasd">
+<variant base=".AT"/>
+</token>
+<token canonical="1776" DOCNO="276148">
+<variant base="1776"/>
+</token>
+<token canonical="Europe" DOCNO="276148">
+<variant base="Europe"/>
+</token>
+<token canonical="American" DOCNO="276148">
+<variant base="American"/>
+<variant base="Americans"/>
+</token>
+<token canonical="House of Lords" DOCNO="276148">
+<variant base="House of Lords"/>
+</token>
+<token canonical="House of Commons" DOCNO="276148">
+<variant base="House of Commons"/>
+</token>
+<token canonical="This Is" DOCNO="276148">
+<variant base="This Is"/>
+</token>
+<token canonical="bladder neck" SemClass="Site" AttributeType="ICDO" AttributeValue="C67.5" POS="NN" key="12461" >
+    <variant base="bladder neck" POS="NN" key="12461" parent="12461" />
+    <variant base="internal urethral orifice" POS="NN" key="12462" parent="12461" />
+</token>
+<token canonical="bladder, nos" SemClass="Site" AttributeType="ICDO" AttributeValue="C67.9" POS="NN" key="12469" >
+    <variant base="bladder, nos" POS="NN" key="12469" parent="12469" />
+    <variant base="bladder wall, nos" POS="NN" key="12470" parent="12469" />
+    <variant base="urinary bladder, nos" POS="NN" key="12471" parent="12469" />
+    <variant base="bladder" POS="NN" key="12472" parent="12469" />
+    <variant base="bladder wall" POS="NN" key="12473" parent="12469" />
+    <variant base="urinary bladder" POS="NN" key="12474" parent="12469" />
+</token>
+</synonym>

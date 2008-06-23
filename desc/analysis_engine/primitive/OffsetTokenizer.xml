@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taeDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+<primitive>true</primitive>
+<annotatorImplementationName>org.apache.uima.conceptMapper.support.tokenizer.OffsetTokenizer</annotatorImplementationName>
+<analysisEngineMetaData>
+<name>OffsetTokenenizer</name>
+<configurationParameters>
+<configurationParameter>
+<name>caseMatch</name>
+<description>matching case sensitive or case insensitive</description>
+<type>String</type>
+<multiValued>false</multiValued>
+<mandatory>true</mandatory>
+</configurationParameter>
+<configurationParameter>
+<name>tokenDelimiters</name>
+<description>String of characters that separate tokens</description>
+<type>String</type>
+<multiValued>false</multiValued>
+<mandatory>false</mandatory>
+</configurationParameter>
+</configurationParameters>
+<configurationParameterSettings>
+<nameValuePair>
+<name>caseMatch</name>
+<value>
+<string>ignoreall</string>
+</value>
+</nameValuePair>
+<nameValuePair>
+<name>tokenDelimiters</name>
+<value>
+<string>/-*&amp;@(){}|[]&gt;&lt;\'`":;,$%+.?!</string>
+</value>
+</nameValuePair>
+</configurationParameterSettings>
+<typeSystemDescription>
+<types>
+<typeDescription>
+<name>org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation</name>
+<description/>
+<supertypeName>uima.tt.TokenAnnotation</supertypeName>
+<features>
+<featureDescription>
+<name>text</name>
+<description></description>
+<rangeTypeName>uima.cas.String</rangeTypeName>
+</featureDescription>
+</features>
+</typeDescription>
+<typeDescription>
+<name>uima.tt.TokenAnnotation</name>
+<description/>
+<supertypeName>uima.tcas.Annotation</supertypeName>
+</typeDescription>
+</types>
+</typeSystemDescription>
+<capabilities>
+<capability>
+<inputs/>
+<outputs>
+<type allAnnotatorFeatures="true">org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation</type>
+<type allAnnotatorFeatures="true">uima.tt.TokenAnnotation</type>
+<type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
+</outputs>
+<languagesSupported/>
+</capability>
+</capabilities>
+<operationalProperties>
+<modifiesCas>true</modifiesCas>
+<multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+<outputsNewCASes>false</outputsNewCASes>
+</operationalProperties>
+</analysisEngineMetaData>
+</taeDescription>
