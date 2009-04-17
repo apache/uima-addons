@@ -842,7 +842,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
           term_cnt++;
           if ((term_cnt % 10000) == 0) {
             getLogger().logInfo("processed " + term_cnt + " entries");
-            System.err.println("processed " + term_cnt + " entries");
+            //System.err.println("processed " + term_cnt + " entries");
           }
         }
       }
@@ -935,7 +935,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       getLogger().logInfo("Loading dictionary");
       try {
         adaptor = new AnnotatorAdaptor(getTokenizerDescriptor(), result, tokenAnnotationName,
-                tokenFilter, langID);
+                tokenFilter, langID, getLogger());
         adaptor.initCPM();
 
         parser.parse(new InputSource(dictStream));

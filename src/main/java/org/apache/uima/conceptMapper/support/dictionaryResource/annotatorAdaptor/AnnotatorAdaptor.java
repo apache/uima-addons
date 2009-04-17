@@ -30,6 +30,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
 import org.apache.uima.cas.text.AnnotationFS;
+import org.apache.uima.conceptMapper.Logger;
 import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryLoaderException;
 import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryToken;
 import org.apache.uima.conceptMapper.support.tokens.TokenFilter;
@@ -61,8 +62,10 @@ public class AnnotatorAdaptor {
 
   private String langID;
 
+  private Logger logger;
+
   public AnnotatorAdaptor(String analysisEngineDescriptorPath, Vector<DictionaryToken> result,
-          String tokenTypeName, TokenFilter tokenFilter, String langID)
+          String tokenTypeName, TokenFilter tokenFilter, String langID, Logger logger)
           throws DictionaryLoaderException {
     super();
     try {
@@ -74,6 +77,7 @@ public class AnnotatorAdaptor {
       this.tokenFilter = tokenFilter;
       this.langID = langID;
       this.result = result;
+      this.logger = logger;
     } catch (InvalidXMLException e) {
       throw new DictionaryLoaderException(e);
     } catch (IOException e) {
@@ -116,9 +120,15 @@ public class AnnotatorAdaptor {
         }
 
         FSIterator tokenIter = cas.getIndexRepository().getAllIndexedFS(tokenType);
+        // System.err.println ("any tokens found? " + tokenIter.hasNext ());
         while (tokenIter.hasNext()) {
           AnnotationFS annotation = (AnnotationFS) tokenIter.next();
           result.add(new DictionaryToken(annotation, tokenTypeFeature, tokenClassFeature));
+        }
+        if (result.size () == 0)
+        {
+            // System.err.println ("Dictionary tokenization of: '" + cas.getDocumentText() + "' produced no tokens of type: '" + tokenType.getName () + "'");
+            logger.logWarning ("Dictionary tokenization of: '" + cas.getDocumentText() + "' produced no tokens of type: '" + tokenType.getName () + "'");
         }
       } catch (UnknownTypeException e) {
         System.err.println(e.getMessage());
