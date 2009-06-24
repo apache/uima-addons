@@ -20,9 +20,7 @@ package org.apache.uima.conceptMapper.support.dictionaryResource;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Properties;
 
 import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
 import org.apache.uima.conceptMapper.Logger;
@@ -42,8 +40,8 @@ public interface DictionaryResource {
   public interface DictEntriesByLength extends Serializable {
     public DictEntries getEntries(int length);
 
-    void putEntry(int length, String entry, ArrayList<String> elements, String unsorted,
-            Properties props);
+    void putEntry(int length, String[] elements, String unsorted,
+            EntryProperties props);
 
     public Integer getLongest();
 
@@ -55,11 +53,9 @@ public interface DictionaryResource {
     /**
      * @param elements
      * @param unsorted
-     * @param key
-     * @param length
      * @param props
      */
-    void putEntry(String entry, Collection<String> elements, String unsorted, Properties props);
+    void putEntry(String[] elements, String unsorted, EntryProperties props);
 
     /**
      * @param string
@@ -71,21 +67,17 @@ public interface DictionaryResource {
   }
 
   public interface DictEntry extends Serializable {
-    public String getText();
+    public void setElements(String[] elements);
 
-    public void setElements(Collection<String> elements);
-
-    public Collection<String> getElements();
-
-    public void setText(String text);
+    public String[] getElements();
 
     public String getUnsorted();
 
     public void setUnsorted(String text);
 
-    public Properties getProperties();
+    public EntryProperties getProperties();
 
-    public void setProperties(Properties props);
+    public void setProperties(EntryProperties props);
 
     public String toString();
 
@@ -102,8 +94,6 @@ public interface DictionaryResource {
   /**
    * @param key
    *          the key to index on
-   * @param entry
-   *          String representation of tokens to be entered in the dictionary
    * @param tokens
    *          array of tokens to be entered in the dictionary
    * @param unsortedEntry
@@ -114,8 +104,8 @@ public interface DictionaryResource {
    * @param props
    *          the properties object for the dictionary entry
    */
-  public void putEntry(String key, String entry, ArrayList<String> tokens, String unsortedEntry,
-          int length, Properties props);
+  public void putEntry(String key, String[] tokens, String unsortedEntry,
+          int length, EntryProperties props);
 
   /**
    * @return

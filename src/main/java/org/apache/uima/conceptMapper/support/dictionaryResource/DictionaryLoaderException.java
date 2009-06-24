@@ -26,11 +26,19 @@ public class DictionaryLoaderException extends Exception {
   private static final long serialVersionUID = -8996670807380390034L;
 
   public DictionaryLoaderException() {
-    super();
-  }
+	    super();
+	  }
+
+  public DictionaryLoaderException(String message) {
+	    super(message);
+	  }
 
   public DictionaryLoaderException(Throwable cause) {
-    super(cause);
-  }
+	    super(cause);
+	  }
+
+  public DictionaryLoaderException(String message, Throwable cause) {
+	    super(message, cause);
+	  }
 
 }

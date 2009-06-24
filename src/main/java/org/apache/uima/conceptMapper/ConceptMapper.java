@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TreeMap;
 
 import org.apache.uima.analysis_engine.ResultSpecification;
@@ -45,6 +45,7 @@ import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.cas.text.AnnotationIndex;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource;
+import org.apache.uima.conceptMapper.support.dictionaryResource.EntryProperties;
 import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource.DictEntry;
 import org.apache.uima.conceptMapper.support.tokens.TokenFilter;
 import org.apache.uima.conceptMapper.support.tokens.TokenNormalizer;
@@ -224,6 +225,8 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
   private JCas jcas;
 
   private static final String PARAM_TOKENIZERDESCRIPTOR = "TokenizerDescriptorPath";
+
+  private static final String UNKNOWN_VALUE = "unknown";
 
   // private FileWriter tokenDebugFile;
   // private FileWriter potentialMatchDebugFile;
@@ -628,7 +631,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
               // ", Entry: " + entry.getText ());
               // debugWrite (potentialMatchDebugFile, "Entry: " +
               // entry.getText ());
-              if ((normalizedTokens.containsAll(entry.getElements())) && (!entries.contains(entry))) {
+              if ((containsAll (normalizedTokens, entry.getElements())) && (!entries.contains(entry))) {
                 entries.add(entry);
                 // System.err.println ("Added potential match: "
                 // + entry);
@@ -646,6 +649,17 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
     return potentialEntries;
   }
 
+  private boolean containsAll (List<String> container, String[] contained)
+  {      
+      for (String item : contained)
+      {
+          if (! container.contains (item))
+          {
+              return false;
+          }
+      }
+      return true;
+  }
   /**
    * @param searchStrategy
    * @param tcas
@@ -687,7 +701,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
           // normalizedTokens.subList (whichToken,
           // normalizedTokens.size ()).toString ());
 
-          if (normalizedTokens.subList(whichToken, normalizedTokens.size()).containsAll(
+          if (containsAll (normalizedTokens.subList(whichToken, normalizedTokens.size()),
                   entry.getElements())) {
             int lengthOfMatch = processMatch(tcas, tokens, normalizedTokens, spanAnnotation,
                     whichToken, entry);
@@ -785,13 +799,11 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
   }
 
   // generate a map from tokens to number of occurences of that token
-  private TreeMap<String, Integer> findEntryOccurences(Collection<String> normalizedTokens,
+  private TreeMap<String, Integer> findEntryOccurences(String[] normalizedTokens,
           int whichToken) {
     TreeMap<String, Integer> result = new TreeMap<String, Integer>();
 
-    Iterator<String> iter = normalizedTokens.iterator();
-    while (iter.hasNext()) {
-      String token = iter.next();
+    for (String token : normalizedTokens) {
       Integer count = result.get(token);
       if (count == null) {
         count = new Integer(1);
@@ -856,17 +868,24 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
     boolean entryFound = false;
     // search through all entry lengths, as necessary
     while ((!entryFound) && (entryLength >= minLength)) {
-      String tokensToMatch = buildTokenString(tokens, whichToken, entryLength, sortElements);
-      // System.err.println(">>> tokensToMatch = " + tokensToMatch);
+      String [] tokensToMatch = buildTokensToMatchArray(tokens, whichToken, entryLength, sortElements);
+      //System.err.print(">>> tokensToMatch: '");
+      //for (String token : tokensToMatch) {
+      //    System.err.print(token + " ");
+      //}
+      //System.err.println("'");
       DictionaryResource.DictEntries entriesByLength = lengthEntries.getEntries(entryLength);
       // System.err.println(">>> entriesByLength = " + entriesByLength);
       if (entriesByLength != null) {
         ArrayList<DictionaryResource.DictEntry> entries = entriesByLength.getEntries();
-        DictionaryResource.DictEntry dictEntry = findMatchingEntry(entries, tokensToMatch);
-        if (dictEntry != null) {
+        Collection <DictionaryResource.DictEntry> resultEntries = findMatchingEntry(entries, tokensToMatch);
+        Iterator<DictionaryResource.DictEntry> resultEntriesIterator = resultEntries.iterator();
+        AnnotationFS endToken = tokens.get(whichToken + entryLength - 1);
+
+        while (resultEntriesIterator.hasNext()) {
+          DictionaryResource.DictEntry dictEntry = resultEntriesIterator.next ();
           // System.err.println("===> MATCH: '" + tokensToMatch + "'");
 
-          AnnotationFS endToken = tokens.get(whichToken + entryLength - 1);
           // System.err.println(">>>"+dictEntry.getUnsorted() );
           makeAnnotation(tcas, start, endToken.getEnd(), dictEntry.getProperties(), spanAnnotation,
                   dictEntry.getUnsorted(), tokens.subList(whichToken, whichToken + entryLength),
@@ -901,7 +920,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       for (int feature = 0; feature < tokenClassWriteBackFeatures.length; feature++) {
         if (tokenClassWriteBackFeatures[feature] != null) {
           String propVal = dictEntry.getProperties().getProperty(
-                  tokenClassWriteBackFeatureNames[feature], "unknown");
+                  tokenClassWriteBackFeatureNames[feature], UNKNOWN_VALUE);
           // System.err.println ("propVal: " + ": " + propVal);
           for (int i = whichToken; i < whichToken + entryLength; i++) {
             AnnotationFS tokenToUpdate = tokens.get(i);
@@ -920,7 +939,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
    * @param properties
    * @param matched
    */
-  protected void makeAnnotation(CAS tcas, int start, int end, Properties properties,
+  protected void makeAnnotation(CAS tcas, int start, int end, EntryProperties properties,
           Annotation spanAnnotation, String matchedText, Collection<AnnotationFS> matched,
           Logger log) {
     AnnotationFS annotation = tcas.createAnnotation(resultAnnotationType, start, end);
@@ -949,7 +968,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
     for (int featIndex = 0; featIndex < features.length; featIndex++) {
       if (features[featIndex] != null) {
         annotation.setStringValue(features[featIndex], properties.getProperty(
-                attributeNames[featIndex], "unknown"));
+                attributeNames[featIndex], UNKNOWN_VALUE));
       } else {
 
         // String message = "Feature '" + features[featIndex].getName() + "' not found in type '" +
@@ -971,21 +990,42 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
    * @param tokensToMatch
    * @return
    */
-  private DictEntry findMatchingEntry(ArrayList<DictionaryResource.DictEntry> entries,
-          String tokensToMatch) {
-    // System.err.println("Searching for: '" + tokensToMatch + "'");
+  private Collection<DictEntry> findMatchingEntry(ArrayList<DictionaryResource.DictEntry> entries,
+          										  String [] tokensToMatch) {
+    //System.err.print("Searching for: '");
+    //for (String token : tokensToMatch) {
+    //    System.err.print(token + " ");
+    //}
+    //System.err.println("'");
 
+
+	Collection<DictEntry> result = new ArrayList<DictEntry> ();
+	
     for (int i = 0; i < entries.size(); i++) {
       DictionaryResource.DictEntry dictEntry = entries.get(i);
-      String entryText = dictEntry.getText();
+      String[] entryText = dictEntry.getElements();
 
-      // System.err.println("--> trying: '" + entryText + "'");
+      // System.err.println("--> trying: '" + entryText.toString() + "'");
 
-      if (entryText.equals(tokensToMatch)) {
-        return dictEntry;
+      if (entryText.length == tokensToMatch.length)
+      {
+    	  boolean match = true;
+    	  int item = 0;
+          for (String entryTextItem : entryText)
+    	  {
+    		  if (! entryTextItem.equals(tokensToMatch[item]))
+    		  {
+    			  match = false;
+    			  break;
+    		  }
+    		  item += 1;
+    	  }
+    	  if (match) {
+    		  result.add (dictEntry);
+    	  }
       }
     }
-    return null;
+    return result;
   }
 
   /**
@@ -993,7 +1033,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
    * @param length
    * @return
    */
-  private String buildTokenString(ArrayList<AnnotationFS> tokens, int startIndex, int length,
+  private String[] buildTokensToMatchArray(ArrayList<AnnotationFS> tokens, int startIndex, int length,
           boolean sortElements) {
     String[] elements = new String[length];
     for (int i = startIndex; i < length + startIndex; i++) {
@@ -1005,14 +1045,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       Arrays.sort(elements);
     }
 
-    StringBuffer result = new StringBuffer();
-    for (int i = 0; i < elements.length; i++) {
-      if (result.length() != 0) {
-        result.append(" ");
-      }
-      result.append(elements[i]);
-    }
-    return result.toString();
+    return elements;
   }
 
   private String getTokenText(AnnotationFS token) {

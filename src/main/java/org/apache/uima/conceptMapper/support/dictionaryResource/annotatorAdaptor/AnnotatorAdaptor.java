@@ -19,6 +19,7 @@
 package org.apache.uima.conceptMapper.support.dictionaryResource.annotatorAdaptor;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Vector;
 
 import org.apache.uima.UIMAFramework;
@@ -36,6 +37,7 @@ import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryToken;
 import org.apache.uima.conceptMapper.support.tokens.TokenFilter;
 import org.apache.uima.conceptMapper.support.tokens.UnknownTypeException;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.ResourceManager;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
@@ -87,10 +89,17 @@ public class AnnotatorAdaptor {
 
   public void initCPM() throws DictionaryLoaderException {
     try {
+      ResourceManager resMgr = UIMAFramework.newDefaultResourceManager();
+      String dp = System.getProperty("uima.datapath");
+      if (null != dp) {
+        resMgr.setDataPath(dp);
+      }
       ae = UIMAFramework.produceAnalysisEngine(aeSpecifier);
       cas = ae.newCAS();
     } catch (ResourceInitializationException e) {
       throw new DictionaryLoaderException(e);
+    } catch (MalformedURLException e) {
+        throw new DictionaryLoaderException(e);
     }
   }
 

@@ -20,10 +20,8 @@ package org.apache.uima.conceptMapper.support.dictionaryResource;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Properties;
 
 import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
 import org.apache.uima.conceptMapper.Logger;
@@ -76,8 +74,8 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
     // nothing to do
   }
 
-  public void putEntry(String key, String entry, ArrayList<String> tokens, String unsortedEntry,
-          int length, Properties props) {
+  public void putEntry(String key, String[] tokens, String unsortedEntry,
+          int length, EntryProperties props) {
     throw new UnsupportedOperationException();
   }
 

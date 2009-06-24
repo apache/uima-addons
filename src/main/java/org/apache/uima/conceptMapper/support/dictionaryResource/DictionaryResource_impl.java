@@ -25,12 +25,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.TreeMap;
 import java.util.Vector;
 import java.util.regex.Pattern;
@@ -117,6 +115,12 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
   private static final String DEFAULT_LANGID = "en";
 
+  /** Configuration parameter key/label for the attribute list */
+  public static final String PARAM_ATTRIBUTE_LIST = "AttributeList";
+
+  public static final String PARAM_XML_PARSER = "XMLParserName";
+  private String XMLParserName = null;
+
   public int entryNum = 0;
 
   /**
@@ -160,15 +164,17 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
    * 
    * @param key
    *          the key to index on
-   * @param phrase
-   *          the phrase to be entered in the dictionary
+   * @param elements
+   *          the individual elements to be entered in the dictionary
+   * @param unsorted
+   * 		  an unsorted string representation of the entry, if the contents of 'elements' has been sorted
    * @param length
    *          the number of words in the phrase (>=1)
    * @param props
-   *          the properties object for the dictionary entry
+   *          the EntryProperties object for the dictionary entry
    */
-  public void putEntry(String key, String text, ArrayList<String> elements, String unsorted,
-          int length, Properties props) {
+  public void putEntry(String key, String[] elements, String unsorted,
+          int length, EntryProperties props) {
     DictEntriesByLength entry = getEntries(key);
 
     if (entry == null) {
@@ -181,7 +187,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     // {
     // System.err.println("ENTRY ELEMENT: " + elemIter.next ());
     // }
-    entry.putEntry(length, text, elements, unsorted, props);
+    entry.putEntry(length, elements, unsorted, props);
     // System.err.println("ENTRY: '" + text + "', PROPS: ");
     // Enumeration propKeys = props.keys();
     // while (propKeys.hasMoreElements())
@@ -256,13 +262,17 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       {
         langID = DEFAULT_LANGID;
       }
+      
+      XMLParserName = (String) aContext.getConfigParameterValue(PARAM_XML_PARSER);
+      
+      String [] entryPropertyNames = (String []) aContext.getConfigParameterValue(PARAM_ATTRIBUTE_LIST);
       // System.out.print ("Loading Dictionary: '" + dictLoader.dataResource.getUri().toString() +
       // "'...");
       // System.out.print ("Loading Dictionary...");
       logger.logInfo("Loading Dictionary...");
       dictLoader.setDictionary(dictStream, NumOfInitialDictEntries, tokenAnnotationName,
               tokenTypeFeatureName, tokenClassFeatureName, tokenizerDescriptor, tokenFilter,
-              tokenNormalizer, langID);
+              tokenNormalizer, langID, entryPropertyNames);
       logger.logInfo("...done");
       // System.out.println ("done");
       // System.err.println("NEW DICT:\n" + toString());
@@ -346,14 +356,14 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      * @see org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource.DictEntriesByLength#putEntry(int,
      *      java.lang.String, java.util.Properties)
      */
-    public void putEntry(int length, String text, ArrayList<String> elements, String unsorted,
-            Properties props) {
+    public void putEntry(int length, String[] elements, String unsorted,
+            EntryProperties props) {
       DictEntries entry = getEntries(length);
       if (entry == null) {
         entry = new DictEntriesImpl();
         entries.put(new Integer(length), entry);
       }
-      entry.putEntry(text, elements, unsorted, props);
+      entry.putEntry(elements, unsorted, props);
     }
 
     /*
@@ -407,13 +417,13 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     /**
      * Add a new phrase to an existing dictionary entry.
      * 
-     * @param text
+     * @param elements
      *          the text to be entered in the dictionary
      * @param props
      *          the properties object for the phrase
      */
-    public void putEntry(String text, Collection<String> elements, String unsorted, Properties props) {
-      add(new DictEntryImpl(text, elements, unsorted, props));
+    public void putEntry(String[] elements, String unsorted, EntryProperties props) {
+      add(new DictEntryImpl(elements, unsorted, props));
     }
 
     /*
@@ -439,13 +449,11 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
   public static class DictEntryImpl implements DictEntry {
     private static final long serialVersionUID = -7723934333674544157L;
 
-    String text;
-
-    Collection<String> elements;
+    String[] elements;
 
     String unsorted;
 
-    Properties properties;
+    EntryProperties properties;
 
     /**
      * @param text
@@ -453,35 +461,19 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      * @param unsorted
      * @param properties
      */
-    public DictEntryImpl(String text, Collection<String> elements, String unsorted,
-            Properties properties) {
+    public DictEntryImpl(String[] elements, String unsorted,
+            EntryProperties properties) {
       super();
       this.properties = properties;
       this.unsorted = unsorted;
-      this.text = text;
       this.elements = elements;
-    }
-
-    /**
-     * @return Returns the text.
-     */
-    public String getText() {
-      return text;
-    }
-
-    /**
-     * @param text
-     *          The text to set.
-     */
-    public void setText(String text) {
-      this.text = text;
     }
 
     /**
      * @param properties
      *          The properties to set.
      */
-    public void setProperties(Properties properties) {
+    public void setProperties(EntryProperties properties) {
       this.properties = properties;
     }
 
@@ -490,20 +482,19 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      * 
      * @see org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource.DictEntry#getProperties()
      */
-    public Properties getProperties() {
+    public EntryProperties getProperties() {
       return properties;
     }
 
     public String toString() {
-      StringBuffer result = new StringBuffer("<DictEntry Text ='" + getText() + "'>");
-      Enumeration<?> e = getProperties().propertyNames();
-
-      while (e.hasMoreElements()) {
-        String propName = (String) e.nextElement();
-        result.append("<property name='" + propName + "'>");
-        String item = getProperties().getProperty(propName);
-        result.append(item);
-        result.append("</property>\n");
+      StringBuffer result = new StringBuffer("<DictEntry Text ='" + getElements().toString() + "'>");
+      
+      for (String propertyName : EntryPropertiesFactory.propertyNames())
+      {
+          result.append("<property name='" + propertyName.toString() + "'>");
+          String item = getProperties().getProperty(propertyName);
+          result.append(item);
+          result.append("</property>\n");
       }
       result.append("</DictEntry>\n");
       return result.toString();
@@ -528,11 +519,11 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       this.unsorted = unsorted;
     }
 
-    public Collection<String> getElements() {
+    public String[] getElements() {
       return elements;
     }
 
-    public void setElements(Collection<String> elements) {
+    public void setElements(String[] elements) {
       this.elements = elements;
     }
 
@@ -570,7 +561,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
    */
   private class DictLoader extends DefaultHandler {
     /** Default parser name. */
-    protected static final String DEFAULT_PARSER_NAME = "org.apache.xerces.parsers.SAXParser";
+    //protected static final String DEFAULT_PARSER_NAME = "org.apache.xerces.parsers.SAXParser";
 
     /** Default name of element that contains dictionary records. */
     protected static final String DEFAULT_TOKEN_ELEM = "token";
@@ -612,7 +603,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     private DictionaryResource dict;
 
     /** Properties for current canonical form */
-    private Properties props;
+    private EntryProperties props;
 
     private AnnotatorAdaptor adaptor;
 
@@ -623,6 +614,8 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     private TokenFilter tokenFilter;
 
     private TokenNormalizer tokenNormalizer;
+    
+    private EntryPropertiesFactory entryPropertiesFactory;
 
     /**
      * needed to access input stream, since cannot load external dict resource until TAE config
@@ -648,9 +641,13 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
       // create parser
       try {
-        parser = XMLReaderFactory.createXMLReader(DEFAULT_PARSER_NAME);
+  	    if (XMLParserName != null) {
+          parser = XMLReaderFactory.createXMLReader(XMLParserName);
+  	    } else {
+          parser = XMLReaderFactory.createXMLReader();
+  	    }
       } catch (Exception e) {
-        log.logError("Unable to instantiate dictionary parser (" + DEFAULT_PARSER_NAME + ")");
+        log.logError("Unable to instantiate dictionary parser (" + ((XMLParserName==null) ? "default XML parser" : XMLParserName) + ")");
         throw (e);
       }
       parser.setContentHandler(this);
@@ -686,6 +683,16 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       this.tokenNormalizer = tokenNormalizer;
     }
 
+    protected void setPropertiesFactory (EntryPropertiesFactory factory)
+    {
+    	this.entryPropertiesFactory = factory;
+    }
+
+    protected EntryPropertiesFactory getPropertiesFactory ()
+    {
+    	return entryPropertiesFactory;
+    }
+    
     protected TokenNormalizer getTokenNormalizer() {
       return tokenNormalizer;
     }
@@ -719,11 +726,12 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       if (raw.equals(token_elem)) { // starting new token entry
         if (attrs != null) {
 
-          props = new Properties();
-          int attrCount = attrs.getLength();
-          for (int i = 0; i < attrCount; i++) {
-            props.setProperty(attrs.getQName(i), convertEntities(attrs.getValue(i)));
-          }
+        	props = getPropertiesFactory().newEntryProperties();
+			int attrCount = attrs.getLength();
+			for (int i = 0; i < attrCount; i++) {
+				props.setProperty(attrs.getQName(i), convertEntities(attrs.getValue(i)));
+			}
+
         }
       } else if (raw.equals(variant_elem)) { // variant for current token
         if (attrs != null) {
@@ -732,7 +740,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
           // if this variant contains its own POS info, save token level POS info and set props to
           // contain variant's
-          Properties variantProperties = new Properties(props);
+          EntryProperties variantProperties = new EntryProperties(props);
           // logger.logInfo("" + entryNum++);
           //
           // System.err.println("" + entryNum++);
@@ -799,7 +807,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
                 //}
               }
             } else {
-              variantProperties.setProperty(attrs.getQName(i), convertEntities(attrs.getValue(i)));
+           		variantProperties.setProperty(attrs.getQName(i), convertEntities(attrs.getValue(i)));
             }
 
           }
@@ -813,7 +821,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
             Arrays.sort(elements);
           }
 
-          String tokenString = stringTogetherTokens(elements);
+          //String tokenString = stringTogetherTokens(elements);
           //if (dumpDict)
           //{
           //  System.err.println ("token string: " + tokenString);
@@ -823,7 +831,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
           // add to dictionary
           if (sortElements) {
             for (int i = 0; i < tokens.size(); i++) {
-              dict.putEntry((String) tokens.get(i), tokenString, tokens, unsorted, tokens.size(),
+              dict.putEntry((String) tokens.get(i), elements, unsorted, elements.length,
                       variantProperties);
               // System.err.println ("adding props for:" + tokenString);
               // Enumeration propKeys = variantProperties.keys();
@@ -836,7 +844,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
             }
           } else {
-            dict.putEntry((String) tokens.get(0), tokenString, tokens, unsorted, tokens.size(),
+            dict.putEntry((String) tokens.get(0), elements, unsorted, elements.length,
                     variantProperties);
           }
           term_cnt++;
@@ -847,23 +855,8 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
         }
       }
     }
-
-    /**
-     * @param elements
-     * @return
-     */
-    private String stringTogetherTokens(String[] elements) {
-      StringBuffer tokenString = new StringBuffer();
-
-      for (int i = 0; i < elements.length; i++) {
-        if (i > 0) {
-          tokenString.append(" ");
-        }
-        tokenString.append(elements[i]);
-      }
-      return tokenString.toString();
-    }
-
+     
+    
     //
     // ErrorHandler methods
     //
@@ -923,7 +916,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      */
     public void setDictionary(InputStream dictStream, int initialDictEntries,
             String tokenAnnotationName, String tokenTypeFeatureName, String tokenClassFeatureName,
-            String tokenizerDescriptor, TokenFilter tokenFilter, TokenNormalizer tokenNormalizer, String langID)
+            String tokenizerDescriptor, TokenFilter tokenFilter, TokenNormalizer tokenNormalizer, String langID, String [] entryPropertyNames)
             throws DictionaryLoaderException {
       term_cnt = 0;
       setTokenAnnotationName(tokenAnnotationName);
@@ -932,6 +925,8 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       setTokenNormalizer(tokenNormalizer);
       result = new Vector<DictionaryToken>();
 
+      setPropertiesFactory (EntryPropertiesFactory.create (entryPropertyNames));
+      
       getLogger().logInfo("Loading dictionary");
       try {
         adaptor = new AnnotatorAdaptor(getTokenizerDescriptor(), result, tokenAnnotationName,
@@ -972,6 +967,20 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     return dictImpl.keys();
   }
 
+
+  public  static String stringTogetherTokens(String[] elements) {
+    StringBuffer tokenString = new StringBuffer();
+
+    for (int i = 0; i < elements.length; i++) {
+      if (i > 0) {
+        tokenString.append(" ");
+      }
+      tokenString.append(elements[i]);
+    }
+    return tokenString.toString();
+  }
+
+  
   public String toString() {
     StringBuffer result = new StringBuffer();
 
