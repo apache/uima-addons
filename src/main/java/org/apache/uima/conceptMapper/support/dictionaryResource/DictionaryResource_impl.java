@@ -936,9 +936,9 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
         parser.parse(new InputSource(dictStream));
       } catch (SAXException e) {
         getLogger().logError("Parse error occurred - " + e.getMessage());
-        throw new DictionaryLoaderException();
+        throw new DictionaryLoaderException(e);
       } catch (IOException e) {
-        throw new DictionaryLoaderException();
+        throw new DictionaryLoaderException(e);
       }
       getLogger().logInfo("Finished loading " + term_cnt + " entries");
     }
