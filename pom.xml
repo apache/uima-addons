@@ -24,13 +24,11 @@
   <packaging>jar</packaging>
   <version>${uimaj-release-version}</version>
   <name>Apache UIMA Java Annotator - ConceptMapper</name>
-  <url>http://incubator.apache.org/uima</url>
   
   <parent>
     <groupId>org.apache.uima</groupId>
     <artifactId>SandboxDistr</artifactId>
-    <version>2.3.0-incubating-SNAPSHOT</version>
-    <!-- this comment is a flag for changeVersion -->
+    <version>2.3.0-incubating-SNAPSHOT</version> <!-- this comment is a flag for changeVersion -->
     <relativePath>../SandboxDistr</relativePath>
   </parent>
   
