@@ -24,6 +24,7 @@
 <project name="Apache UIMA ConceptMapper Annotator Documentation" default="all" basedir=".">
   
   <property name="book_name" value="ConceptMapperAnnotatorUserGuide"/>
+  <property name="artifactId" value="ConceptMapper"/>
 	
   <import file="${basedir}/../SandboxDocs/sandbox_build.xml"/>  
   
