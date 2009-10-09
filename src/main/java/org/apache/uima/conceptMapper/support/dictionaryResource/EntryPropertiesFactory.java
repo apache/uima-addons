@@ -24,7 +24,7 @@ public class EntryPropertiesFactory {
 
 	private static String [] propertyNames = null;
 	
-	public static EntryPropertiesFactory create (String [] thePropertyNames)
+	public static synchronized EntryPropertiesFactory create (String [] thePropertyNames)
 	{
 		if (propertyNames == null)
 		{

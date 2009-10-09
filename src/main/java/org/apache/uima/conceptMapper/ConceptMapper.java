@@ -579,9 +579,6 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
 
     ArrayList<String> normalizedTokens = new ArrayList<String>();
 
-    // mapping from words in sentence to list of dictionary entries starting with that word
-    Map<String, Collection<DictEntry>> potentialEntries = new HashMap<String, Collection<DictEntry>>();
-
     // iterate through all tokens within span and collect dict entries for each unique one
     for (int whichToken = 0; whichToken < tokens.size(); whichToken++) {
       token = tokens.get(whichToken);
@@ -595,13 +592,12 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       // System.err.println("ENTRY SEARCH/ORIGINAL: " + word + " / " +
       // tokenText);
     }
-    potentialEntries = findPotentialEntries(normalizedTokens, dict);
 
     // System.err.println ("processTokenListSkipAny finding matches for " +
     // normalizedTokens.toString ());
 
     findMatchesSkipAnyToken(searchStrategy, findAllMatches, tcas, tokens, normalizedTokens,
-            potentialEntries, spanAnnotation);
+                            findPotentialEntries(normalizedTokens, dict), spanAnnotation);
   }
 
   private Map<String, Collection<DictEntry>> findPotentialEntries(
@@ -746,7 +742,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
     TreeMap<String, Integer> entryOccurences = findEntryOccurences(entry.getElements(), whichToken);
     int begin = -1;
     int end = 0;
-    StringBuffer matchedText = new StringBuffer();
+    StringBuilder matchedText = new StringBuilder();
 
     // while there are still items to match against
     ArrayList<AnnotationFS> matched = new ArrayList<AnnotationFS>();
@@ -777,7 +773,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
         if (count.intValue() == 1) {
           entryOccurences.remove(currentTokenText);
         } else {
-          entryOccurences.put(currentTokenText, new Integer(count.intValue() - 1));
+          entryOccurences.put(currentTokenText, Integer.valueOf (count.intValue() - 1));
         }
       }
 
@@ -806,9 +802,9 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
     for (String token : normalizedTokens) {
       Integer count = result.get(token);
       if (count == null) {
-        count = new Integer(1);
+        count = Integer.valueOf (1);
       } else {
-        count = new Integer(count.intValue() + 1);
+        count = Integer.valueOf (count.intValue() + 1);
       }
       result.put(token, count);
 

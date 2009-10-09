@@ -166,7 +166,7 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
 
 
   public TokenAnnotation nextToken(JCas jcas) {
-    StringBuffer token = new StringBuffer();
+    StringBuilder token = new StringBuilder();
     // System.out.println("in NextToken");
     // skip any delimiters
     while ((offset < length) && (getDelim().indexOf(getText().charAt((offset))) >= 0)) {

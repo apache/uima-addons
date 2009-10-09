@@ -232,7 +232,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     InputStream dictStream = null;
     try {
       dictLoader.setLogger(logger);
-      Boolean sortElementsParam = new Boolean(false);
+      Boolean sortElementsParam = Boolean.valueOf (false);
 
       sortElementsParam = (Boolean) aContext.getConfigParameterValue(PARAM_ORDERINDEPENDENTLOOKUP);
       if (sortElementsParam == null) {
@@ -315,7 +315,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
   private static class DictEntriesByLength_impl implements DictEntriesByLength {
     private static final long serialVersionUID = -8150386021246495622L;
 
-    private class ReverseOrderIntegerComparator implements Comparator<Integer>, Serializable {
+    private static class ReverseOrderIntegerComparator implements Comparator<Integer>, Serializable {
 
       /**
        * 
@@ -347,7 +347,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      * @see org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource.DictEntriesByLength#getEntries(int)
      */
     public DictEntries getEntries(int length) {
-      return entries.get(new Integer(length));
+      return entries.get(Integer.valueOf (length));
     }
 
     /*
@@ -361,7 +361,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       DictEntries entry = getEntries(length);
       if (entry == null) {
         entry = new DictEntriesImpl();
-        entries.put(new Integer(length), entry);
+        entries.put(Integer.valueOf (length), entry);
       }
       entry.putEntry(elements, unsorted, props);
     }
@@ -380,7 +380,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     }
 
     public String toString() {
-      StringBuffer result = new StringBuffer();
+      StringBuilder result = new StringBuilder();
 
       int i = getLongest().intValue();
       int last = getShortest().intValue();
@@ -436,7 +436,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     }
 
     public String toString() {
-      StringBuffer result = new StringBuffer("<DictEntries>");
+      StringBuilder result = new StringBuilder("<DictEntries>");
       for (int i = 0; i < size(); i++) {
         result.append(((DictEntryImpl) get(i)).toString());
       }
@@ -487,7 +487,19 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     }
 
     public String toString() {
-      StringBuffer result = new StringBuffer("<DictEntry Text ='" + getElements().toString() + "'>");
+      StringBuilder result = new StringBuilder("<DictEntry Text ='[");
+      
+      boolean firstTime = true;
+      for (String element: getElements()) {
+          if (firstTime) {
+              firstTime = false;
+          }
+          else {
+              result.append (", ");
+          }
+          result.append (element);
+          }
+      result.append ("''>");
       
       for (String propertyName : EntryPropertiesFactory.propertyNames())
       {
@@ -719,7 +731,6 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     public void startElement(String uri, String local, String raw, Attributes attrs)
             throws SAXException {
 
-      String key = null;
       DictionaryToken token = null;
       int length = 0;
 
@@ -776,20 +787,18 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
                 return;
               }
 
-              key = new String(tokenNormalizer.normalize(token.getText()));
               //if (dumpDict)
               //{
               //  System.err.println ("variant token key:" + key);
               //}
 
-              tokens.add(key);
+              tokens.add(tokenNormalizer.normalize(token.getText()));
               length = 1;
               while (tokenIter.hasNext()) {
                 token = (DictionaryToken) tokenIter.next();
                 String tokenText = tokenNormalizer.normalize(token.getText());
 
                 if (tokenFilter.isOK_Token(token, tokenNormalizer)) {
-                  key += " " + tokenText;
                   tokens.add(tokenText);
                   length++;
                   
@@ -954,7 +963,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
    * 
    * @see org.apache.uima.conceptMapper.support.DictionaryResource#NewDictionaryResource(int)
    */
-  public DictionaryResource NewDictionaryResource(int initialDictEntries) {
+  public DictionaryResource newDictionaryResource(int initialDictEntries) {
     return new DictionaryResource_impl(initialDictEntries);
   }
 
@@ -969,7 +978,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
 
   public  static String stringTogetherTokens(String[] elements) {
-    StringBuffer tokenString = new StringBuffer();
+    StringBuilder tokenString = new StringBuilder();
 
     for (int i = 0; i < elements.length; i++) {
       if (i > 0) {
@@ -982,7 +991,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
   
   public String toString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     Enumeration<String> e = keys();
 

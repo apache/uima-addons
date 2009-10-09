@@ -39,7 +39,7 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
    */
   protected Hashtable<String, DictEntriesByLength> dictImpl;
 
-  public DictionaryResource NewDictionaryResource(int initialSize) {
+  public DictionaryResource newDictionaryResource(int initialSize) {
     throw new UnsupportedOperationException();
   }
 

@@ -190,8 +190,8 @@ public class TokenFilter {
         }
       }
       stopWords = initializeStopWordList(stopWordList);
-    } catch (Exception ie) {
-      throw new AnnotatorConfigurationException();
+    } catch (AnnotatorContextException ie) {
+      throw new AnnotatorConfigurationException(ie);
     }
 
   }
@@ -277,7 +277,7 @@ public class TokenFilter {
     boolean returnValue = true;
 
     if (tokenTypeFeature != null) {
-      Integer tokenType = new Integer(token.getIntValue(tokenTypeFeature));
+      Integer tokenType = Integer.valueOf (token.getIntValue(tokenTypeFeature));
 
       if (tokenType != null) {
         returnValue = isOK_TokenType(tokenType);

@@ -35,7 +35,7 @@ public interface DictionaryResource {
   // shared resource loader
   public void load(DataResource data) throws ResourceInitializationException;
 
-  public DictionaryResource NewDictionaryResource(int initialSize);
+  public DictionaryResource newDictionaryResource(int initialSize);
 
   public interface DictEntriesByLength extends Serializable {
     public DictEntries getEntries(int length);
