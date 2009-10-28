@@ -38,6 +38,7 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
    * of every entry in the specified dictionary.
    */
   protected Hashtable<String, DictEntriesByLength> dictImpl;
+  protected EntryPropertiesRoot entryPropertiesRoot;
 
   public DictionaryResource newDictionaryResource(int initialSize) {
     throw new UnsupportedOperationException();
@@ -59,6 +60,7 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
   public void load(DataResource data) throws ResourceInitializationException {
     try {
       ObjectInputStream ois = new ObjectInputStream(data.getInputStream());
+      entryPropertiesRoot = (EntryPropertiesRoot) ois.readObject();
       dictImpl = (Hashtable) ois.readObject();
       ois.close();
     } catch (IOException e) {
@@ -77,6 +79,10 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
   public void putEntry(String key, String[] tokens, String unsortedEntry,
           int length, EntryProperties props) {
     throw new UnsupportedOperationException();
+  }
+
+  public EntryPropertiesRoot getEntryPropertiesRoot() {
+	return entryPropertiesRoot;
   }
 
 }

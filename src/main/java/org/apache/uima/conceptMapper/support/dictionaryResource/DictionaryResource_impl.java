@@ -60,7 +60,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 
 public class DictionaryResource_impl implements DictionaryResource, SharedResourceObject {
-  /** Dictionary file loader. Uses an XML parser. */
+/** Dictionary file loader. Uses an XML parser. */
   protected DictLoader dictLoader;
 
   /**
@@ -68,6 +68,8 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
    * of every entry in the specified dictionary.
    */
   protected Hashtable<String, DictEntriesByLength> dictImpl;
+  
+  protected EntryPropertiesRoot entryPropertiesRoot;
 
   /** Initial size of <code>dict</code> */
   protected static final int NumOfInitialDictEntries = 500000;
@@ -266,13 +268,14 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       XMLParserName = (String) aContext.getConfigParameterValue(PARAM_XML_PARSER);
       
       String [] entryPropertyNames = (String []) aContext.getConfigParameterValue(PARAM_ATTRIBUTE_LIST);
+      entryPropertiesRoot = new EntryPropertiesRoot(entryPropertyNames);
       // System.out.print ("Loading Dictionary: '" + dictLoader.dataResource.getUri().toString() +
       // "'...");
       // System.out.print ("Loading Dictionary...");
       logger.logInfo("Loading Dictionary...");
       dictLoader.setDictionary(dictStream, NumOfInitialDictEntries, tokenAnnotationName,
               tokenTypeFeatureName, tokenClassFeatureName, tokenizerDescriptor, tokenFilter,
-              tokenNormalizer, langID, entryPropertyNames);
+              tokenNormalizer, langID, entryPropertiesRoot);
       logger.logInfo("...done");
       // System.out.println ("done");
       // System.err.println("NEW DICT:\n" + toString());
@@ -500,14 +503,14 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
           result.append (element);
           }
       result.append ("''>");
-      
-      for (String propertyName : EntryPropertiesFactory.propertyNames())
+      /* TODO
+      for (String propertyName : entryPropertiesRoot.propertyNames())
       {
           result.append("<property name='" + propertyName.toString() + "'>");
           String item = getProperties().getProperty(propertyName);
           result.append(item);
           result.append("</property>\n");
-      }
+      }*/
       result.append("</DictEntry>\n");
       return result.toString();
 
@@ -627,7 +630,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
     private TokenNormalizer tokenNormalizer;
     
-    private EntryPropertiesFactory entryPropertiesFactory;
+    private EntryPropertiesRoot entryPropertiesRoot;
 
     /**
      * needed to access input stream, since cannot load external dict resource until TAE config
@@ -695,14 +698,14 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       this.tokenNormalizer = tokenNormalizer;
     }
 
-    protected void setPropertiesFactory (EntryPropertiesFactory factory)
+    protected void setEntryPropertiesRoot (EntryPropertiesRoot entryPropertiesRoot)
     {
-    	this.entryPropertiesFactory = factory;
+    	this.entryPropertiesRoot = entryPropertiesRoot;
     }
 
-    protected EntryPropertiesFactory getPropertiesFactory ()
+    protected EntryPropertiesRoot getPropertiesRoot ()
     {
-    	return entryPropertiesFactory;
+    	return entryPropertiesRoot;
     }
     
     protected TokenNormalizer getTokenNormalizer() {
@@ -737,7 +740,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       if (raw.equals(token_elem)) { // starting new token entry
         if (attrs != null) {
 
-        	props = getPropertiesFactory().newEntryProperties();
+        	props = getPropertiesRoot().newEntryProperties();
 			int attrCount = attrs.getLength();
 			for (int i = 0; i < attrCount; i++) {
 				props.setProperty(attrs.getQName(i), convertEntities(attrs.getValue(i)));
@@ -925,7 +928,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      */
     public void setDictionary(InputStream dictStream, int initialDictEntries,
             String tokenAnnotationName, String tokenTypeFeatureName, String tokenClassFeatureName,
-            String tokenizerDescriptor, TokenFilter tokenFilter, TokenNormalizer tokenNormalizer, String langID, String [] entryPropertyNames)
+            String tokenizerDescriptor, TokenFilter tokenFilter, TokenNormalizer tokenNormalizer, String langID, EntryPropertiesRoot entryPropertiesRoot)
             throws DictionaryLoaderException {
       term_cnt = 0;
       setTokenAnnotationName(tokenAnnotationName);
@@ -934,7 +937,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       setTokenNormalizer(tokenNormalizer);
       result = new Vector<DictionaryToken>();
 
-      setPropertiesFactory (EntryPropertiesFactory.create (entryPropertyNames));
+      setEntryPropertiesRoot (entryPropertiesRoot);
       
       getLogger().logInfo("Loading dictionary");
       try {
@@ -1007,8 +1010,13 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
   public void serializeEntries(FileOutputStream output) throws IOException {
     ObjectOutputStream oos = new ObjectOutputStream(output);
+    oos.writeObject(this.entryPropertiesRoot);
     oos.writeObject(this.dictImpl);
     oos.close();
+  }
+
+  public EntryPropertiesRoot getEntryPropertiesRoot() {
+	return entryPropertiesRoot;
   }
 
 }

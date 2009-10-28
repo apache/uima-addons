@@ -30,11 +30,20 @@ public class CompileDictionary {
   private static final String DICTIONARY_RESOURCE_NAME = "/DictionaryFile";
 
   public static void main(String[] args) throws Exception {
+    String dictionaryResourceName = DICTIONARY_RESOURCE_NAME;
+    if (args.length == 2) {
+      // do nothing
+    } else if (args.length == 3) {
+      dictionaryResourceName = args[2];
+    } else {
+      usage();
+      System.exit(17);
+    }
     AnalysisEngineDescription conceptMapperDesc = UIMAFramework.getXMLParser()
             .parseAnalysisEngineDescription(new XMLInputSource(args[0]));
     AnalysisEngine ae = UIMAFramework.produceAnalysisEngine(conceptMapperDesc);
     DictionaryResource_impl dict = (DictionaryResource_impl) ae.getResourceManager().getResource(
-            DICTIONARY_RESOURCE_NAME);
+    		dictionaryResourceName);
 
     FileOutputStream output = new FileOutputStream(args[1]);
     dict.serializeEntries(output);
@@ -43,5 +52,20 @@ public class CompileDictionary {
     // for some reason JVM won't exit normally,
     // probably because CPM threads are alive?
     System.exit(0);
+  }
+  
+  public static class ClassNameFinder extends SecurityManager{
+    public String getClassName(){
+      return getClassContext()[1].getName();
+    }
+  }
+
+  public static String getCurClassName(){
+    return (new ClassNameFinder()).getClassName();
+  }
+
+  public static void usage ()
+  {
+    System.out.println("USAGE: " + getCurClassName() + ": <pathToDescriptor> <outputFileName> [<resourceName>]");
   }
 }

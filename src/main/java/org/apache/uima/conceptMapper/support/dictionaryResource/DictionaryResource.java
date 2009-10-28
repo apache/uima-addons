@@ -37,6 +37,8 @@ public interface DictionaryResource {
 
   public DictionaryResource newDictionaryResource(int initialSize);
 
+  public EntryPropertiesRoot getEntryPropertiesRoot ();
+  
   public interface DictEntriesByLength extends Serializable {
     public DictEntries getEntries(int length);
 

@@ -361,7 +361,7 @@
 				<name>TokenizerDescriptorPath</name>
 				<value>
 					<string>
-						/OtherStuff/IBM/eclipse-apacheuima/conceptMapper/descriptors/analysis_engine/primitive/OffsetTokenizer.xml
+						/OtherStuff/IBM/eclipse-UIMAsandbox/ConceptMapper/desc/analysis_engine/primitive/OffsetTokenizer.xml
 					</string>
 				</value>
 			</nameValuePair>

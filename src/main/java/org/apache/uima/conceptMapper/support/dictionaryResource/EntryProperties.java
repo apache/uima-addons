@@ -27,6 +27,7 @@ public class EntryProperties implements Serializable{
      */
     private static final long serialVersionUID = 1L;
 	private String [] properties;
+	private EntryPropertiesRoot entryPropertiesRoot;
 
 	/**
 	 * 
@@ -36,17 +37,19 @@ public class EntryProperties implements Serializable{
 	 * 
 	 * should only be called by factory
 	 */
-	public EntryProperties (EntryPropertiesFactory factory, int maxNumberOfProperties) throws NullPointerException
+	public EntryProperties (EntryPropertiesRoot root, int maxNumberOfProperties) throws NullPointerException
 	{
-		if (factory == null)
+		if (root == null)
 		{
-			throw new NullPointerException ("EntryProperties not initialized via EntryProperties.init()");
+			throw new NullPointerException ("EntryPropertiesRoot cannot be null");
 		}
+		entryPropertiesRoot = root;
 		properties = new String [maxNumberOfProperties];
 	}
 	
 	public EntryProperties (EntryProperties toCopyFrom)
 	{
+		entryPropertiesRoot = toCopyFrom.entryPropertiesRoot;
 		properties = toCopyFrom.properties.clone();
 	}
 	
@@ -56,7 +59,7 @@ public class EntryProperties implements Serializable{
 	}
 	
 	public String getProperty(String propertyName, String defaultValue) {
-		int propertyID = EntryPropertiesFactory.getPropertyID (propertyName);
+		int propertyID = entryPropertiesRoot.getPropertyID (propertyName);
 		if (propertyID < 0)
 		{
 			return defaultValue;
@@ -68,7 +71,7 @@ public class EntryProperties implements Serializable{
 	}
 
 	public void setProperty(String propertyName, String propertyValue) {
-		int propertyID = EntryPropertiesFactory.getPropertyID (propertyName);
+		int propertyID = entryPropertiesRoot.getPropertyID (propertyName);
 		if (propertyID < 0)
 		{
 			// do nothing
