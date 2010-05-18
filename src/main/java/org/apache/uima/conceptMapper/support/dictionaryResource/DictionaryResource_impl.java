@@ -126,7 +126,6 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
   public int entryNum = 0;
 
   /**
-   * @param NumOfInitialDictEntries
    * 
    */
   public DictionaryResource_impl() {
@@ -136,7 +135,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
   }
 
   /**
-   * @param NumOfInitialDictEntries
+   * @param initialDictEntries Number of initial dictionary entries
    * 
    */
   public DictionaryResource_impl(int initialDictEntries) {
@@ -459,7 +458,6 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     EntryProperties properties;
 
     /**
-     * @param text
      * @param elements
      * @param unsorted
      * @param properties

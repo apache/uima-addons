@@ -364,7 +364,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
   /**
    * Perform local type system initialization.
    * 
-   * @param aTypeSystem
+   * @param typeSystem
    *          the current type system.
    * @see org.apache.uima.analysis_engine.annotator.TextAnnotator#typeSystemInit(TypeSystem)
    */
@@ -480,7 +480,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
    * Perform the actual analysis. Iterate over the document content looking for any matching words
    * or phrases in the loaded dictionary and post an annotation for each match found.
    * 
-   * @param aTCAS
+   * @param tcas
    *          the current CAS to process.
    * @param aResultSpec
    *          a specification of the result annotation that should be created by this annotator

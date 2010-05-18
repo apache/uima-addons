@@ -34,7 +34,7 @@ import org.apache.uima.jcas.JCas;
 /**
  * Simple class to tokenize a string (similar to <code>java.util.StringTokenizer</code>), except
  * that this tokenizer returns
- * {@link org.apache.uima.conceptMapper.support.TokenAnnotation TokenAnnotation} objects, which, in
+ * {@link TokenAnnotation} objects, which, in
  * addition to the token text string, also contain the start and end offsets of the token in the
  * original string.
  * <p>
@@ -42,7 +42,7 @@ import org.apache.uima.jcas.JCas;
  * The tokenizer will optionally perform stemming and case normalization on the tokens, and the set
  * of characters that delimit tokens may be specified. The default stemmer is the Snowball Porter
  * stemmer, but any stemmer may be supplied to the tokenizer as long as it implements the
- * {@link org.apache.uima.conceptMapper.support.Stemmer Stemmer}interface.
+ * {@link org.apache.uima.conceptMapper.support.stemmer.Stemmer Stemmer}interface.
  * 
  */
 public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
@@ -134,8 +134,9 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
 
   /**
    * Set the text to tokenize. After this method is called, the next call to
-   * {@link #nextToken nextToken} will return the first token from the input string
-   * {@link TextToken.text}
+   * {@link #nextToken(JCas) nextToken} will return the first token from the input string
+   * as a TokenAnnotation; you can get the text by using
+   * {@link TokenAnnotation#getText()}
    */
   public void setText(String text) {
     this.text = text;
@@ -371,12 +372,12 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
    * Perform the actual analysis. Iterate over the document content looking for tokens and post an
    * annotation for each match found.
    * 
-   * @param aTCAS
+   * @param jcas
    *          the current CAS to process.
    * @param aResultSpec
    *          a specification of the result annotation that should be created by this annotator
    * 
-   * @see org.apache.uima.analysis_engine.annotator.JTextAnnotator#process(ResultSpecification)
+   * @see org.apache.uima.analysis_engine.annotator.JTextAnnotator#process(JCas, ResultSpecification)
    */
   public void process(JCas jcas, ResultSpecification aResultSpec) throws AnnotatorProcessException {
 
@@ -402,7 +403,6 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
    * @param jcas
    * @param documentText
    * @param delimiters
-   * @param logger
    */
   protected void doTokenization(JCas jcas, String documentText, String delimiters) {
 
@@ -421,8 +421,8 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
   }
 
   /**
-   * @param configParametersNames
-   * @param configParameters
+   * @param configParameterName
+   * @param configParameterValue
    */
   public void processConfigurationParameter(String configParameterName, Object configParameterValue) {
     if (configParameterName.equals(PARAM_CASE_MATCH)) {

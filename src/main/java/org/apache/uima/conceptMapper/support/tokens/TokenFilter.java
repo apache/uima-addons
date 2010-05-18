@@ -209,7 +209,7 @@ public class TokenFilter {
   }
 
   /**
-   * @param tokenClass
+   * @param token
    *          tokenClass to look up
    * @return true if in includedTokenClasses or if both includedTokenClasses and
    *         excludedTokenClasses are unset, of if excludedTokenClasses does not contain an entry
@@ -270,8 +270,8 @@ public class TokenFilter {
   }
 
   /**
-   * @param intValue
-   * @return
+   * @param token
+   * @return false if tokenTypeFeature is set, and the token's tokenTypeFeature slot is set, but the value is not OK
    */
   public boolean checkTokenType(AnnotationFS token) {
     boolean returnValue = true;

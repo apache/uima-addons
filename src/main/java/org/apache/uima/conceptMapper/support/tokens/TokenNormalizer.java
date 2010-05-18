@@ -66,10 +66,8 @@ public class TokenNormalizer {
   private boolean replaceCommaWithAND;
 
   /**
-   * @param replaceCommaWithAND
-   * @param all
-   * @param digit
-   * @param cap
+   * @param annotatorContext
+   * @param logger
    * @throws AnnotatorContextException
    */
   public TokenNormalizer(AnnotatorContext annotatorContext, Logger logger)

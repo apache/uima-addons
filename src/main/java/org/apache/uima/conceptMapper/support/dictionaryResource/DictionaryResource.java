@@ -60,8 +60,7 @@ public interface DictionaryResource {
     void putEntry(String[] elements, String unsorted, EntryProperties props);
 
     /**
-     * @param string
-     * @return
+     * @return list of dictionary entries
      */
     ArrayList<DictEntry> getEntries();
 
@@ -89,7 +88,7 @@ public interface DictionaryResource {
    * return data structure containing a list of dictionary entries, sorted by number of tokens
    * 
    * @param key
-   * @return
+   * @return data structure containing a list of dictionary entries, sorted by number of tokens
    */
   public DictEntriesByLength getEntries(String key);
 
@@ -109,17 +108,17 @@ public interface DictionaryResource {
   public void putEntry(String key, String[] tokens, String unsortedEntry,
           int length, EntryProperties props);
 
-  /**
-   * @return
-   */
   public Enumeration<String> keys();
 
   public String toString();
 
   /**
    * @param context
-   * @param tokenizerDescriptor
+   * @param logger
    * @param tokenAnnotationName
+   * @param tokenTypeFeatureName
+   * @param tokenClassFeatureName
+   * @param tokenizerDescriptor
    * @throws ResourceInitializationException
    */
   public void loadDictionaryContents(AnnotatorContext context, Logger logger,

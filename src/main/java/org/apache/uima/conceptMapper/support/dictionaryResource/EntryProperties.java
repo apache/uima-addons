@@ -31,7 +31,7 @@ public class EntryProperties implements Serializable{
 
 	/**
 	 * 
-	 * @param factory
+	 * @param root
 	 * @param maxNumberOfProperties
 	 * @throws NullPointerException
 	 * 
