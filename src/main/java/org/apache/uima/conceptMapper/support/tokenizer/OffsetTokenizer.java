@@ -339,6 +339,7 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
    */
   public void initialize(AnnotatorContext annotatorContext)
           throws AnnotatorInitializationException, AnnotatorConfigurationException {
+    super.initialize(annotatorContext);
     try {
       //logger = new Logger("TextTokenizer", annotatorContext.getLogger());
 
