@@ -23,8 +23,8 @@
   
   <parent>
     <groupId>org.apache.uima</groupId>
-    <artifactId>parent-pom-annotator</artifactId>
-    <version>6-SNAPSHOT</version>
+    <artifactId>parent-pom</artifactId>
+    <version>1-SNAPSHOT</version>
     <relativePath/>
   </parent>
   
@@ -90,6 +90,7 @@
                 <exclude>src/main/java/org/apache/uima/conceptMapper/support/tokenizer/TokenAnnotation_Type.java</exclude> <!-- generated -->
                 <exclude>src/main/java/uima/tt/TokenAnnotation.java</exclude> <!-- generated -->
                 <exclude>src/main/java/uima/tt/TokenAnnotation_Type.java</exclude> <!-- generated -->
+                <exclude>marker-file-identifying-*</exclude>
               </excludes>
             </configuration>
           </execution>
