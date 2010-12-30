@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.apache.uima</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>1</version>
     <relativePath/>
   </parent>
   
@@ -57,7 +57,7 @@
   <properties>
     <uimaScmRoot>sandbox</uimaScmRoot>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
-    <uimaDependencyVersion>2.3.1-SNAPSHOT</uimaDependencyVersion>
+    <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
     <pearMainDescriptor>desc/analysis_engine/primitive/ConceptMapperOffsetTokenizer.xml</pearMainDescriptor>
     <bookNameRoot>ConceptMapperAnnotatorUserGuide</bookNameRoot>
   </properties>
@@ -66,7 +66,7 @@
     <dependency>
       <groupId>org.apache.uima</groupId>
       <artifactId>uimaj-core</artifactId>
-      <version>2.3.1-SNAPSHOT</version>
+      <version>${uimaDependencyVersion}</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -92,6 +92,105 @@
                 <exclude>src/main/java/uima/tt/TokenAnnotation_Type.java</exclude> <!-- generated -->
                 <exclude>marker-file-identifying-*</exclude>
               </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.uima</groupId>
+        <artifactId>PearPackagingMavenPlugin</artifactId>
+        <version>2.3.1</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>build uima annnotator Pear</id>
+            <goals>
+              <goal>package</goal>
+            </goals>
+            <!-- needs to run after the jar is built
+   after docbooks are packaged and copied to pearPackaging/doc folder -->
+            <phase>pre-integration-test</phase>
+            <configuration>
+              <datapath>$main_root/resources</datapath>
+              <componentId>${project.artifactId}</componentId>
+              <mainComponentDesc>${pearMainDescriptor}</mainComponentDesc>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <!-- use the dependency:unpack goal to get the shared resource
+          that has the docbook-shared directory
+          Unpack into spot relative to project - because
+          these are referred to in docbook sources using
+          relative references -->
+            <id>copyDocbookInfo</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.uima</groupId>
+                  <artifactId>uima-build-resources</artifactId>
+                  <version>1</version>
+                  <includes>docbook-shared/**</includes>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
+            <!-- also unpack next to docbook-olink in
+       repository location for olink info, because
+       the site.xml files use relative location to
+       get at the uima entities -->
+            <id>copyDocbookInfoNextToOlink</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <markersDirectory>${dolRepo}/dependency-maven-plugin-markers</markersDirectory>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.uima</groupId>
+                  <artifactId>uima-build-resources</artifactId>
+                  <version>1</version>
+                  <includes>docbook-shared/**</includes>
+                  <outputDirectory>${dolRepo}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <!-- use the dependency:unpack goal to get the
+       olink databases  -->
+          <execution>
+            <id>getOlink</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <markersDirectory>${dolRepo}/dependency-maven-plugin-markers</markersDirectory>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.uima</groupId>
+                  <artifactId>${dolArtifactId}</artifactId>
+                  <version>1-SNAPSHOT</version>
+                  <type>zip</type>
+                  <classifier>${dolClassifier}</classifier>
+                  <outputDirectory>${dolUnzipped}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
             </configuration>
           </execution>
         </executions>
