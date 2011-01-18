@@ -72,5 +72,30 @@
   
   <build>
     <finalName>uima-an-conceptMapper</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>default-cli</id>
+              <configuration>
+                <excludes>
+                  <exclude>release.properties</exclude> <!-- release generated artifact -->
+                  <exclude>src/main/java/org/apache/uima/conceptMapper/DictTerm.java</exclude> <!-- generated -->
+                  <exclude>src/main/java/org/apache/uima/conceptMapper/DictTerm_Type.java</exclude> <!-- generated -->
+                  <exclude>src/main/java/org/apache/uima/conceptMapper/support/tokenizer/TokenAnnotation.java</exclude> <!-- generated -->
+                  <exclude>src/main/java/org/apache/uima/conceptMapper/support/tokenizer/TokenAnnotation_Type.java</exclude> <!-- generated -->
+                  <exclude>src/main/java/uima/tt/TokenAnnotation.java</exclude> <!-- generated -->
+                  <exclude>src/main/java/uima/tt/TokenAnnotation_Type.java</exclude> <!-- generated -->
+                  <exclude>marker-file-identifying-*</exclude>
+                </excludes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
