@@ -23,8 +23,9 @@
   
   <parent>
     <groupId>org.apache.uima</groupId>
-    <artifactId>parent-pom</artifactId>
-    <version>2</version>
+    <artifactId>uima-addons-parent</artifactId>
+    <version>2.3.1-SNAPSHOT</version>
+    <relativePath>../uima-addons-parent</relativePath>
   </parent>
   
   <artifactId>ConceptMapper</artifactId>
@@ -83,19 +84,22 @@
               <configuration>
                 <excludes>
                   <exclude>release.properties</exclude> <!-- release generated artifact -->
-                  <exclude>src/main/java/org/apache/uima/conceptMapper/DictTerm.java</exclude> <!-- generated -->
-                  <exclude>src/main/java/org/apache/uima/conceptMapper/DictTerm_Type.java</exclude> <!-- generated -->
-                  <exclude>src/main/java/org/apache/uima/conceptMapper/support/tokenizer/TokenAnnotation.java</exclude> <!-- generated -->
-                  <exclude>src/main/java/org/apache/uima/conceptMapper/support/tokenizer/TokenAnnotation_Type.java</exclude> <!-- generated -->
-                  <exclude>src/main/java/uima/tt/TokenAnnotation.java</exclude> <!-- generated -->
-                  <exclude>src/main/java/uima/tt/TokenAnnotation_Type.java</exclude> <!-- generated -->
-                  <exclude>marker-file-identifying-*</exclude>
-                </excludes>
+                  <exclude>README*</exclude>
+                  <exclude>RELEASE_NOTES*</exclude>
+                  <exclude>issuesFixed/**</exclude> <!-- generated file -->
+                  <exclude>marker-file-identifying-*</exclude> <!-- empty file -->
+                  <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
+                  
+                  <exclude>src/main/java/org/apache/uima/conceptMapper/DictTerm*.java</exclude> <!-- JCasgen generated file -->
+                  <exclude>src/main/java/org/apache/uima/conceptMapper/support/tokenizer/TokenAnnotation*.java</exclude> <!-- JCasgen generated file -->
+                  <exclude>src/main/java/uima/tt/TokenAnnotation*.java</exclude> <!-- JCasgen generated file -->
+                </excludes>              
               </configuration>
             </execution>
           </executions>
-        </plugin>
+        </plugin>         
       </plugins>
-    </pluginManagement>
+    </pluginManagement> 
+    
   </build>
 </project>
