@@ -23,12 +23,12 @@
   <parent>
     <groupId>org.apache.uima</groupId>
     <artifactId>uima-addons-parent</artifactId>
-    <version>2.3.1</version>
+    <version>2.3.2-SNAPSHOT</version>
     <relativePath>../uima-addons-parent</relativePath>
   </parent>
   
   <artifactId>ConceptMapper</artifactId>
-  <version>2.3.1</version>
+  <version>2.3.2-SNAPSHOT</version>
   <name>UIMA Annotator: ${project.artifactId}</name>
   <description>Extracts concepts from a CAS</description>
   <url>${uimaWebsiteUrl}</url>
@@ -43,13 +43,13 @@
        element, and just changing the following two properties -->  
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/sandbox/tags/uima-addons-2.3.1-rc2/${uimaScmProject}
+      scm:svn:http://svn.apache.org/repos/asf/uima/sandbox/trunk/ConceptMapper
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/sandbox/tags/uima-addons-2.3.1-rc2/${uimaScmProject}
+      scm:svn:https://svn.apache.org/repos/asf/uima/sandbox/trunk/ConceptMapper
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/sandbox/tags/uima-addons-2.3.1-rc2/${uimaScmProject}
+      http://svn.apache.org/viewvc/uima/sandbox/trunk/ConceptMapper
     </url>
   </scm>
   
