@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements. See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to you under the Apache License, Version
+  2.0 (the "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+  applicable law or agreed to in writing, software distributed under
+  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+  OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+        "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<book lang="en">
+
+  <title>
+    Apache UIMA Solrcas documentation
+  </title>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+              href="../../target/docbook-shared/common_book_info.xml"/>
+
+  <preface>
+    <title>Introduction</title>
+    <para>
+      The Solr CAS Consumer (Solrcas) is responsible to write UIMA CAS
+      objects to an Apache Solr instance.
+    </para>
+    <para>
+      It uses SolrJ client classes to execute local or remote updates to the specified Solr instance.
+    </para>
+  </preface>
+
+  <chapter id="sandbox.solrcas.conf">
+    <title>Configuration</title>
+    <para>
+      To use Solrcas the following parameters have to be specified:
+      <itemizedlist>
+        <listitem>
+          <para>
+            mappingFile : identifies where is the file which holds information about which (and how) UIMA objects
+            must be sent to which Solr fields.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            solrInstanceType : this has to be  http.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            solrPath : If the solrInstance value is 'http' this represents the URL to the remote Solr instance.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </chapter>
+  <chapter id="sandbox.solrcas.mapping">
+    <title>The mapping file</title>
+    <para>
+      The mapping file holds information about mapping between CAS properties, types and features and
+      Solr fields.
+    </para>
+    <para>
+      Here is a solrMapping.xml sample:
+      <programlisting>
+      <![CDATA[
+      <solrMapping>
+        <documentText>text</documentText>
+        <documentLanguage>language</documentLanguage>
+        <fsMapping>
+          <type name="uima.jcas.tcas.Annotation">
+            <map feature="coveredText" field="annotation"/>
+          </type>
+        </fsMapping>
+      </solrMapping>
+       ]]>
+      </programlisting>
+    </para>
+    <para>
+      The <emphasis>documentText</emphasis> element holds the field name in which the Cas.getDocumentText()
+      value will be indexed.
+    </para>
+    <para>
+      The <emphasis>documentLanguage</emphasis> element holds the field name in which the Cas.getDocumentLanguage()
+      value will be indexed.
+    </para>
+    <para>
+      The <emphasis>fsMapping</emphasis> element will hold a list of <emphasis>type</emphasis>s. For each <emphasis>type
+    </emphasis> specified a <emphasis>map</emphasis> between a <emphasis>feature</emphasis> and a <emphasis>field</emphasis>
+      will be defined. As the getCoveredText() of Annotation objects is not a Feature the coveredText feature
+      name will be automatically associated with the Annotation.getCoveredText() value (just like a common
+      feature).
+    </para>
+    <para>
+      In the sample above the Cas.getDocumentText() will be written inside the text field, the Cas.getDocumentLanguage() 
+      will be written inside the language field and the Annotation.getCoveredText() of each uima.jcas.tcas.Annotation object
+      will be written inside an annotation field in Solr.
+    </para>
+    <para>
+      Note that documentText and documentLanguage are all optional.
+    </para>
+
+  </chapter>
+
+</book>

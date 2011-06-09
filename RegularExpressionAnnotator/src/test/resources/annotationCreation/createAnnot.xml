@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ -->
+<conceptSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://incubator.apache.org/uima/regex">
+	
+    <concept name="annotationCreationTest">
+    	<rules>
+			<rule ruleId="TestID" regEx="(Annotation)(Creation)(Test)(That)(Tests)(The)(Various)(Match)(Groups)(Numbers)" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
+	    </rules>
+	    <createAnnotations>	
+			<annotation type="org.apache.uima.TestAnnot">
+				<begin group="0" location="start"/>
+				<end group="0" location="end"/>
+				<setFeature name="testFeature" type="String">$0</setFeature>
+				<setFeature name="testFeature1" type="String">$1</setFeature>
+		 	</annotation>
+		 	<annotation type="org.apache.uima.TestAnnot1">
+				<begin group="2" location="end"/>
+				<end group="4" location="start"/>
+				<setFeature name="testFeature" type="String">$2</setFeature>
+				<setFeature name="testFeature1" type="String">$4</setFeature>
+		 	</annotation>
+		 	<annotation id="testannot2" type="org.apache.uima.TestAnnot2">
+				<begin group="3"/>
+				<end group="3"/>
+				<setFeature name="testFeature" type="String">$6</setFeature>
+				<setFeature name="testFeature1" type="String">$8</setFeature>
+		 	</annotation>
+		 	<annotation id="testannot3" type="org.apache.uima.TestAnnot3" validate="org.apache.uima.annotator.regex.TestValidator">
+				<begin group="5" location="start"/>
+				<end group="5" location="start"/>
+				<setFeature name="testFeature" type="String">$7</setFeature>
+				<setFeature name="testFeature1" type="String">$9</setFeature>
+		 	</annotation> 	
+		 	<annotation id="testannot4" type="org.apache.uima.TestAnnot4">
+				<begin group="5" location="start"/>
+				<end group="10" location="end"/>
+		 	</annotation> 	
+	 	</createAnnotations>
+    </concept>
+
+</conceptSet>

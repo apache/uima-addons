@@ -1,0 +1,2 @@
+DocumentAnnotation(0,51): this is my text with a simpleMatch and no exception
+TestAnnot(23,34): simpleMatch

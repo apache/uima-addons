@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary xmlns="http://incubator.apache.org/uima" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="dictionary.xsd">
+<typeCollection>
+<dictionaryMetaData caseNormalization="true" multiWordEntries="true" multiWordSeparator=" "/>
+<languageId>en</languageId>
+<typeDescription>
+<typeName> ADD DICTIONARY OUTPUT TYPE HERE</typeName>
+</typeDescription>
+<entries>
+<entry>
+<key>new</key>
+</entry>
+<entry>
+<key>new york</key>
+</entry>
+<entry>
+<key>new orleans</key>
+</entry>
+<entry>
+<key>foo-bar</key>
+</entry>
+<entry>
+<key>foo_bar</key>
+</entry>
+<entry>
+<key>web2.0</key>
+</entry>
+<entry>
+<key>&amp;Test</key>
+</entry>
+<entry>
+<key>&lt;Test</key>
+</entry>
+<entry>
+<key>&lt;&amp;&gt;&apos;&quot;</key>
+</entry>
+</entries>
+</typeCollection>
+</dictionary>

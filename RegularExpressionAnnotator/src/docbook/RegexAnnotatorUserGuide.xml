@@ -1,0 +1,1495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+
+<book lang="en">
+
+	<title>
+		Apache UIMA Regular Expression Annotator Documentation
+	</title>
+
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="../../target/docbook-shared/common_book_info.xml" />
+
+	<preface>
+		<title>Introduction</title>
+		<para>
+			The Regular Expression Annotator (RegexAnnotator) is an
+			Apache UIMA analysis engine that detects entities such as
+			email addresses, URLs, phone numbers, zip codes or any other
+			entity that can be specified using a regular expression. For
+			each entity that is detected an own annotation can be
+			created or an already existing annotation can be updated
+			with new features.
+
+			To detect also more difficult and complex entities, the
+			annotator provides some advanced filter capabilities and a
+			rule definition syntax that can combine rules to a concept
+			with a confidence value for each of the concept's rules.
+		</para>
+	</preface>
+
+	<chapter id="sandbox.regexAnnotator.processingOverview">
+		<title>Processing Overview</title>
+		<para>
+			To detect any kind of entity the RegexAnnotator must be
+			configured using an external XML file. We call this file
+			"concept file" since it contains the regular expressions and
+			concepts that the annotator use during its processing to
+			detect entities. In addition to the rules the concept file
+			also contains the "entity result processing" that is done if
+			an entity was detected. The "entity result processing" can
+			either be the creation of new annotations or an update of an
+			existing annotation with additional features. The types and
+			features that are used to create new annotations have to be
+			available in the UIMA type system.
+		</para>
+		<para>
+			After the concept file is created, the annotator XML
+			descriptor have to be updated with the capabilities and
+			maybe with the type system information from the concept
+			file. The capability update is necessary that the UIMA
+			framework can call the annotator also in complex annotator
+			flows if the annotator is assembled with others to an
+			analysis bundle. The UIMA type system update is only
+			necessary if the used types are not available in the UIMA
+			type system definition.
+		</para>
+		<para>
+			With the completion of the descriptor updates, the
+			RegexAnnotator is ready to use. When starting the annotator,
+			during the initialization the annotator reads the concept
+			file and checks if all rules and concepts are valid and if
+			all annotations types are defined in the UIMA type system.
+			For each document that is processed the rules and concepts
+			are executed in exactly the same order as defined in the
+			concept file. The results and annotations created for a
+			preceding rule are used by the following one since they are
+			stored in the CAS.
+		</para>
+	</chapter>
+	<chapter id="sandbox.regexAnnotator.conceptsFile">
+		<title>Concepts Configuration File</title>
+		<para>
+			The RegexAnnotator can be configured using two levels of
+			complexity.
+		</para>
+		<para>
+			The RuleSet definition is the easier way to define rules.
+			Such a definition consists of a regular expression pattern
+			and of annotations that should be created if the rule match
+			an entity.
+		</para>
+		<para>
+			The Concept definition is the more complex way to define
+			rules. Such a definition can consists of more than one
+			regular expression rule that can be combined together and of
+			a set of annotations that should be created if one of the
+			rules has matched an entity.
+		</para>
+		<para>
+			The syntax for both definitions is the same, so you don't
+			need to learn two configuration possibilities. The RuleSet
+			definition is just available to have an easier and faster
+			way to configure the annotator for simple tasks. If you have
+			a RuleSet definition it is also possible to extend it with
+			more and more features so that it becomes a real Concept
+			definition.
+		</para>
+
+		<section id="sandbox.regexAnnotator.conceptsFile.rules">
+			<title>RuleSet definition</title>
+			<para>
+				The syntax of a simple RuleSet definition to detect email addresses 
+				is shown in the listing below:
+			</para>
+			<para>
+				<programlisting><![CDATA[<conceptSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:noNamespaceSchemaLocation="concept.xsd">
+
+  <concept name="emailAddressDetection">
+    <rules>
+      <rule regEx="([a-zA-Z0-9!#$%*+'/=?^_-`{|}~.\x26]+)@
+      			([a-zA-Z0-9._-]+[a-zA-Z]{2,4})" 
+        matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>		
+    </rules>
+    <createAnnotations>	
+      <annotation id="emailAnnot" type="org.apache.uima.EmailAddress">
+        <begin group="0"/>
+        <end group="0"/>
+      </annotation>
+    </createAnnotations>
+  </concept>
+
+</conceptSet>
+]]></programlisting>
+			</para>
+			<para>
+				The definition above defines are simple concept
+				with the name <code>emailAddressDetection</code>. The 
+				defined rule use <code>([a-zA-Z0-9!#$%*+'/=?^_-`{|}~.\x26]+)@([a-zA-Z0-9._-]+[a-zA-Z]{2,4})</code> as 
+				regular expression pattern that is matched on the
+				covered text of the match type <code>uima.tcas.DocumentAnnotation</code>. 
+				As match strategy, <code>matchAll</code> is used that means that all
+				matches for the pattern are used to create the
+				annotations defined in the
+				<code>&lt;createAnnotations></code>
+				element. So for each match a
+				<code>org.apache.uima.EmailAddress</code> annotation is created that
+				covers the match in the document text.
+			</para>
+			<para>
+				For additional annotation creation possibilities such as adding
+				features to a created annotation, please refer to 
+				<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation"/>
+			</para>
+		</section>
+
+		<section id="sandbox.regexAnnotator.conceptsFile.concepts">
+			<title>Concept definition</title>
+			<para>The syntax of a complex Concept definition to detect credit card numbers for the 
+			  RegexAnnotator is shown in the listing below:</para>
+			<para>
+			
+			<programlisting><![CDATA[<conceptSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="concept.xsd">
+
+    <concept name="creditCardNumberDetection" processAllRules="true">
+      <rules>
+        <rule ruleId="AmericanExpress" 
+              regEx="(((34|37)\d{2}[- ]?)(\d{6}[- ]?)\d{5})" 
+              matchStrategy="matchAll" 
+              matchType="uima.tcas.DocumentAnnotation" 
+              confidence="1.0"/>
+        <rule ruleId="Visa" 
+              regEx="((4\d{3}[- ]?)(\d{4}[- ]?){2}\d{4})" 
+              matchStrategy="matchAll" 
+              matchType="uima.tcas.DocumentAnnotation" 
+              confidence="1.0"/>
+        <rule ruleId="MasterCard" 
+              regEx="((5[1-5]\d{2}[- ]?)(\d{4}[- ]?){2}\d{4})" 
+              matchStrategy="matchAll" 
+              matchType="uima.tcas.DocumentAnnotation" 
+              confidence="1.0"/>
+        <rule ruleId="unknownCardType" 
+              regEx="(([1-6]\d{3}[- ])(\d{4}[- ]){2}\d{4})|
+                 ([1-6]\d{13,18})|([1-6]\d{3}[- ]\d{6}[- ]\d{5})" 
+              matchStrategy="matchAll" 
+              matchType="uima.tcas.DocumentAnnotation" 
+              confidence="1.0"/>		
+      </rules> 
+      <createAnnotations>	
+        <annotation	id="creditCardNumber" 
+            		type="org.apache.uima.CreditCardNumber" 
+            		validate="org.apache.uima.annotator.regex.
+            		    extension.impl.CreditCardNumberValidator">
+          <begin group="0"/>
+          <end group="0"/>
+          <setFeature name="confidence" type="Confidence"/>
+          <setFeature name="cardType" type="RuleId"/>
+        </annotation>
+      </createAnnotations>
+    </concept>
+
+</conceptSet>
+]]></programlisting>
+				
+			</para>
+			<para>
+				As you can see the Concept definition is a more complex
+				RuleSet definition. The main differences are some additional
+				features defined at the rule and the combination of rules 
+				within one concept. 
+				The new features for a rule are <code>ruleID</code>
+				and <code>confidence</code>. If these features
+				are specified, the feature values for these features can 
+				later be assigned to an annotation feature for a created annotation. 
+				In case we use the listing above as example this means that when the 
+				<code>org.apache.uima.CreditCardNumber</code> is created the value of the
+				<code>confidence</code> feature of the rule that matched the document text 
+				is assigned to the annotation feature called <code>confidenceValue</code>.
+				The same is done for the <code>ruleId</code> feature.
+				With that you can later check your annotation confidence and you can see 
+				which rule was responsible for the annotation creation.
+			</para>
+			<note>
+				<para>
+					The annotation features for <code>Confidence</code>
+					and <code>RuleId</code>
+					have to be created manually in the UIMA type system.
+					Given that it is possible to assign the <code>confidence</code> and <code>ruleId</code> 
+					feature values to any other annotation feature you have defined 
+					in the UIMA type system. Confidence features have to be of type
+					<code>uima.cas.Float</code> and RuleId features have to be of
+					type <code>uima.cas.String</code>.
+				</para>
+			</note>
+			
+			<para>
+				The processing of a concept definition depends on the rule processing.
+				The feature that controls the rule processing is called
+				<code>processAllRules</code> and is specified at the <code>&lt;concept></code> element.
+				By default this optional feature is set to <code>false</code>. 
+				This means that the concept processing 
+				starts with the	first rule and goes on with the next one 
+				until a match was found. So in this processing mode, maybe only the first rule
+				of a concept is evaluated if there a match was found. The other rules
+				of this concept will be ignored in that case.
+				This strategy should be used for example if your first concept 
+				rule has a strict pattern with a confidence of 1.0 and your 
+				second rule has a more lenient pattern with a confidence
+				of 0.5. If the <code>processAllRules</code> feature
+				is set to <code>true</code>	all rules of a concept are processed 
+				independent of the matches for a previous rule.
+			</para>
+
+		</section>
+
+		<section
+			id="sandbox.regexAnnotator.conceptsFile.regexVariables">
+			<title>Regex Variables</title>
+			<para>
+				The regex variables allows to externalize parts of a regular expression
+				to shorten them and make it easier to read. The externalized part of the
+				expression is replaced with a regex variable. The variable syntax looks like
+				<code>\v{weekdays}</code>, where <code>weekdays</code> is the variable name.
+				The field for regex variables are mainly the separation of enumerations in a 
+				regular expression to make them easier to understand and maintain.
+				But let's see how it works in the short example below.
+			</para>
+			<para>
+			    A simple regular expression for a date like <code>Wednesday, November 28, 2007</code>
+			    can look like: 
+			</para>
+			<para>
+			   <programlisting><emphasis><![CDATA[<concept name="Date" processAllRules="true">
+ <rules>
+  <rule regEx="(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), 
+   (January|February|March|April|May|June|July|August|September|October|
+   November|December) (0[1-9]|[12][0-9]|3[01]), ((19|20)\d\d)"
+   matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
+ </rules>
+ <createAnnotations>
+  <annotation type="org.apache.uima.Date">
+   <begin group="0" />
+   <end group="0" />
+  </annotation>
+ </createAnnotations>
+</concept>		   
+]]></emphasis></programlisting>
+			</para>
+			<para>
+			   When using regex variables to externalize the weekdays and the months in this 
+			   regular expression, it looks like: 
+			</para>
+			<para>
+			   <programlisting><emphasis><![CDATA[<conceptSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://incubator.apache.org/uima/regex">
+
+<variables>
+ <variable name="weekdays" 
+   value="Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday"/>
+ 
+ <variable name="months" 
+   value="January|February|March|April|May|June|July|August|September|
+     October|November|December"/>
+</variables>
+			   
+
+<concept name="Date" processAllRules="true">
+ <rules>
+  <rule regEx="(\v{weekdays}), (\v{months}) (0[1-9]|[12][0-9]|3[01]), 
+     ((19|20)\d\d)"
+     matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
+  </rules>
+  <createAnnotations>
+   <annotation type="org.apache.uima.Date">
+    <begin group="0" />
+    <end group="0" />
+   </annotation>
+ </createAnnotations>
+</concept>		
+
+</conceptSet>   
+]]></emphasis></programlisting>
+			</para>
+			<para>
+			  The regex variables must be defined at the beginning of the concept file 
+			  next to the <code>&lt;conceptSet></code> element before the concepts are 
+			  defined. The variables can be used in all concept definition within the
+			  same file. 
+			</para>
+			<para>
+			  The regex variable name can contain any of the following characters 
+			  <code>[a-zA-Z_0-9]</code>. Other characters are not allowed.
+			</para>
+		</section>
+		<section
+			id="sandbox.regexAnnotator.conceptsFile.rulesDefinition">
+			<title>Rule Definition</title>
+			<para>
+				This paragraph shows in detail how to define a rule for a 
+				RuleSet or Concept definition and give you some advanced 
+				configuration possibilities	for the rule processing.
+			</para>
+			<para>
+				The listing below shows an abstract rule definition with
+				all possible sub elements and attributes. Please refer to
+				the sub sections for details about the sub elements.
+			</para>
+			<para> 
+<programlisting><emphasis><![CDATA[<rule ruleId="ID1" regEx="TestRegex" matchStrategy="matchAll" 
+    matchType="uima.tcas.DocumentAnnotation" featurePath="my/feature/path" 
+    confidence="1.0">
+
+  <matchTypeFilter>
+    <feature name="language">en</feature>
+  </matchTypeFilter>
+
+  <updateMatchTypeAnnotation>
+    <setFeature name="language" type="String">$0</setFeature>
+  </updateMatchTypeAnnotation>	
+
+  <ruleExceptions>	
+    <exception matchType="uima.tcas.DocumentAnnotation">
+        ExceptionExpression
+    </exception>
+  </ruleExceptions>
+
+</rule>
+]]></emphasis></programlisting>
+			</para>
+			
+			<para>
+				For each rule that should be added a <code>&lt;rule></code> element
+				have to be created. The <code>&lt;rule></code> element definition has three 
+				mandatory features, these are:
+			</para>
+				<para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<code>regEx</code>
+								- The regular expression pattern that
+								is used for this rule. As pattern, everything supported 
+								by the Java regular expression syntax is allowed.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<code>matchStrategy</code>
+								- The match strategy that is used
+								for this rule. Possible values are
+								<code>matchAll</code>
+								to get all matches,
+								<code>matchFirst</code>
+								to get the first match only and
+								<code>matchComplete</code>
+								to get matches where the whole input
+								text match the regular expression pattern.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<code>matchType</code>
+								- The annotation type that is used 
+								to match the regular expression pattern.
+								As input text for the match, the annotation span 
+								is used, but only if no additional <code>featurePath</code>
+								feature is specified.
+							</para>
+						</listitem>
+					</itemizedlist>
+				</para>
+				<para>
+					In addition to the mandatory features the <code>&lt;rule></code>
+					element definition also has some optional features that can
+					be used, these are:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>ruleId</code>
+							- Specifies the ID for this rule. The
+							ID can later be used to add it as
+							value to an annotation feature (see
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.features"/>).
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>confidence</code>
+							- Specifies the confidence value of this
+							rule. If you have more than one rule that describes 
+							the same complex entity you can classify the rules with
+							a confidence value. This confidence value
+							can later be used to add it as value to an
+							annotation feature (see
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.features"/>).
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>featurePath</code>
+							- Specifies the feature path that should be used to match the regular expression pattern. 
+							If a feature path is specified, the feature path value is used to match against the
+							regular expression instead of the match type annotation span.
+							The defined feature path must be valid for the specified match type annotation type. 
+							The feature path elements are separated by "/".
+						</para>
+						<para>
+						    The listing below shows how to match a regular expression on the <code>normalizedText</code> 
+						    feature of a <code>uima.TokenAnnotation</code>. So in this case, not the covered text of the
+						    <code>uima.TokenAnnotation</code> is used to match the regular expression but the 
+						    <code>normalizedText</code> feature value of the annotation. The <code>normalizedText</code> 
+						    feature must be defined in the UIMA type system as feature of type <code>uima.TokenAnnotation</code>.
+						</para>
+						<para>
+						    <programlisting><emphasis><![CDATA[<rule regEx="TestRegex" matchStrategy="matchAll" 
+    matchType="uima.TokenAnnotation" featurePath="normalizedText">
+</rule>
+]]></emphasis></programlisting>
+						</para>
+					</listitem>					
+				</itemizedlist>
+
+			<section
+				id="sandbox.regexAnnotator.conceptsFile.rulesDefinition.filter">
+				<title>Match Type Filter</title>
+				<para>
+				<programlisting><emphasis><![CDATA[<matchTypeFilter>
+  <feature featurePath="language">en</feature>
+</matchTypeFilter>
+]]></emphasis></programlisting>
+					
+
+				</para>
+				<para>
+					Match type filters can be used to filter the match type
+					annotations that are used for matching the regular expression
+					pattern. For example to use a rule only when the document language 
+					is English, as shown in the example above. 
+					Match type filters ever relate to the <code>matchType</code>
+					that was specified for the rule.
+				</para>
+				<para>
+					The <code>&lt;matchTypeFilter></code>
+					element can contain an arbitrary amount of
+					<code>&lt;feature></code>
+					elements that contains the filter information. But all specified <code>&lt;feature></code>
+					elements have to be valid for the <code>matchType</code> annotation
+					of the rule.
+				</para>
+				<para>
+					The feature path that should be used as 
+					filter is specified using the <code>featurePath</code> feature of the
+					<code>&lt;feature></code> element. Feature path elements are separated by "/" e.g.
+					my/feature/path. The specified feature path must be valid for the <code>matchType</code> annotation.
+					The content of the
+					<code>&lt;feature></code> element contains the regular expression pattern 
+					that is used as filter. To pass the filter, this pattern 
+					have to match the feature path value that is resolved using the match type annotation. 
+					In the example above the match type annotation has a UIMA feature called 
+					<code>language</code> that have to have the content <code>en</code>. If that
+					is true, the annotation passed the filter condition.
+				</para>
+			</section>
+			<section id="sandbox.regexAnnotator.conceptsFile.rulesDefinition.update">
+				<title>Update Match Type Annotations With Additional Features</title>
+				<para>	
+					<programlisting><emphasis><![CDATA[<updateMatchTypeAnnotation>
+  <setFeature name="language" type="String">$0</setFeature>
+</updateMatchTypeAnnotation>
+]]></emphasis></programlisting>
+				</para>
+				<para>
+					With the
+					<code>&lt;updateMatchTypeAnnotation></code>
+					construct it is possible to update or set a UIMA feature value
+					for the match type annotation in case a rule match
+					was found. The
+					<code>&lt;updateMatchTypeAnnotation></code> element
+					can have an arbitrary amount of
+					<code>&lt;setFeature></code> elements that contains
+					the feature information that should be updated.
+				</para>
+				<para>
+					The	<code>&lt;setFeature></code> element has two 
+					mandatory features, these are:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>name</code>
+							- Specifies the UIMA feature name that
+							should be set. The feature have to be available
+							at the <code>matchType</code> annotation
+							of the rule.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>type</code>
+							- Specifies the UIMA feature type that is
+							defined in the UIMA type system for this feature. 
+							Currently supported feature types are <code>String</code>,
+							<code>Integer</code> and <code>Float</code>.
+						</para>
+					</listitem>
+				</itemizedlist>
+				<para>
+					The	optional features are:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>normalization</code>
+							- Specifies the normalization that should be performed before the feature value
+							is assigned to the match type annotation. For a list of all built-in
+							normalization functions please refer to 
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureNormalization"/>. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>class</code>
+							- Specifies the custom normalization class that should be used to normalize the
+							feature value before it is assigned to the match type annotation. Custom normalization
+							classes are used if the <code>normalization</code> feature has the value 
+							<code>Custom</code>. The normalization class have to implement the
+							<code>org.apache.uima.annotator.regex.extension.Normalization</code> interface.
+							For details about the feature normalization please refer to 
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureNormalization"/>. 
+						</para>
+					</listitem>								
+				</itemizedlist>
+				<para>
+					The content of the	<code>&lt;setFeature></code>
+					element definition contains the feature value that should be set. 
+					This can either be a literal value or a regular
+					expression capturing group as shown in the example
+					above. A combination of capturing groups and literals
+					is also possible.
+				</para>
+			</section>
+			<section
+				id="sandbox.regexAnnotator.conceptsFile.rulesDefinition.exception">
+				<title>Rule exception</title>
+				<para>
+					 
+					<programlisting><emphasis><![CDATA[<ruleExceptions>	
+  <exception matchType="uima.tcas.DocumentAnnotation">
+      ExceptionPattern
+  </exception>
+</ruleExceptions>
+]]></emphasis></programlisting>			
+
+				</para>
+				<para>
+					With the
+					<code>&lt;ruleExceptions></code>
+					construct it is possible to configure exceptions to prevent matches for the rule. 
+					An exception is something similar to a filter, but on the higher level. For
+					example take the scenario where you have several token annotations that
+					are covered by a sentence annotation. You have written a rule that can detect
+					car brands. The text you analyze has the sentence "Henry Ford was born 1863". 
+					When analyzing the text you will get a car brand annotation since "Ford" is
+					a car brand. But is this the correct behavior? The work around that issue
+					you can create an exception that looks like
+					 <programlisting><emphasis><![CDATA[<ruleExceptions>	
+  <exception matchType="uima.SentenceAnnotation">Henry</exception>
+</ruleExceptions>
+]]></emphasis></programlisting>
+					and add it to your car brand rule. After adding this, car brand annotations
+					are only created if the sentence annotation that covers the token annotation
+					does not contain the word "Henry". 					
+				</para>
+				<para>
+					The	<code>&lt;ruleExceptions></code> element can have 
+					an arbitrary amount of <code>&lt;exception></code>
+					elements to specify rule exceptions.
+				</para>
+				<para>
+					The <code>&lt;exception></code>
+					element has one mandatory feature called
+					<code>matchType</code>. The <code>matchType</code> feature
+					specifies the annotation type the exception is based on. 
+					The concrete exception match type annotation that is used 
+					during the runtime is evaluated for each
+					match type annotation that is used to match a rule. As
+					exception annotation always the covering annotation
+					of the current match type annotation is used. 
+					If no covering annotation instance of the exception match type 
+					was found the exception is not evaluated.
+				</para>
+				<para>
+					The content of the <code>&lt;exception></code>
+					element specifies the regular expression that is used to evaluate the exception.
+				</para>
+				<para>
+					If the exception match is true, the
+					current match type annotation is filtered out and is
+					not used to create any matches and annotations.
+				</para>
+			</section>
+		</section>
+		<section id="sandbox.regexAnnotator.conceptsFile.annotationCreation">
+				<title>Annotation Creation</title>
+				<para>
+				  This paragraph explains in detail how to create annotations if a rule has matched some input text.
+				  An annotation creation example with all possible settings is shown in the listing below.
+				</para>
+				<para>
+				<programlisting><emphasis><![CDATA[<annotation id="testannot" type="org.apache.uima.TestAnnot" 
+	validate="CustomValidatorClass">
+	<begin group="0" location="start"/>
+	<end group="0" location="end"/>
+	<setFeature name="testFeature1" type="String">$0</setFeature>
+	<setFeature name="testFeature2" type="String" 
+		normalization="ToLowerCase">$0</setFeature>
+	<setFeature name="testFeature3" type="Integer">$1</setFeature>
+	<setFeature name="testFeature4" type="Float">$2</setFeature>		
+	<setFeature name="testFeature5" type="Reference">testannot1</setFeature>
+	<setFeature name="confidenceValue" type="Confidence"/>
+	<setFeature name="ruleId" type="RuleId"/>
+	<setFeature name="normalizedText" type="String" 
+		normalization="Custom" 
+		class="org.apache.CustomNormalizer">$0</setFeature>
+</annotation>]]></emphasis></programlisting>
+				</para>
+				
+				<para>
+				  The <code>&lt;annotation></code> element has two mandatory features, these are:
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>id</code>
+							- Specifies the annotation id for this annotation. If the annotation id is specified, 
+							it must be unique within the same concept. An annotation id is required if the
+							annotation is referred by another annotation or if the annotation itself refers 
+							other annotations using a <code>Reference</code> feature. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>type</code>
+							- Specifies the UIMA annotation type that is used if an annotation is created. 
+							The used type have to be defined in the UIMA type system.
+						</para>
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				  The optional features are:
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>validate</code>
+							- Specifies the custom validator class that is used to validate matches before
+							they are added as annotation to the CAS. For more details about the custom 
+							annotation validation, please refer to 
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.validation"/>.
+						</para>
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				  The mandatory sub elements of the <code>&lt;annotation></code> element are:
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>&lt;begin></code>
+							- Specifies the begin position of the annotation that is created.
+							For details about the <code>&lt;begin></code> element, please refer
+							to <xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.boundaries"/>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>&lt;end></code>
+							- Specifies the end position of the annotation that is created.
+							For details about the <code>&lt;end></code> element, please refer
+							to <xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.boundaries"/>.
+						</para>
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				  The optional sub elements of the <code>&lt;annotation></code> element are:
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code><code>&lt;setFeature></code></code>
+							- set a UIMA feature for the created annotation.
+							For details about the <code>&lt;setFeature></code> element, please refer
+							to <xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.features"/>
+						</para>
+					</listitem>
+				</itemizedlist>
+				</para>
+				<section id="sandbox.regexAnnotator.conceptsFile.annotationCreation.boundaries">
+				<title>Annotation Boundaries</title>
+				<para>
+				  When creating an annotation with the <code>&lt;annotation></code> element it is also
+				  necessary to define the annotations boundaries. The annotation boundaries are defined using the
+				  sub elements <code>&lt;begin></code> and <code>&lt;end></code>. The start position of
+				  the annotation is defined using the <code>&lt;begin></code> element, the end position using
+				  the <code>&lt;end></code> element. Both elements have the same features as shown below:
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>group</code>
+							- identifies the capturing group number within the regular expression pattern for the 
+							current rule. The value is a positive number where 0 denotes 
+							the whole match, 1 the first capturing group, 2 the second one, and so on.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>location</code>
+							- indicates a position inside the capturing group, which can either be the position 
+							of the left parenthesis in case of a value <code>start</code>, or the right parenthesis in 
+							case of a value <code>end</code>. The <code>location</code> feature is optional. By default
+							the <code>&lt;begin></code> element is set to <code>location="start"</code> and the 
+							<code>&lt;end></code> element to <code>location="end"</code>.
+						</para>
+					</listitem>
+				</itemizedlist>
+				</para>
+				<note>
+					<para>
+					When the rule definition defines a <code>featurePath</code> for a <code>matchType</code>, 
+					the annotation boundaries for the created annotation are automatically set to 
+					the annotation boundaries of the match input annotation. This must be done since
+					the matching with a feature value of an annotation has no relation to the document text, so the only
+					relation is the annotation where the feature is defined. 
+					</para>
+				</note>
+				</section>
+				<section id="sandbox.regexAnnotator.conceptsFile.annotationCreation.validation">
+				<title>Annotation Validation</title>
+				<para>
+				  The custom annotation validation can be used to validate a regular expression match by using some
+				  java code before the match is added as annotation to the CAS. For example if your regular expression
+				  detects an ISBN number you can use the custom validation code to check if it is really an ISBN number
+				  by calculating the last check digit or if it is just a phone number.
+				</para>
+				<para>
+				  To use the custom annotation validation you have to specify the validation class at the <code>validate</code>
+				  feature of the <code>&lt;annotation></code> element. The validation class must implement the 
+				  <code>org.apache.uima.annotator.regex.extension.Validation</code> interface 
+				  (<xref linkend="sandbox.regexAnnotator.Validation"/>). The interface defines one 
+				  method called <code>validate(String coveredText, String ruleID)</code>. The validate method is called by the annotator
+				  before the match is added as annotation to the CAS. Annotations are only added if the validate method 
+				  returns <code>true</code>, otherwise the match is skipped. The <code>coveredText</code> parameter contains 
+				  the text that matches the regular expression.
+				  The <code>ruleID</code> parameter contains the ruldId of the rule that creates the match. This can also be null
+				  if no ruleID was specified. The listing below shows a sample implementation of the validation interface.  
+				</para>
+				<para>
+				<programlisting><![CDATA[package org.apache.uima.annotator.regex;
+
+public class SampleValidator implements 
+	org.apache.uima.annotator.regex.extension.Validation {
+
+   /* (non-Javadoc)
+    * @see org.apache.uima.annotator.regex.extension.Validation
+    *      #validate(java.lang.String, java.lang.String)
+    */
+   public boolean validate(String coveredText, String ruleID) 
+      throws Exception {
+      
+      //implement your custom validation, e.g. to validate ISBN numbers
+      return validateISBNNumbers(coveredText);
+   }
+}]]></programlisting>
+				</para>
+				<para>
+				  The configuration for this example looks like: 
+				</para>
+				<para>
+				<programlisting><emphasis><![CDATA[<annotation id="isbnNumber" type="org.apache.uima.ISBNNumber" 
+    validate="org.apache.uima.annotator.regex.SampleValidator">
+	<begin group="0"/>
+	<end group="0"/>
+</annotation>]]></emphasis></programlisting>
+				</para>
+				</section>
+				<section id="sandbox.regexAnnotator.conceptsFile.annotationCreation.features">
+				<title>Annotation Features</title>
+				<para>
+				  With the <code>&lt;setFeature></code> element of <code>&lt;annotation></code> definition it is 
+				  possible to set UIMA features for the created annotation. The mandatory features
+				  for the <code>&lt;setFeature></code> element are: 
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>name</code>
+							- Specifies the UIMA feature name that should be set. The feature name have to 
+							be a valid UIMA feature for this annotation and have to be defined in the
+							UIMA type system.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>type</code>
+							- Specifies the type of the UIMA feature. For a list of all
+							possible feature types please refer to 
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureTypes"/>.
+						</para>
+					</listitem>
+				</itemizedlist>
+				</para>
+				<para>
+				  The optional features are:
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>normalization</code>
+							- Specifies the normalization that should be performed before the feature value
+							is assigned to the UIMA annotation. For a list of all built-in
+							normalization functions please refer to 
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureNormalization"/>. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>class</code>
+							- Specifies the custom normalization class that should be used to normalize the
+							feature value before it is assigned to the UIMA annotation. Custom normalization
+							classes are used if the <code>normalization</code> feature has the value 
+							<code>Custom</code>. The normalization class have to implement the
+							<code>org.apache.uima.annotator.regex.extension.Normalization</code> interface.
+							For details about the feature normalization please refer to 
+							<xref linkend="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureNormalization"/>. 
+						</para>
+					</listitem>					
+				</itemizedlist>
+				</para>
+				<para>
+				  The content of the <code>&lt;setFeature></code> element specifies the value of the
+				  UIMA feature that is set. As value a literal, a capturing group or a combination of
+				  both can be used.
+				  To add the value of a capturing group there are two ways to do it.
+				  The first notation is <code>$</code> followed by the capturing group number from 0 to 9
+				  e.g. $0 for capturing group 0 or $7 for capturing group 7.
+				  The second notation to get the value of a capturing group are capturing group names. 
+				  If the rule contains named capturing groups these groups can be accessed 
+				  with <code>${matchGroupName}</code>. For the access of capturing
+				  groups greater than 9 capturing group names must be used. An example for capturing group names is 
+				  shown below:
+				</para>
+				<para>
+				To add a name to a capturing group just add the following fragment <code>\m{groupname}</code>
+				in front of the capturing group start parenthesis.
+				<programlisting><emphasis><![CDATA[<concept name="capturingGroupNames">
+   <rules>
+      <rule ruleId="ID1" 
+         regEx="My \m{groupName}(named capturing group) example" 
+         matchStrategy="matchAll" 
+         matchType="uima.tcas.DocumentAnnotation"/>
+   </rules>
+   <createAnnotations>	
+      <annotation type="org.apache.uima.TestAnnot">
+         <begin group="0"/>
+         <end group="0"/>
+         <setFeature name="testFeature0" type="String">
+            ${groupName}
+         </setFeature>		
+      </annotation>
+   </createAnnotations>
+</concept>    
+]]></emphasis></programlisting>
+				</para>
+				<section id="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureTypes">
+				<title>Features Types</title>
+				<para>
+				  When setting UIMA feature for an annotation using the <code>&lt;setFeature></code> element 
+				  the feature type has to be specified according the the UIMA type system definition.
+				  The feature at the <code>&lt;setFeature></code> element to do that is called <code>type</code>.
+				  The list below shows all currently supported feature types: 
+				</para>
+				<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>String</code>
+							- for <code>uima.cas.String</code> based UIMA features.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>Integer</code>
+							- for <code>uima.cas.Integer</code> based UIMA features.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>Float</code>
+							- for <code>uima.cas.Float</code> based UIMA features.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>Reference</code>
+							- to link a UIMA feature to another annotation. In this case the
+							UIMA feature type have to be the same as the referred annotation type.
+							To reference another annotation instance the <code>&lt;setFeature></code>
+							content must have the annotation <code>id</code> as value of the referred 
+							annotation. The referred annotation instance is the created annotation of
+							the current match.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>Confidence</code>
+							- to add the value of the <code>confidence</code> feature defined
+							at the <code>&lt;rule></code> element to this feature. The UIMA feature have to
+							be of type <code>uima.cas.Float</code>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<code>RuleId</code>
+							- to add the value of the <code>ruleId</code> feature defined
+							at the <code>&lt;rule></code> element to this feature. The UIMA feature have to
+							be of type <code>uima.cas.String</code>.
+						</para>
+					</listitem>					
+				</itemizedlist>
+				</para>
+
+				<note>
+					<para>
+					Float and Integer based feature values are converted using the Java NumberFormat for the
+					current Java default locale. If the feature value cannot be converted the feature value is not
+					set and a warning is written to the log. To prevent these warnings it may be useful 
+					to do a custom normalization of the numbers before they are added to the feature.
+					</para>
+				</note>
+
+				</section>
+				<section id="sandbox.regexAnnotator.conceptsFile.annotationCreation.featureNormalization">
+					<title>Features Value Normalization</title>
+					<para>
+					  Before assigning a feature value to an annotation it is possible to 
+					  do a normalization on the feature value. This normalization can be useful for example to normalize 
+					  a detected email addresses to lower case before it is added to the annotation. 
+					  To normalize a feature value the <code>normalization</code> feature of the 
+					  <code>&lt;setFeature></code> element is used. The built-in normalization functions 
+					  are listed below. Additionally the RegexAnnotator provides an extension point that can be 
+					  implemented to add a custom normalization. 
+				    </para>
+				    <para>
+				      The possible build-in functions that are specified as feature value of 
+				      the <code>normalization</code> feature are listed below: 
+					</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<code>ToLowerCase</code>
+									- normalize the feature value to lower case before it is assigned to the annotation.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<code>ToUpperCase</code>
+									- normalize the feature value to upper case before it is assigned to the annotation.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<code>Trim</code>
+									- remove all leading and trailing whitespace characters from the feature value before 
+									it is assigned to the annotation.
+								</para>
+							</listitem>
+						</itemizedlist>
+						Built-in normalization configuration:
+						<programlisting><emphasis><![CDATA[<setFeature name="normalizedFeature" type="String" 
+	normalization="ToLowerCase">$0</setFeature>]]></emphasis></programlisting>
+   					</para>
+					<para>
+					  In case of a custom normalization, the <code>normalization</code> feature must have the value
+					  <code>Custom</code>, and an additional feature of the <code>&lt;setFeature></code> element 
+					  called <code>class</code> have to be specified containing the full qualified class name of the 
+					  custom normalization implementation. The custom normalization implementation have to implement 
+					  the interface <code>org.apache.uima.annotator.regex.extension.Normalization</code> 
+					  (<xref linkend="sandbox.regexAnnotator.Normalization"/>) which defines the 
+					  <code>normalize</code> method to normalize the feature values. A sample implementation with 
+					  the corresponding configuration is shown below.
+					</para>
+					<para> 
+					  Custom normalization implementation:
+					  <programlisting><![CDATA[package org.apache.uima;
+					  
+public class CustomNormalizer 
+  implements org.apache.uima.annotator.regex.extension.Normalization {
+
+   /* (non-Javadoc)
+    * @see org.apache.uima.annotator.regex.extension.Normalization
+    *		#normalize(java.lang.String, java.lang.String)
+    */
+   public String normalize(String input, String ruleId) {
+      
+      //implement your custom normalization
+      String result = ...
+      return result;
+   }]]></programlisting>
+   					</para>
+   					<para>
+   					  Custom normalization configuration:
+   					  <programlisting><emphasis><![CDATA[<setFeature name="normalizedFeature" type="String" 
+	normalization="Custom" class="org.apache.uima.CustomNormalizer">
+  $0
+</setFeature>]]></emphasis></programlisting>
+   					</para>
+				</section>
+			</section>			
+		</section>
+</chapter>
+<chapter id="sandbox.regexAnnotator.annotatorDescriptor">
+			<title>Annotator Descriptor</title>
+			<para>The RegexAnnotator analysis engine descriptor contains some processing information for 
+			the annotator. The processing information is specified as configuration parameters. 
+			This chapter we explain in detail the possible descriptor settings.
+			</para>
+			<section id="sandbox.regexAnnotator.annotatorDescriptor.configParam">
+				<title>Configuration Parameters</title>
+				<para>
+				  The RegexAnnotator has the following configuration parameters: 
+				</para>
+				<para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<code>ConceptFiles</code>
+								- This parameter is modeled as array of Strings and contains 
+								the concept files the annotator should use. The concept files
+								must be specified using a relative path that is available in the
+								UIMA datapath or in the classpath.  When you use the UIMA datapath,
+								you can use wildcard expressions such as <code>rules/*.rule</code>.
+								These kinds of wildcard expressions will not work when rule files
+								are discovered via the classpath.
+								<programlisting><emphasis><![CDATA[<nameValuePair>
+  <name>ConceptFiles</name>
+  <value>
+    <array>
+      <string>subdir/myConcepts.xml</string>
+      <string>SampleConcept.xml</string> 
+    </array>
+  </value>
+</nameValuePair>]]></emphasis></programlisting>
+							</para>
+						</listitem>
+				  	</itemizedlist>
+				</para>
+			</section>
+			<section id="sandbox.regexAnnotator.annotatorDescriptor.capabilities">
+				<title>Capabilities</title>
+				<para>
+				  In the capabilities section of the RegexAnnotator descriptor the input and output 
+				  capabilities and the supported languages have to be defined. 
+				</para>
+				<para>
+				  The input capabilities defined
+				  in the descriptor have to comply with the match types used in the concept rule file 
+				  that is used. For example the <code>uima.SentenceAnnotation</code> used in the rule
+				  below have to be added to the input capability section in the RegexAnnotator descriptor.
+				</para>
+				<para>
+				<programlisting><emphasis><![CDATA[<rules>
+  <rule regEx="SampleRegex" matchStrategy="matchAll" 
+      matchType="uima.SentenceAnnotation"/>
+</rules>
+]]></emphasis></programlisting>
+				</para>
+				<para>
+				  In the output section, all of the annotation types and features created by 
+				  the RegexAnnotator have to be specified. These have to match the 
+				  output types and features declared in the <code>&lt;annotation></code> elements of the concept file.
+				  For example the <code>org.apache.uima.TestAnnot</code> annotation and the 
+				  <code>org.apache.uima.TestAnnot:testFeature</code> feature used below have to
+				  be added to the output capability section in the RegexAnnotator descriptor. 
+				</para>
+				<para>
+				<programlisting><emphasis><![CDATA[<createAnnotations>
+  <annotation type="org.apache.uima.TestAnnot">
+    <begin group="0"/>
+    <end group="0"/>
+    <setFeature name="testFeature" type="String">$0</setFeature>
+  </annotation>
+</createAnnotations>
+]]></emphasis></programlisting>
+				</para>
+				<para>
+				  If there are any language dependent rules in the concept file the languages abbreviations 
+				  have to be specified in the <code>&lt;languagesSupported></code>element. If there are no 
+				  language dependent rules available you can specify <code>x-unspecified</code> as language. That means
+				  that the annotator can work on all languages.   
+				</para>
+				<para>
+				  For the short examples used above the capabilities section in the RegexAnnotator 
+				  descriptor looks like:
+				</para>
+				<para>
+				<programlisting><emphasis><![CDATA[<capabilities>
+  <capability>
+    <inputs>
+      <type>uima.SentenceAnnotation</type>
+    </inputs>
+    <outputs>
+      <type>org.apache.uima.TestAnnot</type>
+      <feature>org.apache.uima.TestAnnot:testFeature</feature>
+    </outputs>
+    <languagesSupported>
+      <language>x-unspecified</language>
+    </languagesSupported>
+  </capability>
+</capabilities>
+]]></emphasis></programlisting>
+				</para>
+			</section>
+</chapter>
+<appendix id="sandbox.regexAnnotator.xsd">
+			<title>Concept File Schema</title>
+			<para>The concept file schema that is used to define the concept file looks like:
+			</para>
+			<para>
+				<programlisting><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   targetNamespace="http://incubator.apache.org/uima/regex"
+   xmlns="http://incubator.apache.org/uima/regex" 
+   elementFormDefault="qualified">
+	<!--
+		* Licensed to the Apache Software Foundation (ASF) under one
+		* or more contributor license agreements.  See the NOTICE file
+		* distributed with this work for additional information
+		* regarding copyright ownership.  The ASF licenses this file
+		* to you under the Apache License, Version 2.0 (the
+		* "License"); you may not use this file except in compliance
+		* with the License.  You may obtain a copy of the License at
+		* 
+		*   http://www.apache.org/licenses/LICENSE-2.0
+		* 
+		* Unless required by applicable law or agreed to in writing,
+		* software distributed under the License is distributed on an
+		* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+		* KIND, either express or implied.  See the License for the
+		* specific language governing permissions and limitations
+		* under the License.
+	-->
+
+  <xs:element name="conceptSet">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element ref="concept" minOccurs="0"	maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="concept">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element ref="rules" minOccurs="1" maxOccurs="1"/>
+		<xs:element ref="createAnnotations" minOccurs="1" maxOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="name" type="xs:string" use="optional"/>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="createAnnotations">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element ref="annotation" minOccurs="1" maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="rules">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element ref="rule" minOccurs="1" maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="rule">
+	<xs:complexType>
+	  <xs:all>
+		<xs:element ref="matchTypeFilter" minOccurs="0"	maxOccurs="1"/>
+		<xs:element ref="updateMatchTypeAnnotation" minOccurs="0" maxOccurs="1"/>
+		<xs:element ref="ruleExceptions" minOccurs="0" maxOccurs="1"/>
+	  </xs:all>
+	  <xs:attribute name="regEx" type="xs:string" use="required"/>
+	  <xs:attribute name="matchStrategy" use="required">
+	    <xs:simpleType>
+		  <xs:restriction base="xs:string">
+		    <xs:enumeration value="matchFirst"/>
+			<xs:enumeration value="matchAll"/>
+			<xs:enumeration value="matchComplete"/>
+		  </xs:restriction>
+		</xs:simpleType>
+	  </xs:attribute>
+	  <xs:attribute name="matchType" type="xs:string" use="required"/>
+	  <xs:attribute name="featurePath" type="xs:string" use="optional" />
+	  <xs:attribute name="ruleId" type="xs:string" use="optional"/>
+	  <xs:attribute name="confidence" type="xs:decimal"	use="optional"/>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="matchTypeFilter">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element ref="feature" minOccurs="0"	maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="ruleExceptions">
+	<xs:complexType>
+	  <xs:sequence>
+	    <xs:element ref="exception" minOccurs="0" maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="exception">
+	<xs:complexType>
+	  <xs:simpleContent>
+		<xs:extension base="xs:string">
+		  <xs:attribute name="matchType" type="xs:string" use="required"/>
+		</xs:extension>
+	  </xs:simpleContent>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="feature">
+	<xs:complexType>
+	  <xs:simpleContent>
+		<xs:extension base="xs:string">
+		  <xs:attribute name="featurePath" type="xs:string" use="required"/>
+		</xs:extension>
+	  </xs:simpleContent>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="annotation">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element ref="begin" minOccurs="1" maxOccurs="1"/>
+		<xs:element ref="end" minOccurs="1" maxOccurs="1"/>
+		<xs:element ref="setFeature" minOccurs="0" maxOccurs="unbounded"/>
+	  </xs:sequence>
+	  <xs:attribute name="id" type="xs:string" use="optional"/>
+	  <xs:attribute name="type" type="xs:string" use="required"/>
+	  <xs:attribute name="validate" type="xs:string" use="optional" />
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="updateMatchTypeAnnotation">
+	<xs:complexType>
+	  <xs:sequence>
+	    <xs:element ref="setFeature" minOccurs="0" maxOccurs="unbounded"/>
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="begin">
+	<xs:complexType>
+	  <xs:attribute name="group" use="required" type="xs:integer"/>
+	  <xs:attribute name="location" use="optional" default="start">
+	    <xs:simpleType>
+	      <xs:restriction base="xs:string">
+		    <xs:enumeration value="start"/>
+		    <xs:enumeration value="end"/>
+		  </xs:restriction>
+	    </xs:simpleType>
+	  </xs:attribute>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="end">
+	<xs:complexType>
+	  <xs:attribute name="group" use="required" type="xs:integer"/>
+	  <xs:attribute name="location" use="optional" default="end">
+		<xs:simpleType>
+		  <xs:restriction base="xs:string">
+		    <xs:enumeration value="start"/>
+			<xs:enumeration value="end"/>
+		  </xs:restriction>
+		</xs:simpleType>
+	  </xs:attribute>
+	</xs:complexType>
+  </xs:element>
+
+  <xs:element name="setFeature">
+	<xs:complexType>
+	  <xs:simpleContent>
+		<xs:extension base="xs:string">
+		  <xs:attribute name="name" type="xs:string" use="required"/>
+		  <xs:attribute name="type" use="required">
+		    <xs:simpleType>
+			  <xs:restriction base="xs:string">
+			    <xs:enumeration value="String"/>
+				<xs:enumeration value="Integer"/>
+				<xs:enumeration value="Float"/>
+				<xs:enumeration value="Reference"/>
+				<xs:enumeration value="Confidence"/>
+				<xs:enumeration value="RuleId"/>
+			  </xs:restriction>
+			</xs:simpleType>
+		  </xs:attribute>
+		  <xs:attribute name="normalization" use="optional">
+		    <xs:simpleType>
+			  <xs:restriction base="xs:string">
+			    <xs:enumeration value="Custom" />
+				<xs:enumeration value="ToLowerCase" />
+				<xs:enumeration value="ToUpperCase" />
+				<xs:enumeration value="Trim" />
+			  </xs:restriction>
+			</xs:simpleType>
+		  </xs:attribute>
+		  <xs:attribute name="class" type="xs:string" use="optional" />
+		</xs:extension>
+	  </xs:simpleContent>
+	</xs:complexType>
+  </xs:element>
+</xs:schema>
+]]></programlisting>
+			  
+			</para>
+
+</appendix>
+<appendix id="sandbox.regexAnnotator.Validation">
+	<title>Validation Interface</title>
+	<para>
+		<programlisting><![CDATA[/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.uima.annotator.regex.extension;
+
+
+/**
+ * The Validation interface is provided to implement a custom validator
+ * that can be used to validate regular expression matches before 
+ * they are added as annotations. 
+ */
+public interface Validation {
+	
+/**
+ * The validate method validates the covered text of an annotator and 
+ * returns true or false whether the annotation is correct or not. 
+ * The validate method is called between a rule match and the 
+ * annotation creation. The annotation is only created if the method
+ * returns true. 
+ * 
+ * @param coveredText covered text of the annotation that should be 
+ *        validated 
+ * @param ruleID ruleID of the rule which created the match
+ * 
+ * @return true if the annotation is valid or false if the annotation 
+ *         is invalid
+ * 
+ * @throws Exception throws an exception if an validation error occurred
+ */
+public boolean validate(String coveredText, String ruleID) 
+   throws Exception;
+
+}]]></programlisting>
+	</para>
+</appendix>
+<appendix id="sandbox.regexAnnotator.Normalization">
+	<title>Normalization Interface</title>
+	<para>
+		<programlisting><![CDATA[/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.uima.annotator.regex.extension;
+
+
+/**
+ * The Normalization interface was add to implement a custom normalization
+ * for feature values before they are assigned to an anntoation. 
+ */
+public interface Normalization {
+	
+/**
+ * Custom feature value normalization. This interface must be implemented 
+ * to perform a custom normalization on the given input string.
+ * 
+ * @param input input string which should be normalized
+ *
+ * @param ruleID rule ID of the matching rule
+ * 
+ * @return String - normalized input string 
+ */
+public String normalize(String input, String ruleID) throws Exception;
+}]]></programlisting>
+	</para>
+</appendix>
+
+</book>

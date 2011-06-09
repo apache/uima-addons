@@ -1,0 +1,82 @@
+/*
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.    
+ */
+/**
+ * Example of beanshell script to be used as input for the
+ * BSFAnnotator 
+ * @author Olivier Terrier
+ * @version 1.0 
+ */
+
+import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.util.Level;
+import org.apache.uima.util.Logger;
+import org.apache.uima.cas.*;
+import org.apache.uima.jcas.cas.*;
+import org.apache.uima.jcas.tcas.*;
+import org.apache.uima.annotator.bsf.types.Token;
+
+import java.util.regex.*;
+
+/**
+ * Initialisation of global variables
+ */ 
+String scriptName;
+Pattern matchPattern;
+
+/**
+ * Performs any startup tasks required by this annotator.
+ * The Analysis Engine calls this method only once, just after an Annotator has been instantiated.
+ * @param aContext Provides access to external resources that may be used by this annotator.
+ *                 This includes configuration parameters, logging and instrumentation services, and access to external analysis resources. 
+ * @see com.ibm.uima.analysis_engine.annotator.BaseAnnotator#initialize(com.ibm.uima.analysis_engine.annotator.AnnotatorContext)
+ */ 
+	public void initialize(UimaContext aContext)
+			throws ResourceInitializationException {
+			
+			String source = (String) aContext.getConfigParameterValue("SourceFile");
+			String regexp = (String) aContext.getConfigParameterValue("Regexp");
+			if (regexp == null)
+				regexp = "Dave|David|Bob|Tim|Joe";
+			matchPattern = Pattern.compile(regexp);
+}
+
+/**
+ * Invokes this annotator's analysis logic.
+ * This annotator will access the data in the JCas and add new data to the JCas.
+ * @param jcas contains the document to be analyzed and may contain other metadata about that document.
+ * @param rs a list of output types and features that this annotator should produce. 
+ */  
+	public void process(JCas jcas)
+      throws AnalysisEngineProcessException {
+      
+      // Looking for regexp in the document text and storing start/end indexes in arrays
+      String text = jcas.getDocumentText();
+      Matcher matcher = matchPattern.matcher(text);
+      List annotArray = new ArrayList();
+      while (matcher.find()) {
+        // Create an EntityOccurrence for each firstname found in the text
+        Token token = new Token(jcas, matcher.start(), matcher.end());
+        token.addToIndexes();
+      }
+}
+

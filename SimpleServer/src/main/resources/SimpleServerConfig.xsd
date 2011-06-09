@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.    
+-->
+
+<xsd:schema elementFormDefault="qualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:uima="http://uima.apache.org/simpleserver/config/xml"
+	targetNamespace="http://uima.apache.org/simpleserver/config/xml">
+	<!-- Top level element -->
+	<xsd:element name="uimaSimpleServerSpec">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="shortDescription" type="xsd:string"
+					minOccurs="0" maxOccurs="1">
+				</xsd:element>
+				<xsd:element name="longDescription" type="xsd:string"
+					minOccurs="0" maxOccurs="1">
+				</xsd:element>
+				<xsd:element name="type" type="uima:TypeElementType"
+					maxOccurs="unbounded" minOccurs="1">
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="outputAll" type="xsd:boolean"
+				default="false" use="optional" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- Type element -->
+	<xsd:complexType name="TypeElementType">
+		<xsd:sequence>
+			<xsd:element name="shortDescription" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+			</xsd:element>
+			<xsd:element name="longDescription" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+			</xsd:element>
+			<!-- Filters: either a single filter, a conjunction or disjunction -->
+			<xsd:element name="filters" minOccurs="0" maxOccurs="1">
+				<xsd:complexType>
+					<xsd:choice minOccurs="0" maxOccurs="1">
+						<xsd:element type="uima:simpleFilterType"
+							name="filter">
+						</xsd:element>
+						<xsd:element type="uima:or" name="or"></xsd:element>
+						<xsd:element type="uima:and" name="and"></xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="outputs" minOccurs="0" maxOccurs="1">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="output"
+							type="uima:outputType" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="outputTag" type="xsd:string"
+			use="required" />
+		<xsd:attribute name="outputCoveredText" type="xsd:boolean"
+			use="optional" />
+		<xsd:attribute name="outputAll" type="xsd:boolean"
+			default="false" use="optional" />
+	</xsd:complexType>
+
+	<xsd:complexType name="filterType" abstract="true">
+	</xsd:complexType>
+
+	<!-- A single constraint on output -->
+	<xsd:complexType name="simpleFilterType">
+		<xsd:complexContent>
+			<xsd:extension base="uima:filterType">
+				<xsd:attribute name="featurePath" type="xsd:string"
+					use="required">
+				</xsd:attribute>
+				<xsd:attribute name="operator"
+					type="uima:filterOperator" use="required">
+				</xsd:attribute>
+				<xsd:attribute name="value" type="xsd:string"
+					use="optional">
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="filterOperator">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="null" />
+			<xsd:enumeration value="!null" />
+			<xsd:enumeration value="=" />
+			<xsd:enumeration value="!=" />
+			<xsd:enumeration value="&gt;" />
+			<xsd:enumeration value="&lt;" />
+			<xsd:enumeration value="&gt;=" />
+			<xsd:enumeration value="&lt;=" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- A conjunction of output constraints; must contain at least 2 subelements -->
+	<xsd:complexType name="and">
+		<xsd:complexContent>
+			<xsd:extension base="uima:filterType">
+				<xsd:choice minOccurs="2" maxOccurs="unbounded">
+					<xsd:element type="uima:simpleFilterType"
+						name="filter">
+					</xsd:element>
+					<xsd:element type="uima:or" name="or"></xsd:element>
+					<xsd:element type="uima:and" name="and"></xsd:element>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- A disjunction of output constraints; must contain at least 2 subelements -->
+	<xsd:complexType name="or">
+		<xsd:complexContent>
+			<xsd:extension base="uima:filterType">
+				<xsd:choice minOccurs="2" maxOccurs="unbounded">
+					<xsd:element type="uima:simpleFilterType"
+						name="filter">
+					</xsd:element>
+					<xsd:element type="uima:or" name="or"></xsd:element>
+					<xsd:element type="uima:and" name="and"></xsd:element>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- Output feature path/attribute mapping -->
+	<xsd:complexType name="outputType">
+		<xsd:sequence>
+			<xsd:element name="shortDescription" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+			</xsd:element>
+			<xsd:element name="longDescription" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="featurePath" type="xsd:string"
+			use="required">
+		</xsd:attribute>
+		<xsd:attribute name="outputAttribute" type="xsd:string"
+			use="required">
+		</xsd:attribute>
+	</xsd:complexType>
+
+</xsd:schema>

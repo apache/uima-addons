@@ -1,0 +1,2 @@
+DocumentAnnotation:   { language=en-gb }
+TestAnnot(0,19): AdvancedFilterRegex

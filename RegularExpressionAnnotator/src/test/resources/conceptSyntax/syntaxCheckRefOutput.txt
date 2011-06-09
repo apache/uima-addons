@@ -1,0 +1,105 @@
+Concept ConceptName
+ProcessAllConceptRules: true
+
+Concept rules: 
+Rule ID1
+Regex: someRegex
+Match strategy: MATCH_ALL
+Match type: uima.tcas.DocumentAnnotation
+FeaturePath: null
+Confidence: 1.0
+Match type filter features: 
+Filter Feature: 
+  FeaturePath: language
+  Pattern: regexExpression
+
+
+Rule exceptions: 
+Exception: 
+  matchType: uima.tcas.DocumentAnnotation
+  Pattern: regexExpression
+
+Rule ID2
+Regex: someOtherRegex
+Match strategy: MATCH_FIRST
+Match type: uima.tcas.DocumentAnnotation
+FeaturePath: null
+Confidence: 0.7
+Match type filter features: 
+Filter Feature: 
+  FeaturePath: language
+  Pattern: regexExpression
+
+
+Rule ID3
+Regex: anotherRegex
+Match strategy: MATCH_COMPLETE
+Match type: uima.tcas.DocumentAnnotation
+FeaturePath: valid/feature/path
+Confidence: 0.3
+Match type filter features: 
+Filter Feature: 
+  FeaturePath: language
+  Pattern: regexExpression
+
+
+Annotations: 
+Annotation: 
+  ID: testannot
+  Type: org.apache.uima.TestAnnot
+  Begin: matchGroup: 0 location: end
+  End: matchGroup: 0 location: start
+Features: 
+Feature: 
+  Name: testFeature
+  Type: string
+  Value: $0
+  Normalization: ToLowerCase
+Feature: 
+  Name: customNormalized
+  Type: string
+  Value: $0
+  Normalization: my.package.Normalizer
+Feature: 
+  Name: testFeature1
+  Type: reference
+  Value: testannot1
+Feature: 
+  Name: confidenceValue
+  Type: confidence
+  Value: 
+Feature: 
+  Name: ruleId
+  Type: ruleId
+  Value: 
+  Normalization: ToUpperCase
+Feature: 
+  Name: testFeature2
+  Type: ruleId
+  Value: 
+  Normalization: Trim
+
+Annotation: 
+  ID: testannot1
+  Type: org.apache.uima.TestAnnot1
+  Begin: matchGroup: 8 location: start
+  End: matchGroup: 3 location: end
+  Validation class: my.package.Validator
+
+Concept 
+ProcessAllConceptRules: false
+
+Concept rules: 
+Rule 
+Regex: regexExpression
+Match strategy: MATCH_ALL
+Match type: uima.tcas.DocumentAnnotation
+FeaturePath: null
+
+Annotations: 
+Annotation: 
+  ID: testannotation
+  Type: org.apache.uima.TestAnnot1
+  Begin: matchGroup: 0 location: start
+  End: matchGroup: 0 location: end
+

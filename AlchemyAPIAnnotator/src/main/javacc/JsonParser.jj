@@ -1,0 +1,281 @@
+PARSER_BEGIN(JsonParser)
+/*
+ *  Copyright 2008-2009 The Digester Tools Team
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.uima.alchemy.digester.json;
+
+
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
+
+import java.util.Stack;
+
+/**
+ * Json prser
+ */
+public final class JsonParser {
+
+    private static final String ROOT = "$";
+
+    private static final String EMPTY_URI = "";
+
+    private static final AttributesImpl ATTRIBUTES = new AttributesImpl();
+
+    private final Stack<String> objectStack = new Stack<String>();
+
+    private String rootElementName = ROOT;
+
+    private ContentHandler contentHandler;
+   
+   	public void setRootElementName(String rootElementName) {
+   		this.rootElementName = rootElementName;
+   	}
+	    
+    public void setContentHandler(ContentHandler contentHandler) {
+    	this.contentHandler = contentHandler;
+    }
+
+    private void startElement(final String name) throws SAXException {
+        this.contentHandler.startElement(EMPTY_URI, name, name, ATTRIBUTES);
+    }
+
+    private void endElement(final String name) throws SAXException {
+        this.contentHandler.endElement(EMPTY_URI, name, name);
+    }
+
+    private void text(final String text) throws SAXException {
+        this.contentHandler.characters(text.toCharArray(), 0, text.length());
+    }
+
+}
+
+PARSER_END(JsonParser)
+
+SKIP : {
+    <[" ","\t","\n","\r"]>
+}
+
+TOKEN : {
+    <E : ["e","E"](["+","-"])?>
+    | <DIGITS : (["0"-"9"] | ["1"-"9"](["0"-"9"])*)+>
+    | <QUOTE : "\""> : STRING_STATE
+}
+
+<STRING_STATE> MORE : {
+    "\\" : ESC_STATE
+}
+
+<STRING_STATE> TOKEN : {
+    <ENDQUOTE : <QUOTE> > : DEFAULT
+    | <CHAR : ~["\"","\\"]>
+}
+
+<ESC_STATE> TOKEN : {
+  <CNTRL_ESC : ["\"","\\","/","b","f","n","r","t"]> : STRING_STATE
+}
+
+<ESC_STATE> MORE : {
+    "u" : HEX_STATE
+}
+
+<HEX_STATE>  TOKEN : {
+    <#HEX : ["a"-"f","A"-"F","0"-"9"]>
+    | <HEX_ESC : <HEX><HEX><HEX><HEX> > : STRING_STATE
+}
+
+SPECIAL_TOKEN : {
+  <SINGLE_LINE_COMMENT: "//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")? >
+}
+
+MORE : {
+    <"/**" ~["/"]> { input_stream.backup(1); } : IN_JAVA_DOC_COMMENT
+    | <"/*"> : IN_MULTI_LINE_COMMENT
+}
+
+<IN_JAVA_DOC_COMMENT>
+SPECIAL_TOKEN : {
+  <JAVA_DOC_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN : {
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_JAVA_DOC_COMMENT, IN_MULTI_LINE_COMMENT>
+MORE : {
+  < ~[] >
+}
+
+public void json() throws SAXException : { }
+{
+    {
+        this.contentHandler.startDocument();
+        this.objectStack.push(this.rootElementName);
+    } ( object() | array() ) { this.contentHandler.endDocument(); }
+}
+
+/**
+ *
+ */
+private void object() throws SAXException : { }
+{
+    "{" { this.startElement(this.objectStack.peek()); } [ members() ] "}" {  this.endElement(this.objectStack.peek()); }
+}
+
+/**
+ *
+ */
+private void members() throws SAXException : { }
+{
+    pair() [ "," members() ]
+}
+
+/**
+ *
+ */
+private void pair() throws SAXException : { String property; }
+{
+    property = jsonString() { this.objectStack.push(property); } ":" value()
+}
+
+/**
+ *
+ */
+private void value() throws SAXException : { String text; }
+{
+    (
+        { this.startElement(this.objectStack.peek()); }
+        ( text = jsonString()
+        | text = jsonNumber()
+        | text = "true".image
+        | text = "false".image ) { this.text(text); this.endElement(this.objectStack.pop()); }
+        | array()
+        | object()
+    )
+}
+
+/**
+ *
+ */
+private void array() throws SAXException : { }
+{
+    "[" [ elements() ] "]" { this.objectStack.pop(); }
+}
+
+/**
+ *
+ */
+private void elements() throws SAXException : { }
+{
+     value() [ "," elements() ]
+}
+
+/**
+ *
+ */
+private String jsonString() : { StringBuilder buffer = new StringBuilder(); }
+{
+    <QUOTE> [ chars(buffer) ] <ENDQUOTE>
+    { return buffer.toString(); }
+}
+
+/**
+ *
+ */
+private void chars(final StringBuilder buffer) : { char c; }
+{ 
+    c=character() [ chars(buffer) ]
+    { buffer.insert(0, c); }
+}
+
+/**
+ *
+ */
+private char character() : { Token t; }
+{
+    ( t=<CHAR>
+    | t=<CNTRL_ESC>
+    | t=<HEX_ESC> )
+    {
+        if (t.image.length() < 2) {
+            return t.image.charAt(0);
+        }
+        if (t.image.length() < 6) {
+            char c = t.image.charAt(1);
+            switch(t.image.charAt(1)) {
+                //control characters
+                case 'b' : return (char) 8; break;
+                case 'f' : return (char) 12; break;
+                case 'n' : return (char) 10; break;
+                case 'r' : return (char) 13; break;
+                case 't' : return (char) 9; break;
+                default  : return c;   //characters that represent themselves
+            }
+        } else { //hex escape code
+            //create an integer from our hex values
+            //and then cast into a char
+            int i = Integer.valueOf(t.image.substring(2,6), 16).intValue();
+            return (char) i;
+        }
+    }
+}
+
+/**
+ *
+ */
+private String jsonNumber() : { String intpart = "", fracpart = "", exppart = ""; }
+{
+    intpart = jsonInt() [ fracpart = jsonFrac() ] [ exppart = jsonExp() ] { return intpart + fracpart + exppart; }
+}
+
+/**
+ *
+ */
+private String jsonInt() : { String digits; boolean negative = false; }
+{
+    ["-" { negative = true; } ] digits=digits()
+    {
+        if (negative) {
+            return "-" + digits;
+        }
+        return digits;
+    }
+}
+
+/**
+ *
+ */
+private String jsonFrac() : { String digits; }
+{
+    "." digits = digits() { return "." + digits; }
+}
+
+/**
+ *
+ */
+private String jsonExp() : { Token t; String digits; }
+{
+    t=<E> digits=digits() { return t.image + digits; }
+}
+
+/**
+ *
+ */
+private String digits() : { Token t; }
+{
+    t=<DIGITS> { return t.image; }
+}

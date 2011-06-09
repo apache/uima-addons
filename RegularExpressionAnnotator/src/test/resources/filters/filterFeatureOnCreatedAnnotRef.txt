@@ -1,0 +1,2 @@
+TestAnnot(0,22): JustCreateAnAnnotation  { testFeature=JustCreate }
+TestAnnot(12,22): Annotation  { testFeature=Annotation }

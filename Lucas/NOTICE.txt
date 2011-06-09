@@ -1,0 +1,8 @@
+Apache UIMA Lucene CAS Indexer component
+Copyright 2009 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+This product includes the Google Collections Library
+from http://code.google.com/p/google-collections/.

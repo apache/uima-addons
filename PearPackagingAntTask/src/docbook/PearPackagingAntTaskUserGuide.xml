@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY imgroot "images/" >
+]>
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+
+<book lang="en">
+
+	<title>
+		Apache UIMA PEAR Packaging Ant Task Documentation
+	</title>
+
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="../../target/docbook-shared/common_book_info.xml" />
+
+	<preface>
+		<title>Overview</title>
+		<para>
+			To make UIMA analysis components easily consumable for other users, UIMA defines
+			the PEAR (Processing Engine ARchive) file format. This allows applications and tools
+			to manage UIMA analysis components automatically for verification, deployment, 
+			invocation and testing. So far the PEAR file format is the desired output format for 
+			an UIMA analysis component. With the PEAR packaging Ant Task it is possible to create
+			such a PEAR package for the analysis component automatically.
+		</para>
+	</preface>
+	
+	<chapter id="pear.packaging.ant.task.usage">
+		<title>Using The PEAR Packaging Ant Task</title>
+		<para>
+		  To use the PEAR packaging Ant task it is necessary to define an additional classpath setting for the ant build.
+		  The two necessary jars for this setting are the <code>uima-core.jar</code> that contains the PEAR packaging code and the  
+		  <code>uima-pear-ant-task.jar</code> that contains the code for the PEAR packaging Ant task. 
+		  The additional classpath setting can look like:
+		</para>
+		<para>  
+		  <programlisting><![CDATA[<path id="pearTask.classpath">
+  <fileset dir="/home/apache-uima/lib/" includes="uima-pear-ant-task.jar"/>
+  <fileset dir="/home/apache-uima/lib/" includes="uima-core.jar"/>
+</path>]]></programlisting>
+		  </para>
+		  <para>
+		    Update the classpath fileset with your local path settings.
+		  </para>
+		  
+		  <para>
+		    Next we have to define a custom Ant task for the PEAR packaging. The definition looks like:
+		    <programlisting><![CDATA[<taskdef 
+   name="packagePear" 
+   classname="org.apache.uima.pear.tools.PearPackagingAntTask"
+   classpathref="pearTask.classpath"/>]]></programlisting>
+		  </para>
+		  <para>
+		    The custom PEAR packaging Ant task is called <code>packagePear</code>. This task name is used later
+		    to package a PEAR file. The <code>classname</code> attribute contains the main class of the PEAR packaging Ant
+		    task component and should not be changed. The <code>classpathref</code> attribute refers the defined 
+		    <code>pearTask.classpath</code> that is necessary to execute the PEAR packaging task.
+		  </para>
+		  <para>
+		    Now we are ready to use the PEAR packaging Ant task within our build target. To call the PEAR packaging just integrate
+		    the custom defined task <code>&lt;packagePear></code>as shown in the fragment below:
+		  </para>
+		  <para>  
+		  <programlisting><![CDATA[<packagePear 
+   componentID="SampleAnnotator"
+   mainComponentDesc="desc/mainComponentDesc.xml" 
+   classpath="$main_root/pearClasspahtEntry;$main_root/anotherPearClasspahtEntry" 
+   datapath="$main_root/resources"
+   mainComponentDir="/home/user/workspace/SampeAnntotator" 
+   targetDir="/home/user/pearArchive">
+   <envVar name="ENV_VAR_NO1" value="value1"/>
+   <envVar name="ENV_VAR_NO2" value="value2"/>
+</packagePear>]]></programlisting>
+		  </para>
+		  <para>
+		    The <code>&lt;packagePear></code> task has the following mandatory properties. If a property is not necessary, provide 
+		    it with an empty content. 
+		    <itemizedlist>
+			  <listitem><para><code>componentID</code> - The main component ID of the UIMA component that should be packaged</para></listitem>
+		      <listitem><para><code>mainComponentDesc</code> - The main component descriptor that should be used to run the PEAR package content</para></listitem>
+		      <listitem><para><code>classpath</code> - The classpath settings that must be used to run the PEAR package content - use $main_root macros</para></listitem>
+		      <listitem><para><code>datapath</code> - The datapath settings that must be used to run the PEAR package content - use $main_root macros</para></listitem>
+		      <listitem><para><code>mainComponentDir</code> - The main component directory that contains the PEAR package content</para></listitem>
+		      <listitem><para><code>targetDir</code> - The target directory where the created PEAR package is written to. The filename for
+		      the created PEAR package is &lt;componetID>.pear</para></listitem>		      
+		    </itemizedlist>
+		  </para>
+		  <para>
+		    Additionally it is possible to specify environment variable settings that are necessary to run the PEAR package.
+		    This is done with the <code>&lt;envVar></code> element as shown above. The <code>name</code> specifies the variable 
+		    name and the <code>value</code> specifies the variable value. 
+		  </para>
+	</chapter>
+</book>

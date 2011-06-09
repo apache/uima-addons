@@ -1,0 +1,45 @@
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.    
+
+Media UK publishes all the audience figures for every radio station - here's Radio 1's audience figures for example. You'll find audience figures published on the Media UK website, linked-to from most radio station pages. 
+The figures below, however, also include radio station brands: we're treating "Heart" or "Kiss" as one station here, rather than each individual local radio service. This gives a clearer view of the popularity of "Heart" or "Magic", for example. 
+These figures are based on RAJAR ending March 2010. 
+The top 10 radio stations with the most listeners 
+Normally, when people ask for the most popular radio station, they mean the one with the most amount of listeners. This will always give national or London stations as a result, and ignore smaller, local radio stations - even though, in many areas, the most popular station is a local one. 
+1. BBC Radio 2 (14.6m) 
+2. BBC Radio 1 (11.7m) 
+3. BBC Radio 4 (10.0m) 
+4. Heart (7.4m) 
+5. BBC Radio 5 live (6.5m) 
+6. Classic FM (5.5m) 
+7. Galaxy (4.0m) 
+8. Magic (3.8m) 
+9. Kiss (3.4m) 
+10. Smooth Radio (2.6m) 
+The top 10 radio owners with the most listeners 
+1. BBC national radio (34.9m) 
+2. Global Radio (18.6m) 
+3. Bauer Media (12.3m) 
+4. BBC local/regional radio (10.0m) 
+5. GMG Radio (4.7m) 
+6. UTV Radio (3.6m) 
+7. TIML Radio (1.8m) 
+8. BBC World Service (1.3m) 
+9. Orion Media (1.2m) 
+10. Planet Rock (0.7m) 
+The top 10 radio stations with the highest amount of listeners in their area 
+If you want to look at popularity based on how many people listen in their area (and thus, take on board local radio stations as well as national), then the 'reach percent' is the best figure to examine. This shows you people who've listened for at least five minutes a week, and takes no account of whether they listen any longer than that. 

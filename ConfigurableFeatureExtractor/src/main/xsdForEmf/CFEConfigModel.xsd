@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.    
+-->  
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://www.apache.org/uima/tools/cfe/config" 
+        xmlns:tns="http://www.apache.org/uima/tools/cfe/config"
+  elementFormDefault="qualified">
+
+    <complexType name="SingleFeatureMatcherXML">
+    	<choice>
+    		<element name="rangeFeatureValues"
+    			type="tns:RangeFeatureValuesXML" minOccurs="0" maxOccurs="1">
+    		</element>
+    		<element name="enumFeatureValues"
+    			type="tns:EnumFeatureValuesXML" minOccurs="0" maxOccurs="1">
+    		</element>
+    		<element name="bitsetFeatureValues"
+    			type="tns:BitsetFeatureValuesXML" maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="objectPathFeatureValues"
+    			type="tns:ObjectPathFeatureValuesXML" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="patternFeatureValues"
+    			type="tns:PatternFeatureValuesXML" maxOccurs="1" minOccurs="0">
+    		</element>
+    	</choice>
+    	<attribute name="featureTypeName" type="string"
+    		use="optional">
+    	</attribute>
+    	<attribute name="featurePath" type="string" use="required"></attribute>
+    	<attribute name="exclude" use="optional" type="boolean"></attribute>
+    	<attribute name="quiet" type="boolean" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="GroupFeatureMatcherXML">
+    	<sequence>
+    		<element name="featureMatchers" type="tns:SingleFeatureMatcherXML" maxOccurs="unbounded" minOccurs="1"></element>
+    		<element name="exclude" type="boolean" minOccurs="0" maxOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+
+    <complexType name="PartialObjectMatcherXML">
+    	<sequence>
+    		<element name="groupFeatureMatchers" type="tns:GroupFeatureMatcherXML" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="annotationTypeName" type="string" use="required"></attribute>
+    	<attribute name="fullPath" type="string" use="optional"></attribute>
+    </complexType>
+
+
+    <complexType name="TargetAnnotationXML">
+    	<sequence>
+    		<element name="targetAnnotationMatcher" type="tns:PartialObjectMatcherXML" minOccurs="1" maxOccurs="1"></element>
+    		<element name="featureAnnotationMatchers" type="tns:FeatureObjectMatcherXML" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="className" type="string" use="required">
+    		<annotation>
+    			<documentation>class id for RRM training</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="enclosingAnnotation" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="CFEDescriptorXML">
+    	<sequence>
+    		<element name="targetAnnotations" type="tns:TargetAnnotationXML" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="nullValueImage" type="string" use="optional"></attribute>
+    </complexType>
+
+
+    <element name="CFEConfig" type="tns:CFEDescriptorXML"></element>
+
+    <complexType name="EnumFeatureValuesXML">
+    	<sequence>
+    		<element name="values" type="string" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="caseSensitive" type="boolean" use="optional"></attribute>
+    </complexType>
+
+
+    <complexType name="RangeFeatureValuesXML">
+    	<attribute name="lowerBoundaryInclusive" type="boolean" use="optional"></attribute>
+    	<attribute name="upperBoundaryInclusive" type="boolean" use="optional"></attribute>
+    	<attribute name="lowerBoundary" use="optional"></attribute>
+    	<attribute name="upperBoundary" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="FeatureObjectMatcherXML">
+    	<complexContent>
+    		<extension base="tns:PartialObjectMatcherXML">
+    			<sequence></sequence>
+    			<attribute name="windowsizeLeft" type="int" use="optional"></attribute>
+    			<attribute name="windowsizeInside" type="int" use="optional"></attribute>
+    			<attribute name="windowsizeRight" type="int" use="optional"></attribute>
+    			<attribute name="windowsizeEnclosed" type="int" use="optional"></attribute>
+    			<attribute name="windowFlags" type="int" use="optional">
+    				<annotation>
+    					<documentation>
+    						in class CommonFeatureMatcher
+    						the following flg constants are defined
+
+    						CONSTANT_LEFTLEFT // 1 feature
+    						annotation starts left from the target ends
+    						left from the target
+
+    						CONSTANT_LEFTINSIDE // 2 feature
+    						annotation starts left from the target ends
+    						inside the target
+
+    						CONSTANT_LEFTRIGHT  // 4 feature
+    						annotation starts left from the target ends
+    						right from the target
+
+    						CONSTANT_INSIDEINSIDE // 8 feature
+    						annotation starts inside the target ends
+    						inside the target
+
+    						CONSTANT_INSIDERIGHT // 16 feature
+    						annotation starts inside the target ends
+    						right from the target
+
+    						CONSTANT_RIGHTRIGHT  // 32 feature
+    						annotation starts right from the target ends
+    						right from the target
+
+    						// any annotation that starts left from the
+    						target
+
+    						CONSTANT_STARTSLEFT = CONSTANT_LEFTLEFT |
+    						CONSTANT_LEFTINSIDE | CONSTANT_LEFTRIGHT;
+    						// 7
+
+    						// any annotation that starts inside the
+    						target
+
+    						CONSTANT_STARTSINSIDE =
+    						CONSTANT_INSIDEINSIDE|CONSTANT_INSIDERIGHT;
+    						// 24
+
+    						// any annotation that starts right from the
+    						target
+
+    						CONSTANT_STARTSRIGHT = CONSTANT_RIGHTRIGHT;
+    						// 32
+
+    						// any annotation that is within the span
+    						of enclosing annotation
+
+    						CONSTANT_ANYENCLOSED = CONSTANT_STARTSLEFT |
+    						CONSTANT_STARTSINSIDE |
+    						CONSTANT_STARTSRIGHT;
+    						// 63
+    					</documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="orientation" type="boolean" use="optional"></attribute>
+    			<attribute name="distance" type="boolean" use="optional"></attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="BitsetFeatureValuesXML">
+    	<attribute name="bitmask" type="string" use="required"></attribute>
+    	<attribute name="exact_match" type="boolean" use="optional"></attribute>
+    </complexType>
+
+    <complexType name="ObjectPathFeatureValuesXML">
+    	<attribute name="objectPath" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="PatternFeatureValuesXML">
+    	<attribute name="pattern" type="string" use="required"></attribute>
+    </complexType>
+</schema>

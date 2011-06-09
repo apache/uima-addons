@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY imgroot "./images/">
+<!ENTITY % xinclude SYSTEM "../../../uima-docbook-tool/xinclude.mod">
+]>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+   
+     http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<book lang="en">
+	<title>
+		Apache UIMA ConceptMapper Annotator Documentation
+	</title>
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../target/docbook-shared/common_book_info.xml"/>
+	<preface id="intro">
+		<title>Introduction</title>
+		<para>
+			ConceptMapper is a highly configurable, high performance dictionary lookup tool, implemented as a UIMA (Unstructured Information Management Architecture) component. Using one of several matching algorithms, it maps entries in a dictionary onto input documents, producing UIMA annotations.
+		</para>
+	</preface>
+	<chapter id="usingcm">
+		<title>Using ConceptMapper</title>	
+		<para>
+			ConceptMapper was designed to provide highly accurate mappings of text into controlled vocabularies, specified as dictionaries, including the association of any necessary properties from the controlled vocabulary as part of that mapping. Individual dictionary entries could contain multiple terms (tokens), and ConceptMapper can be configured to allow multi-term entries to be matched against non-contiguous text. It was also designed to perform fast, and has been easily able to provide real-time results even with multi-million entry dictionaries.
+		</para>
+		<para>
+			Lookups are token-based, and are limited to applying within a specific context, usually a sentence, though this is configurable (e.g., a noun phrase, a paragraph or other NLP-based concept).
+		</para>
+	</chapter>
+	<chapter id="config">
+		<title>Functionality</title>
+		<para>
+			There are many parameters to configure all aspects of ConceptMapper's functionality, in terms of:				
+			<itemizedlist>
+				<listitem>
+					<para>
+						processing the dictionary
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the way input documents are processed
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the availability of multiple lookup strategies
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						its various output options
+					</para>
+				</listitem>
+			</itemizedlist>			
+		</para>
+		
+		<section id="dict">
+			<title>Dictionaries</title>
+			<para>The requirements on the design of the ConceptMapper dictionary were that it be easily extensible and that arbitrary properties could be associated with individual entries. Additionally, the set of properties could not be fixed, but rather customizable for any particular application.
+			</para>
+			<para>
+			The structure of a ConceptMapper dictionary is quite flexible and is expressed using XML (see <xref linkend="ConceptMapper.fig.dictentry"/>). Specifically, it consists of a set of entries, specified by the &lt;token&gt; XML tag, each containing one or more variants (synonyms), the text of which is specified using by the "base" feature of the &lt;variant&gt; XML tag. Entries can have any number of associated properties, as needed. Individual variants (synonyms) inherit features from their parent token (i.e., the canonical form), but can override any or all of them, or even add additional features.
+		</para>
+		<para>
+			In the following sample dictionary entry, there are 6 variants, and according to the rules described earlier, each inherits the all attributes from the canonical form (canonical, CodeType, CodeValue, and SemClass), though the variants “colonic” and “colic” override the value of the POS (part of speech) attribute:
+		</para>
+		<para>
+			<example  id="ConceptMapper.fig.dictentry"><title>Sample dictionary entry</title>
+			<programlisting xml:space="preserve">
+			&lt;token canonical="colon, nos"
+			       CodeType="ICDO" CodeValue="C18.9"
+			       SemClass="Site" POS="NN"&gt;
+				&lt;variant base=”colon, nos”/&gt;
+				&lt;variant base=”colon”/&gt;
+				&lt;variant base="colonic" POS="JJ" /&gt;
+				&lt;variant base="colic" POS="JJ" /&gt;
+				&lt;variant base="large intestine" /&gt;
+				&lt;variant base="large bowel" /&gt;
+			&lt;/token&gt;</programlisting>
+		</example>
+		</para>
+		<para>
+			The result of running ConceptMapper are UIMA annotations, and there are two configuration parameters that are used to map the attributes from the dictionary (see <xref linkend="ConceptMapper.param.attributelist"/>) to features of UIMA annotations (see <xref linkend="ConceptMapper.param.featurelist"/>).
+		</para>
+		<para>
+			The entire dictionary is loaded into memory, which, in conjunction with an efficient data structure, provides very fast lookups. As stated earlier, dictionaries with millions of entries have been used without any performance issues. The obvious drawback to storing the dictionary in memory is that large dictionaries require large amounts of memory; this is partially mitigated by the fact that the dictionary is implemented as a UIMA shared resource (see <xref linkend="ConceptMapper.res.dictionaryfile"/>). This means that multiple annotators, such as multiple instances of ConceptMapper that are set up using different parameters, can all access it without having to load it more than once. The dictionary loader is specified in the external resource section of the descriptor, and is expected to implement the interface <interfacename>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource</interfacename>. Two implementations are included in the distribution, <classname>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</classname>, the standard implementation, which loads an XML version of a dictionary, and <classname>org.apache.uima.conceptMapper.support.dictionaryResource.CompiledDictionaryResource_impl</classname> which loads a pre-compiled version, for faster loading. The compiler is supplied as <classname>org.apache.uima.conceptMapper.dictionaryCompiler.CompileDictionary</classname>, which takes two arguments, a ConceptMapper analysis engine descriptor that loads the dictionary using the standard dictionary loader, and the name of the output file into which to write the compiled dictionary.
+		</para>
+		</section>
+		<section id="tokenizer">
+			<title>Dictionary Entry Tokenization</title>
+			<para>Input documents are processed on a token-by-token basis, so it is important that the dictionary entries are tokenized in the same way as the input documents. To accomplish this, ConceptMapper allows any UIMA analysis engine to be specified as the tokenizer for the dictionary entries. See parameter <xref linkend="ConceptMapper.param.tokenizerdescriptorpath"/> for details.
+			</para>
+		</section>
+		<section id="paramInput">
+			<title>Input Document Processing</title>
+			<para>As stated earlier, input documents are processed on a token-by-token basis. Tokens are processed one span (e.g., a sentence or a noun phrase) at a time. Token annotations are specified by the parameter <xref linkend="ConceptMapper.param.tokenannotation"/>, while span annotations are specified by the parameter <xref linkend="ConceptMapper.param.spanfeaturestructure"/>. By default, all tokens within a span are considered, and it is the text associated with each token that is used for lookups. ConceptMapper can also be configured to consider tokens differently:
+				
+				<itemizedlist>
+					<listitem>
+						<para>
+							Case sensitive or insensitive matching. See the parameter <xref linkend="ConceptMapper.param.casematch"/>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Stop words: ignore token during lookup if it appears in given stop word list. See the parameter <xref linkend="ConceptMapper.param.stopwords"/>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+						Stemming: a stemmer can be specified to be applied to the text of the token. In practice, the stemmer could be a standard stemmer providing the root form of the token, or it could perform other functions, such as abbreviation expansion or spelling variant replacement. See the parameter <xref linkend="ConceptMapper.param.stemmer"/>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+						Use a token feature instead of the token's text. This is useful for cases where, for example, spelling or case correction results need to be applied instead of the token’s original text. See the parameter <xref linkend="ConceptMapper.param.tokentextfeaturename"/>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							skip tokens during lookups based on particular feature values, as described below
+						</para>
+					</listitem>
+				</itemizedlist>
+				
+			</para>
+			<para>
+			The ability to skip tokens during lookups based on particular feature values makes it easy to skip, for example, all tokens with particular part of speech tags, or with some previously computed semantic class. For example, given the text below in <xref linkend="ConceptMapper.fig.preskip"/>:
+			</para>
+			<para>
+				<example  id="ConceptMapper.fig.preskip"><title>Sample Input Text</title><programlisting>
+				Infiltrating mammary carcinoma</programlisting></example>
+			</para>
+			<para>
+				Assume each word is a token that has a feature SemanticClass, and that feature for the token “mammary” contains the value “AnatomicalSite”, while the tokens “Infiltrating” and “carcinoma” do not. It is then possible to configure ConceptMapper to indicate that tokens that have a particular feature, in this case SemanticClass, equal to one of a set of values, in this case “AnatomicalSite”, should be excluded when performing dictionary lookups (see parameters <xref linkend="ConceptMapper.param.excludedtokenclasses"/> and <xref linkend="ConceptMapper.param.excludedtokentypes"/>). By doing this, for the purposes of dictionary lookup, the example text would effectively appear to be:
+			</para>
+			<para>	
+				<example  id="ConceptMapper.fig.skip"><title>Result of Token Skipping</title><programlisting>
+				Infiltrating carcinoma</programlisting></example>
+			</para>
+			<para>				
+				In addition to the set of feature values that indicate their associated token are to be excluded during lookup, there are also configuration parameters that can be used to specify a set of feature values for inclusion (see parameters <xref linkend="ConceptMapper.param.includedtokenclasses"/> and <xref linkend="ConceptMapper.param.includedtokentypes"/>). The algorithm for selecting annotations to include during lookup is as follows:
+			</para>
+			<example  id="ConceptMapper.fig.algo"><title>Token Selection Algorithm</title><programlisting>
+				if there is an includeList but no excludeList
+				include annotation if feature value in includeList
+
+				else if there is an excludeList
+				exclude annotation if feature value in excludeList
+
+				else
+				include annotation</programlisting></example>
+			<para>
+				This provides a simple way to restrict the selection of pre-classified tokens, whether that pre-classification is done via previous instances of ConceptMapper or some altogether different annotator.  See <xref linkend="ConceptMapper.param.tokentextfeaturename"/>
+			</para>
+		</section>
+		<section id="paramLookup">
+			<title>Lookup Strategies</title>
+			<para>The actual dictionary lookup algorithm is controlled by three parameters. One specifies token-order independent lookup (<xref linkend="ConceptMapper.param.orderindependentlookup"/>). For example, a dictionary entry that contained the variant:
+			</para>
+			<para>
+				<programlisting>
+			&lt;variant base='carcinoma, infiltrating'/&gt;</programlisting>
+			</para>
+			<para>
+
+			would also match against any permutation of its tokens. In this case, assuming that punctuation was ignored, it would match against both “infiltrating carcinoma” and “carcinoma, infiltrating”. Clearly, this particular setting must be used with care to prevent incorrect matches from being found, but for some domains it enables the use of a more compact dictionary, as all permutations of a particular entry do not need to be enumerated.
+			</para>
+			<para>
+			Another parameter that controls the dictionary lookup algorithm toggles between finding only the longest match vs. finding all possible matches (<xref linkend="ConceptMapper.param.findallmatches"/>). For the text:
+			</para>
+			<para>
+				<programlisting>
+			... carcinoma, infiltrating ...</programlisting>
+			</para>
+			<para>
+			If there was a dictionary entry for “carcinoma” as well as the entry for “carcinoma, infiltrating”, this parameter would control whether only the latter was annotated as a result or both would be annotated. Using the setting that indicates all possible matches should be found is useful when subsequent disambiguation is required.
+			</para>
+			<para>
+			The final parameter that controls the dictionary lookup algorithm specifies the search strategy (<xref linkend="ConceptMapper.param.searchstrategy"/>), of which there are three. The default search strategy only considers contiguous tokens (not including tokens from the stop word list or otherwise skipped tokens, as described above), and then begins the subsequent search after the longest match. The second strategy allows for ignoring non-matching tokens, allowing for disjoint matches, so that a dictionary entry of
+			</para>
+			<para>
+				<programlisting>
+			    A C</programlisting>
+			</para>
+			<para>
+			would match against the text
+			</para>
+			<para>
+				<programlisting>
+			    A B C</programlisting>
+			</para>
+			<para>
+			This can be used as alternative method for finding “infiltrating carcinoma” over the text “infiltrating mammary carcinoma”, as opposed to the method described above, wherein the token “mammary” had to have been have been somehow pre-marked with a feature and that feature listed as indicating the token should be skipped. On the other hand, this approach is less precise, potentially finding completely disjoint and unrelated tokens as a dictionary match. As with the default search strategy, the subsequent search begins after the longest match.
+			</para>
+			<para>
+			The final search strategy is identical to the previous, except that subsequent searches begin one token ahead, instead of after the previous match. This enables overlapped matching. As with the setting that finds all matches instead of the longest match, using this setting is useful when subsequent disambiguation is required.
+			</para>
+		</section>
+		<section id="paramOutput">
+			<title>Output Options</title>
+			<para>Output is in the form of new UIMA annotations. As previously discussed, the mapping from dictionary entry attributes to the result annotation features can also be specified. 
+			Given the fact that dictionary entries can have multiple variants, and that matches could contain non-contiguous sets of tokens, it can be useful to be able to be able to know exactly what was matched. There are two parameters that can be used to provide this information. One allows the specification of a feature in the output annotation that will be set to the string containing the matched text. The other can be used to indicate a feature to be filled with the list of tokens that were matched. Going back to the example in figure 2, where the token “mammary” was skipped, the matched string would be set to “Infiltrating carcinoma” and the matched tokens would be set to the list of tokens “Infiltrating” and “carcinoma”.
+			</para>
+			<para>
+			Another output control AE descriptor parameter  can be used to specify a feature of the resultant annotation to be set to contain the span annotation enclosing the matched token. Assuming, for example, that the spans being processed are sentences, this provides a convenient way to link the resultant annotation back to its enclosing sentence.
+			</para>
+			<para>
+			 It is also possible to indicate dictionary attributes to store back into each of the matched tokens. This provides the ability for tokens to be marked with information regarding what it was matched against. Going back to the example in figure 2, one way that the SemanticClass  feature  of the token “mammary” could have been labeled with the value “AnatomicalSite” was using this technique: a previous invocation of ConceptMapper had “mammary” as a dictionary entry, that entry had the SemanticClass feature with the value “AnatomicalSite”, and SemanticClass was listed as an attribute to write back as a token feature. If, instead of “mammary” the match was against a multi-token entry, then each of the multiple tokens would have that feature set.
+			</para>
+		</section>
+		
+		
+	</chapter>
+	<chapter id="configParams">
+		<title>Configuration Parameters</title>
+		<para>
+			Detailed description of all configuration parameters:	
+			</para>			
+			<itemizedlist>
+				
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.tokenizerdescriptorpath" xreflabel="TokenizerDescriptorPath">TokenizerDescriptorPath</varname>: <emphasis>[Required]</emphasis> <type>String</type>
+					</para>
+					<para>Path to tokenizer Analysis Engine descriptor, which is used to tokenize dictionary entries.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.languageid" xreflabel="LanguageID">LanguageID</varname>: <emphasis>[Required]</emphasis> <type>String</type>
+					</para>
+					<para>Language ID (ISO 639-2), for use by the tokenizer specified by <xref linkend="ConceptMapper.param.tokenizerdescriptorpath"/>.
+					</para>
+				</listitem>
+				
+				
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.tokenannotation" xreflabel="TokenAnnotation">TokenAnnotation</varname>: <emphasis>[Required]</emphasis> <type>String</type>
+					</para>
+					<para>Type of feature structure representing tokens in the input CAS.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.spanfeaturestructure" xreflabel="SpanFeatureStructure">SpanFeatureStructure</varname>: <emphasis>[Required]</emphasis> <type>String</type>
+					</para>
+					<para>Type of feature structure that corresponds to spans of
+					data for processing (e.g. a sentence) in the input CAS.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.attributelist" xreflabel="AttributeList">AttributeList</varname>: <emphasis>[Required]</emphasis> <type>Array of Strings</type>
+					</para>
+					<para>List of attribute names for XML dictionary entry record. Must correspond to parallel list <xref linkend="ConceptMapper.param.featurelist"/>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.featurelist" xreflabel="FeatureList">FeatureList</varname>: <emphasis>[Required]</emphasis> <type>Array of Strings</type>
+					</para>
+					<para>List of feature names for <xref linkend="ConceptMapper.param.resultingannotationname"/>. Must correspond to parallel list <xref linkend="ConceptMapper.param.attributelist"/>.
+					</para>
+				</listitem>
+
+				
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.casematch" xreflabel="caseMatch">caseMatch</varname>: <emphasis>[Required]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Specifies the case folding mode. The following are the allowable values:
+						<itemizedlist>
+							<listitem>
+								<constant>ignoreall</constant> - fold everything to lowercase for matching
+							</listitem>
+							<listitem>
+								<constant>insensitive</constant> - fold only tokens with initial caps to lowercase
+							</listitem>
+							<listitem><constant>digitfold</constant> - fold all (and only) tokens with a digit
+							</listitem>
+							<listitem><constant>sensitive</constant> - perform no case folding
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.stopwords" xreflabel="StopWords">StopWords</varname>: <emphasis>[Optional]</emphasis> <type>Array of Strings</type>
+					</para>
+					<para>A list of words that are always to be ignored in dictionary lookups.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.stemmer" xreflabel="Stemmer">Stemmer</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of stemmer class to use before matching. <emphasis>Must</emphasis> implement the <interfacename>org.apache.uima.conceptMapper.support.stemmer</interfacename> interface and
+						have a zero-parameter constructor. If not specified,
+						no stemming will be performed.
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.tokentextfeaturename" xreflabel="TokenTextFeatureName">TokenTextFeatureName</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of feature of token annotation that contains the token's text. If not specified, the token's covered text will be used.
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.tokenclassfeaturename" xreflabel="TokenClassFeatureName">TokenClassFeatureName</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of feature used when doing lookups against <xref linkend="ConceptMapper.param.includedtokenclasses"/> and <xref linkend="ConceptMapper.param.excludedtokenclasses"/>. Values contained in this feature are of type <type>String</type>. <note>This parameter is mandatory if either <xref linkend="ConceptMapper.param.includedtokenclasses"/> or <xref linkend="ConceptMapper.param.excludedtokenclasses"/> are specified. See <xref linkend="ConceptMapper.fig.algo"/> for a description of how these are used during lookup.</note>
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.tokentypefeaturename" xreflabel="TokenTypeFeatureName">TokenTypeFeatureName</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of feature used when doing lookups against <xref linkend="ConceptMapper.param.includedtokentypes"/> and <xref linkend="ConceptMapper.param.excludedtokentypes"/>. Values contained in this feature are of type <type>Integer</type>. <note>This parameter is mandatory if either <xref linkend="ConceptMapper.param.includedtokentypes"/> or <xref linkend="ConceptMapper.param.excludedtokentypes"/> are specified See <xref linkend="ConceptMapper.fig.algo"/> for a description of how these are used during lookup.</note>
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.includedtokentypes" xreflabel="IncludedTokenTypes">IncludedTokenTypes</varname>: <emphasis>[Optional]</emphasis> <type>Array of Integers</type>
+					</para>
+					<para>
+						Type of tokens to include in lookups (if not
+						supplied, then all types are included except those
+						specifically mentioned in <xref linkend="ConceptMapper.param.excludedtokentypes"/>)
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.excludedtokentypes" xreflabel="ExcludedTokenTypes">ExcludedTokenTypes</varname>: <emphasis>[Optional]</emphasis> <type>Array of Integers</type>
+					</para>
+					<para>
+						Type of tokens to exclude from lookups (if not
+						supplied, then all types are excluded except those
+						specifically mentioned in <xref linkend="ConceptMapper.param.includedtokentypes"/>,
+						unless <xref linkend="ConceptMapper.param.includedtokentypes"/> is not supplied, in
+						which case none are excluded)
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.includedtokenclasses" xreflabel="IncludedTokenClasses">IncludedTokenClasses</varname>: <emphasis>[Optional]</emphasis> <type>Array of Strings</type>
+					</para>
+					<para>
+						Class of tokens to include in lookups (if not
+						supplied, then all classes are included except those
+						specifically mentioned in <xref linkend="ConceptMapper.param.excludedtokenclasses"/>)
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.excludedtokenclasses" xreflabel="ExcludedTokenClasses">ExcludedTokenClasses</varname>: <emphasis>[Optional]</emphasis> <type>Array of Strings</type>
+					</para>
+					<para>
+						Class of tokens to exclude from lookups (if not
+						supplied, then all classes are excluded except those
+						specifically mentioned in <xref linkend="ConceptMapper.param.includedtokenclasses"/>,
+						unless <xref linkend="ConceptMapper.param.includedtokenclasses"/> is not supplied, in
+						which case none are excluded).
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.orderindependentlookup" xreflabel="OrderIndependentLookup">OrderIndependentLookup</varname>: <emphasis>[Optional]</emphasis> <type>Boolean</type>
+					</para>
+					<para>
+						If "True", token (as specified by <xref linkend="ConceptMapper.param.tokenannotation"/>) ordering within span (as specified by <xref linkend="ConceptMapper.param.spanfeaturestructure"/>) is ignored during lookup
+						(i.e., "top box" would equal "box top"). Default is
+						False.
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.searchstrategy" xreflabel="SearchStrategy">SearchStrategy</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Specifies the dictionary lookup strategy. The following are the allowable values:
+						<itemizedlist>
+							<listitem>
+								<constant>ContiguousMatch</constant> - longest
+								match of contiguous tokens (as specified by <xref linkend="ConceptMapper.param.tokenannotation"/>) within enclosing
+								span (as specified by <xref linkend="ConceptMapper.param.spanfeaturestructure"/>), taking into account included/excluded items (see <xref linkend="ConceptMapper.param.includedtokentypes"/>,  <xref linkend="ConceptMapper.param.excludedtokentypes"/>,  <xref linkend="ConceptMapper.param.includedtokenclasses"/> and  <xref linkend="ConceptMapper.param.excludedtokenclasses"/>).
+								DEFAULT strategy
+							</listitem>
+							<listitem>
+								<constant>SkipAnyMatch</constant> - longest match of
+								not-necessarily contiguous tokens (as specified by <xref linkend="ConceptMapper.param.tokenannotation"/>) within enclosing
+								span (as specified by <xref linkend="ConceptMapper.param.spanfeaturestructure"/>), taking into account included/excluded items (see <xref linkend="ConceptMapper.param.includedtokentypes"/>,  <xref linkend="ConceptMapper.param.excludedtokentypes"/>,  <xref linkend="ConceptMapper.param.includedtokenclasses"/> and  <xref linkend="ConceptMapper.param.excludedtokenclasses"/>).
+								Subsequent lookups begin in span after complete
+								match. <emphasis>Implies</emphasis> order-independent lookup (see <xref linkend="ConceptMapper.param.orderindependentlookup"/>).
+							</listitem>
+							<listitem>
+								<constant>SkipAnyMatchAllowOverlap</constant> - longest match of
+								not-necessarily contiguous tokens (as specified by <xref linkend="ConceptMapper.param.tokenannotation"/>) within enclosing
+								span, (as specified by <xref linkend="ConceptMapper.param.spanfeaturestructure"/>) taking into account included/excluded items (see <xref linkend="ConceptMapper.param.includedtokentypes"/>,  <xref linkend="ConceptMapper.param.excludedtokentypes"/>,  <xref linkend="ConceptMapper.param.includedtokenclasses"/> and  <xref linkend="ConceptMapper.param.excludedtokenclasses"/>).
+								Subsequent lookups begin in span after next token.
+								<emphasis>Implies</emphasis> order-independent lookup (see <xref linkend="ConceptMapper.param.orderindependentlookup"/>).
+							</listitem>
+						</itemizedlist>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.findallmatches" xreflabel="FindAllMatches">FindAllMatches</varname>: <emphasis>[Optional]</emphasis> <type>Boolean</type>
+					</para>
+					<para>
+						If True, all dictionary matches are found within the span specified by <xref linkend="ConceptMapper.param.spanfeaturestructure"/>, otherwise only the longest matches are found.
+					</para>				
+				</listitem>
+								
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.resultingannotationname" xreflabel="ResultingAnnotationName">ResultingAnnotationName</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of the annotation type created by this TAE.
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.resultingenclosingspanname" xreflabel="ResultingEnclosingSpanName">ResultingEnclosingSpanName</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of the feature in the <xref linkend="ConceptMapper.param.resultingannotationname"/> that will be set to point to the span annotation that encloses it (i.e. its
+						sentence)
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.resultingannotationmatchedtextfeature" xreflabel="ResultingAnnotationMatchedTextFeature">ResultingAnnotationMatchedTextFeature</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of the feature in the <xref linkend="ConceptMapper.param.resultingannotationname"/> that will be set to the string that was matched  in the dictionary. This could be different that the annotation's covered text if there were any skipped tokens in the match.
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.matchedtokensfeaturename" xreflabel="ResultingAnnotationMatchedTextFeature">MatchedTokensFeatureName</varname>: <emphasis>[Optional]</emphasis> <type>String</type>
+					</para>
+					<para>
+						Name of the FSArray feature in the <xref linkend="ConceptMapper.param.resultingannotationname"/> that will set to the set of tokens matched.
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.tokenclasswritebackfeaturenames" xreflabel="TokenClassWriteBackFeatureNames">TokenClassWriteBackFeatureNames</varname>: <emphasis>[Optional]</emphasis> <type>Array of Strings</type>
+					</para>
+					<para>
+						Names of features in the <xref linkend="ConceptMapper.param.resultingannotationname"/> that should be written back to a token from the matching dictionary entry, such as a POS tag. 
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.param.printdictionary" xreflabel="PrintDictionary">PrintDictionary</varname>: <emphasis>[Optional]</emphasis> <type>Boolean</type>
+					</para>
+					<para>
+						If True, print dictionary after loading. Default is False. 
+					</para>				
+				</listitem>
+				<listitem>
+					<para>
+						<varname id="ConceptMapper.res.dictionaryfile" xreflabel="DictionaryFile">DictionaryFile</varname>: <emphasis>[Dictionary Resource]</emphasis> <type>Boolean</type>
+					</para>
+					<para>
+						Dictionary file resource specification. Specify class name for dictionary loader, then bind to name of file containing dictionary contents to be loaded.
+					</para>				
+				</listitem>
+		</itemizedlist>
+	</chapter>
+</book>

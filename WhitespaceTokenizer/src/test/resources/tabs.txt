@@ -1,0 +1,2 @@
+Tab	space-tab 	2tabs		tabFollowedByNL	
+textAfterNL

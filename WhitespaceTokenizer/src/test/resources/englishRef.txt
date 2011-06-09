@@ -1,0 +1,2187 @@
+SentenceAnnotation(0,212): 							    Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. 	
+TokenAnnotation(11,17): Apache
+TokenAnnotation(18,25): License
+TokenAnnotation(54,61): Version
+TokenAnnotation(62,63): 2
+TokenAnnotation(63,64): .
+TokenAnnotation(64,65): 0
+TokenAnnotation(65,66): ,
+TokenAnnotation(67,74): January
+TokenAnnotation(75,79): 2004
+TokenAnnotation(105,109): http
+TokenAnnotation(109,110): :
+TokenAnnotation(110,111): /
+TokenAnnotation(111,112): /
+TokenAnnotation(112,115): www
+TokenAnnotation(115,116): .
+TokenAnnotation(116,122): apache
+TokenAnnotation(122,123): .
+TokenAnnotation(123,126): org
+TokenAnnotation(126,127): /
+TokenAnnotation(127,135): licenses
+TokenAnnotation(135,136): /
+TokenAnnotation(143,148): TERMS
+TokenAnnotation(149,152): AND
+TokenAnnotation(153,163): CONDITIONS
+TokenAnnotation(164,167): FOR
+TokenAnnotation(168,171): USE
+TokenAnnotation(171,172): ,
+TokenAnnotation(173,185): REPRODUCTION
+TokenAnnotation(185,186): ,
+TokenAnnotation(187,190): AND
+TokenAnnotation(191,203): DISTRIBUTION
+TokenAnnotation(210,211): 1
+TokenAnnotation(211,212): .
+SentenceAnnotation(212,225):  Definitions.
+TokenAnnotation(213,224): Definitions
+TokenAnnotation(224,225): .
+SentenceAnnotation(225,380): 
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+TokenAnnotation(235,236): "
+TokenAnnotation(236,243): License
+TokenAnnotation(243,244): "
+TokenAnnotation(245,250): shall
+TokenAnnotation(251,255): mean
+TokenAnnotation(256,259): the
+TokenAnnotation(260,265): terms
+TokenAnnotation(266,269): and
+TokenAnnotation(270,280): conditions
+TokenAnnotation(281,284): for
+TokenAnnotation(285,288): use
+TokenAnnotation(288,289): ,
+TokenAnnotation(290,302): reproduction
+TokenAnnotation(302,303): ,
+TokenAnnotation(311,314): and
+TokenAnnotation(315,327): distribution
+TokenAnnotation(328,330): as
+TokenAnnotation(331,338): defined
+TokenAnnotation(339,341): by
+TokenAnnotation(342,350): Sections
+TokenAnnotation(351,352): 1
+TokenAnnotation(353,360): through
+TokenAnnotation(361,362): 9
+TokenAnnotation(363,365): of
+TokenAnnotation(366,370): this
+TokenAnnotation(371,379): document
+TokenAnnotation(379,380): .
+SentenceAnnotation(380,512): 
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+TokenAnnotation(390,391): "
+TokenAnnotation(391,399): Licensor
+TokenAnnotation(399,400): "
+TokenAnnotation(401,406): shall
+TokenAnnotation(407,411): mean
+TokenAnnotation(412,415): the
+TokenAnnotation(416,425): copyright
+TokenAnnotation(426,431): owner
+TokenAnnotation(432,434): or
+TokenAnnotation(435,441): entity
+TokenAnnotation(442,452): authorized
+TokenAnnotation(453,455): by
+TokenAnnotation(463,466): the
+TokenAnnotation(467,476): copyright
+TokenAnnotation(477,482): owner
+TokenAnnotation(483,487): that
+TokenAnnotation(488,490): is
+TokenAnnotation(491,499): granting
+TokenAnnotation(500,503): the
+TokenAnnotation(504,511): License
+TokenAnnotation(511,512): .
+SentenceAnnotation(512,694): 
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity.
+TokenAnnotation(522,523): "
+TokenAnnotation(523,528): Legal
+TokenAnnotation(529,535): Entity
+TokenAnnotation(535,536): "
+TokenAnnotation(537,542): shall
+TokenAnnotation(543,547): mean
+TokenAnnotation(548,551): the
+TokenAnnotation(552,557): union
+TokenAnnotation(558,560): of
+TokenAnnotation(561,564): the
+TokenAnnotation(565,571): acting
+TokenAnnotation(572,578): entity
+TokenAnnotation(579,582): and
+TokenAnnotation(583,586): all
+TokenAnnotation(594,599): other
+TokenAnnotation(600,608): entities
+TokenAnnotation(609,613): that
+TokenAnnotation(614,621): control
+TokenAnnotation(621,622): ,
+TokenAnnotation(623,626): are
+TokenAnnotation(627,637): controlled
+TokenAnnotation(638,640): by
+TokenAnnotation(640,641): ,
+TokenAnnotation(642,644): or
+TokenAnnotation(645,648): are
+TokenAnnotation(649,654): under
+TokenAnnotation(655,661): common
+TokenAnnotation(669,676): control
+TokenAnnotation(677,681): with
+TokenAnnotation(682,686): that
+TokenAnnotation(687,693): entity
+TokenAnnotation(693,694): .
+SentenceAnnotation(694,1019):  For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+TokenAnnotation(695,698): For
+TokenAnnotation(699,702): the
+TokenAnnotation(703,711): purposes
+TokenAnnotation(712,714): of
+TokenAnnotation(715,719): this
+TokenAnnotation(720,730): definition
+TokenAnnotation(730,731): ,
+TokenAnnotation(739,740): "
+TokenAnnotation(740,747): control
+TokenAnnotation(747,748): "
+TokenAnnotation(749,754): means
+TokenAnnotation(755,756): (
+TokenAnnotation(756,757): i
+TokenAnnotation(757,758): )
+TokenAnnotation(759,762): the
+TokenAnnotation(763,768): power
+TokenAnnotation(768,769): ,
+TokenAnnotation(770,776): direct
+TokenAnnotation(777,779): or
+TokenAnnotation(780,788): indirect
+TokenAnnotation(788,789): ,
+TokenAnnotation(790,792): to
+TokenAnnotation(793,798): cause
+TokenAnnotation(799,802): the
+TokenAnnotation(810,819): direction
+TokenAnnotation(820,822): or
+TokenAnnotation(823,833): management
+TokenAnnotation(834,836): of
+TokenAnnotation(837,841): such
+TokenAnnotation(842,848): entity
+TokenAnnotation(848,849): ,
+TokenAnnotation(850,857): whether
+TokenAnnotation(858,860): by
+TokenAnnotation(861,869): contract
+TokenAnnotation(870,872): or
+TokenAnnotation(880,889): otherwise
+TokenAnnotation(889,890): ,
+TokenAnnotation(891,893): or
+TokenAnnotation(894,895): (
+TokenAnnotation(895,897): ii
+TokenAnnotation(897,898): )
+TokenAnnotation(899,908): ownership
+TokenAnnotation(909,911): of
+TokenAnnotation(912,917): fifty
+TokenAnnotation(918,925): percent
+TokenAnnotation(926,927): (
+TokenAnnotation(927,929): 50
+TokenAnnotation(929,930): %
+TokenAnnotation(930,931): )
+TokenAnnotation(932,934): or
+TokenAnnotation(935,939): more
+TokenAnnotation(940,942): of
+TokenAnnotation(943,946): the
+TokenAnnotation(954,965): outstanding
+TokenAnnotation(966,972): shares
+TokenAnnotation(972,973): ,
+TokenAnnotation(974,976): or
+TokenAnnotation(977,978): (
+TokenAnnotation(978,981): iii
+TokenAnnotation(981,982): )
+TokenAnnotation(983,993): beneficial
+TokenAnnotation(994,1003): ownership
+TokenAnnotation(1004,1006): of
+TokenAnnotation(1007,1011): such
+TokenAnnotation(1012,1018): entity
+TokenAnnotation(1018,1019): .
+SentenceAnnotation(1019,1142): 
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+TokenAnnotation(1029,1030): "
+TokenAnnotation(1030,1033): You
+TokenAnnotation(1033,1034): "
+TokenAnnotation(1035,1036): (
+TokenAnnotation(1036,1038): or
+TokenAnnotation(1039,1040): "
+TokenAnnotation(1040,1044): Your
+TokenAnnotation(1044,1045): "
+TokenAnnotation(1045,1046): )
+TokenAnnotation(1047,1052): shall
+TokenAnnotation(1053,1057): mean
+TokenAnnotation(1058,1060): an
+TokenAnnotation(1061,1071): individual
+TokenAnnotation(1072,1074): or
+TokenAnnotation(1075,1080): Legal
+TokenAnnotation(1081,1087): Entity
+TokenAnnotation(1095,1105): exercising
+TokenAnnotation(1106,1117): permissions
+TokenAnnotation(1118,1125): granted
+TokenAnnotation(1126,1128): by
+TokenAnnotation(1129,1133): this
+TokenAnnotation(1134,1141): License
+TokenAnnotation(1141,1142): .
+SentenceAnnotation(1142,1333): 
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+TokenAnnotation(1152,1153): "
+TokenAnnotation(1153,1159): Source
+TokenAnnotation(1159,1160): "
+TokenAnnotation(1161,1165): form
+TokenAnnotation(1166,1171): shall
+TokenAnnotation(1172,1176): mean
+TokenAnnotation(1177,1180): the
+TokenAnnotation(1181,1190): preferred
+TokenAnnotation(1191,1195): form
+TokenAnnotation(1196,1199): for
+TokenAnnotation(1200,1206): making
+TokenAnnotation(1207,1220): modifications
+TokenAnnotation(1220,1221): ,
+TokenAnnotation(1229,1238): including
+TokenAnnotation(1239,1242): but
+TokenAnnotation(1243,1246): not
+TokenAnnotation(1247,1254): limited
+TokenAnnotation(1255,1257): to
+TokenAnnotation(1258,1266): software
+TokenAnnotation(1267,1273): source
+TokenAnnotation(1274,1278): code
+TokenAnnotation(1278,1279): ,
+TokenAnnotation(1280,1293): documentation
+TokenAnnotation(1301,1307): source
+TokenAnnotation(1307,1308): ,
+TokenAnnotation(1309,1312): and
+TokenAnnotation(1313,1326): configuration
+TokenAnnotation(1327,1332): files
+TokenAnnotation(1332,1333): .
+SentenceAnnotation(1333,1585): 
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+TokenAnnotation(1343,1344): "
+TokenAnnotation(1344,1350): Object
+TokenAnnotation(1350,1351): "
+TokenAnnotation(1352,1356): form
+TokenAnnotation(1357,1362): shall
+TokenAnnotation(1363,1367): mean
+TokenAnnotation(1368,1371): any
+TokenAnnotation(1372,1376): form
+TokenAnnotation(1377,1386): resulting
+TokenAnnotation(1387,1391): from
+TokenAnnotation(1392,1402): mechanical
+TokenAnnotation(1410,1424): transformation
+TokenAnnotation(1425,1427): or
+TokenAnnotation(1428,1439): translation
+TokenAnnotation(1440,1442): of
+TokenAnnotation(1443,1444): a
+TokenAnnotation(1445,1451): Source
+TokenAnnotation(1452,1456): form
+TokenAnnotation(1456,1457): ,
+TokenAnnotation(1458,1467): including
+TokenAnnotation(1468,1471): but
+TokenAnnotation(1479,1482): not
+TokenAnnotation(1483,1490): limited
+TokenAnnotation(1491,1493): to
+TokenAnnotation(1494,1502): compiled
+TokenAnnotation(1503,1509): object
+TokenAnnotation(1510,1514): code
+TokenAnnotation(1514,1515): ,
+TokenAnnotation(1516,1525): generated
+TokenAnnotation(1526,1539): documentation
+TokenAnnotation(1539,1540): ,
+TokenAnnotation(1548,1551): and
+TokenAnnotation(1552,1563): conversions
+TokenAnnotation(1564,1566): to
+TokenAnnotation(1567,1572): other
+TokenAnnotation(1573,1578): media
+TokenAnnotation(1579,1584): types
+TokenAnnotation(1584,1585): .
+SentenceAnnotation(1585,1852): 
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+TokenAnnotation(1595,1596): "
+TokenAnnotation(1596,1600): Work
+TokenAnnotation(1600,1601): "
+TokenAnnotation(1602,1607): shall
+TokenAnnotation(1608,1612): mean
+TokenAnnotation(1613,1616): the
+TokenAnnotation(1617,1621): work
+TokenAnnotation(1622,1624): of
+TokenAnnotation(1625,1635): authorship
+TokenAnnotation(1635,1636): ,
+TokenAnnotation(1637,1644): whether
+TokenAnnotation(1645,1647): in
+TokenAnnotation(1648,1654): Source
+TokenAnnotation(1655,1657): or
+TokenAnnotation(1665,1671): Object
+TokenAnnotation(1672,1676): form
+TokenAnnotation(1676,1677): ,
+TokenAnnotation(1678,1682): made
+TokenAnnotation(1683,1692): available
+TokenAnnotation(1693,1698): under
+TokenAnnotation(1699,1702): the
+TokenAnnotation(1703,1710): License
+TokenAnnotation(1710,1711): ,
+TokenAnnotation(1712,1714): as
+TokenAnnotation(1715,1724): indicated
+TokenAnnotation(1725,1727): by
+TokenAnnotation(1728,1729): a
+TokenAnnotation(1737,1746): copyright
+TokenAnnotation(1747,1753): notice
+TokenAnnotation(1754,1758): that
+TokenAnnotation(1759,1761): is
+TokenAnnotation(1762,1770): included
+TokenAnnotation(1771,1773): in
+TokenAnnotation(1774,1776): or
+TokenAnnotation(1777,1785): attached
+TokenAnnotation(1786,1788): to
+TokenAnnotation(1789,1792): the
+TokenAnnotation(1793,1797): work
+TokenAnnotation(1805,1806): (
+TokenAnnotation(1806,1808): an
+TokenAnnotation(1809,1816): example
+TokenAnnotation(1817,1819): is
+TokenAnnotation(1820,1828): provided
+TokenAnnotation(1829,1831): in
+TokenAnnotation(1832,1835): the
+TokenAnnotation(1836,1844): Appendix
+TokenAnnotation(1845,1850): below
+TokenAnnotation(1850,1851): )
+TokenAnnotation(1851,1852): .
+SentenceAnnotation(1852,2144): 
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship.
+TokenAnnotation(1862,1863): "
+TokenAnnotation(1863,1873): Derivative
+TokenAnnotation(1874,1879): Works
+TokenAnnotation(1879,1880): "
+TokenAnnotation(1881,1886): shall
+TokenAnnotation(1887,1891): mean
+TokenAnnotation(1892,1895): any
+TokenAnnotation(1896,1900): work
+TokenAnnotation(1900,1901): ,
+TokenAnnotation(1902,1909): whether
+TokenAnnotation(1910,1912): in
+TokenAnnotation(1913,1919): Source
+TokenAnnotation(1920,1922): or
+TokenAnnotation(1923,1929): Object
+TokenAnnotation(1937,1941): form
+TokenAnnotation(1941,1942): ,
+TokenAnnotation(1943,1947): that
+TokenAnnotation(1948,1950): is
+TokenAnnotation(1951,1956): based
+TokenAnnotation(1957,1959): on
+TokenAnnotation(1960,1961): (
+TokenAnnotation(1961,1963): or
+TokenAnnotation(1964,1971): derived
+TokenAnnotation(1972,1976): from
+TokenAnnotation(1976,1977): )
+TokenAnnotation(1978,1981): the
+TokenAnnotation(1982,1986): Work
+TokenAnnotation(1987,1990): and
+TokenAnnotation(1991,1994): for
+TokenAnnotation(1995,2000): which
+TokenAnnotation(2001,2004): the
+TokenAnnotation(2012,2021): editorial
+TokenAnnotation(2022,2031): revisions
+TokenAnnotation(2031,2032): ,
+TokenAnnotation(2033,2044): annotations
+TokenAnnotation(2044,2045): ,
+TokenAnnotation(2046,2058): elaborations
+TokenAnnotation(2058,2059): ,
+TokenAnnotation(2060,2062): or
+TokenAnnotation(2063,2068): other
+TokenAnnotation(2069,2082): modifications
+TokenAnnotation(2090,2099): represent
+TokenAnnotation(2099,2100): ,
+TokenAnnotation(2101,2103): as
+TokenAnnotation(2104,2105): a
+TokenAnnotation(2106,2111): whole
+TokenAnnotation(2111,2112): ,
+TokenAnnotation(2113,2115): an
+TokenAnnotation(2116,2124): original
+TokenAnnotation(2125,2129): work
+TokenAnnotation(2130,2132): of
+TokenAnnotation(2133,2143): authorship
+TokenAnnotation(2143,2144): .
+SentenceAnnotation(2144,2362):  For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+TokenAnnotation(2145,2148): For
+TokenAnnotation(2149,2152): the
+TokenAnnotation(2153,2161): purposes
+TokenAnnotation(2169,2171): of
+TokenAnnotation(2172,2176): this
+TokenAnnotation(2177,2184): License
+TokenAnnotation(2184,2185): ,
+TokenAnnotation(2186,2196): Derivative
+TokenAnnotation(2197,2202): Works
+TokenAnnotation(2203,2208): shall
+TokenAnnotation(2209,2212): not
+TokenAnnotation(2213,2220): include
+TokenAnnotation(2221,2226): works
+TokenAnnotation(2227,2231): that
+TokenAnnotation(2232,2238): remain
+TokenAnnotation(2246,2255): separable
+TokenAnnotation(2256,2260): from
+TokenAnnotation(2260,2261): ,
+TokenAnnotation(2262,2264): or
+TokenAnnotation(2265,2271): merely
+TokenAnnotation(2272,2276): link
+TokenAnnotation(2277,2278): (
+TokenAnnotation(2278,2280): or
+TokenAnnotation(2281,2285): bind
+TokenAnnotation(2286,2288): by
+TokenAnnotation(2289,2293): name
+TokenAnnotation(2293,2294): )
+TokenAnnotation(2295,2297): to
+TokenAnnotation(2298,2301): the
+TokenAnnotation(2302,2312): interfaces
+TokenAnnotation(2313,2315): of
+TokenAnnotation(2315,2316): ,
+TokenAnnotation(2324,2327): the
+TokenAnnotation(2328,2332): Work
+TokenAnnotation(2333,2336): and
+TokenAnnotation(2337,2347): Derivative
+TokenAnnotation(2348,2353): Works
+TokenAnnotation(2354,2361): thereof
+TokenAnnotation(2361,2362): .
+SentenceAnnotation(2362,2760): 
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner.
+TokenAnnotation(2372,2373): "
+TokenAnnotation(2373,2385): Contribution
+TokenAnnotation(2385,2386): "
+TokenAnnotation(2387,2392): shall
+TokenAnnotation(2393,2397): mean
+TokenAnnotation(2398,2401): any
+TokenAnnotation(2402,2406): work
+TokenAnnotation(2407,2409): of
+TokenAnnotation(2410,2420): authorship
+TokenAnnotation(2420,2421): ,
+TokenAnnotation(2422,2431): including
+TokenAnnotation(2439,2442): the
+TokenAnnotation(2443,2451): original
+TokenAnnotation(2452,2459): version
+TokenAnnotation(2460,2462): of
+TokenAnnotation(2463,2466): the
+TokenAnnotation(2467,2471): Work
+TokenAnnotation(2472,2475): and
+TokenAnnotation(2476,2479): any
+TokenAnnotation(2480,2493): modifications
+TokenAnnotation(2494,2496): or
+TokenAnnotation(2497,2506): additions
+TokenAnnotation(2514,2516): to
+TokenAnnotation(2517,2521): that
+TokenAnnotation(2522,2526): Work
+TokenAnnotation(2527,2529): or
+TokenAnnotation(2530,2540): Derivative
+TokenAnnotation(2541,2546): Works
+TokenAnnotation(2547,2554): thereof
+TokenAnnotation(2554,2555): ,
+TokenAnnotation(2556,2560): that
+TokenAnnotation(2561,2563): is
+TokenAnnotation(2564,2577): intentionally
+TokenAnnotation(2585,2594): submitted
+TokenAnnotation(2595,2597): to
+TokenAnnotation(2598,2606): Licensor
+TokenAnnotation(2607,2610): for
+TokenAnnotation(2611,2620): inclusion
+TokenAnnotation(2621,2623): in
+TokenAnnotation(2624,2627): the
+TokenAnnotation(2628,2632): Work
+TokenAnnotation(2633,2635): by
+TokenAnnotation(2636,2639): the
+TokenAnnotation(2640,2649): copyright
+TokenAnnotation(2650,2655): owner
+TokenAnnotation(2663,2665): or
+TokenAnnotation(2666,2668): by
+TokenAnnotation(2669,2671): an
+TokenAnnotation(2672,2682): individual
+TokenAnnotation(2683,2685): or
+TokenAnnotation(2686,2691): Legal
+TokenAnnotation(2692,2698): Entity
+TokenAnnotation(2699,2709): authorized
+TokenAnnotation(2710,2712): to
+TokenAnnotation(2713,2719): submit
+TokenAnnotation(2720,2722): on
+TokenAnnotation(2723,2729): behalf
+TokenAnnotation(2730,2732): of
+TokenAnnotation(2740,2743): the
+TokenAnnotation(2744,2753): copyright
+TokenAnnotation(2754,2759): owner
+TokenAnnotation(2759,2760): .
+SentenceAnnotation(2760,3541):  For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+TokenAnnotation(2761,2764): For
+TokenAnnotation(2765,2768): the
+TokenAnnotation(2769,2777): purposes
+TokenAnnotation(2778,2780): of
+TokenAnnotation(2781,2785): this
+TokenAnnotation(2786,2796): definition
+TokenAnnotation(2796,2797): ,
+TokenAnnotation(2798,2799): "
+TokenAnnotation(2799,2808): submitted
+TokenAnnotation(2808,2809): "
+TokenAnnotation(2817,2822): means
+TokenAnnotation(2823,2826): any
+TokenAnnotation(2827,2831): form
+TokenAnnotation(2832,2834): of
+TokenAnnotation(2835,2845): electronic
+TokenAnnotation(2845,2846): ,
+TokenAnnotation(2847,2853): verbal
+TokenAnnotation(2853,2854): ,
+TokenAnnotation(2855,2857): or
+TokenAnnotation(2858,2865): written
+TokenAnnotation(2866,2879): communication
+TokenAnnotation(2880,2884): sent
+TokenAnnotation(2892,2894): to
+TokenAnnotation(2895,2898): the
+TokenAnnotation(2899,2907): Licensor
+TokenAnnotation(2908,2910): or
+TokenAnnotation(2911,2914): its
+TokenAnnotation(2915,2930): representatives
+TokenAnnotation(2930,2931): ,
+TokenAnnotation(2932,2941): including
+TokenAnnotation(2942,2945): but
+TokenAnnotation(2946,2949): not
+TokenAnnotation(2950,2957): limited
+TokenAnnotation(2958,2960): to
+TokenAnnotation(2968,2981): communication
+TokenAnnotation(2982,2984): on
+TokenAnnotation(2985,2995): electronic
+TokenAnnotation(2996,3003): mailing
+TokenAnnotation(3004,3009): lists
+TokenAnnotation(3009,3010): ,
+TokenAnnotation(3011,3017): source
+TokenAnnotation(3018,3022): code
+TokenAnnotation(3023,3030): control
+TokenAnnotation(3031,3038): systems
+TokenAnnotation(3038,3039): ,
+TokenAnnotation(3047,3050): and
+TokenAnnotation(3051,3056): issue
+TokenAnnotation(3057,3065): tracking
+TokenAnnotation(3066,3073): systems
+TokenAnnotation(3074,3078): that
+TokenAnnotation(3079,3082): are
+TokenAnnotation(3083,3090): managed
+TokenAnnotation(3091,3093): by
+TokenAnnotation(3093,3094): ,
+TokenAnnotation(3095,3097): or
+TokenAnnotation(3098,3100): on
+TokenAnnotation(3101,3107): behalf
+TokenAnnotation(3108,3110): of
+TokenAnnotation(3110,3111): ,
+TokenAnnotation(3112,3115): the
+TokenAnnotation(3123,3131): Licensor
+TokenAnnotation(3132,3135): for
+TokenAnnotation(3136,3139): the
+TokenAnnotation(3140,3147): purpose
+TokenAnnotation(3148,3150): of
+TokenAnnotation(3151,3161): discussing
+TokenAnnotation(3162,3165): and
+TokenAnnotation(3166,3175): improving
+TokenAnnotation(3176,3179): the
+TokenAnnotation(3180,3184): Work
+TokenAnnotation(3184,3185): ,
+TokenAnnotation(3186,3189): but
+TokenAnnotation(3197,3206): excluding
+TokenAnnotation(3207,3220): communication
+TokenAnnotation(3221,3225): that
+TokenAnnotation(3226,3228): is
+TokenAnnotation(3229,3242): conspicuously
+TokenAnnotation(3243,3249): marked
+TokenAnnotation(3250,3252): or
+TokenAnnotation(3253,3262): otherwise
+TokenAnnotation(3270,3280): designated
+TokenAnnotation(3281,3283): in
+TokenAnnotation(3284,3291): writing
+TokenAnnotation(3292,3294): by
+TokenAnnotation(3295,3298): the
+TokenAnnotation(3299,3308): copyright
+TokenAnnotation(3309,3314): owner
+TokenAnnotation(3315,3317): as
+TokenAnnotation(3318,3319): "
+TokenAnnotation(3319,3322): Not
+TokenAnnotation(3323,3324): a
+TokenAnnotation(3325,3337): Contribution
+TokenAnnotation(3337,3338): .
+TokenAnnotation(3338,3339): "
+TokenAnnotation(3349,3350): "
+TokenAnnotation(3350,3361): Contributor
+TokenAnnotation(3361,3362): "
+TokenAnnotation(3363,3368): shall
+TokenAnnotation(3369,3373): mean
+TokenAnnotation(3374,3382): Licensor
+TokenAnnotation(3383,3386): and
+TokenAnnotation(3387,3390): any
+TokenAnnotation(3391,3401): individual
+TokenAnnotation(3402,3404): or
+TokenAnnotation(3405,3410): Legal
+TokenAnnotation(3411,3417): Entity
+TokenAnnotation(3425,3427): on
+TokenAnnotation(3428,3434): behalf
+TokenAnnotation(3435,3437): of
+TokenAnnotation(3438,3442): whom
+TokenAnnotation(3443,3444): a
+TokenAnnotation(3445,3457): Contribution
+TokenAnnotation(3458,3461): has
+TokenAnnotation(3462,3466): been
+TokenAnnotation(3467,3475): received
+TokenAnnotation(3476,3478): by
+TokenAnnotation(3479,3487): Licensor
+TokenAnnotation(3488,3491): and
+TokenAnnotation(3499,3511): subsequently
+TokenAnnotation(3512,3524): incorporated
+TokenAnnotation(3525,3531): within
+TokenAnnotation(3532,3535): the
+TokenAnnotation(3536,3540): Work
+TokenAnnotation(3540,3541): .
+SentenceAnnotation(3541,3550): 
+
+   2.
+TokenAnnotation(3548,3549): 2
+TokenAnnotation(3549,3550): .
+SentenceAnnotation(3550,3578):  Grant of Copyright License.
+TokenAnnotation(3551,3556): Grant
+TokenAnnotation(3557,3559): of
+TokenAnnotation(3560,3569): Copyright
+TokenAnnotation(3570,3577): License
+TokenAnnotation(3577,3578): .
+SentenceAnnotation(3578,3965):  Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+TokenAnnotation(3579,3586): Subject
+TokenAnnotation(3587,3589): to
+TokenAnnotation(3590,3593): the
+TokenAnnotation(3594,3599): terms
+TokenAnnotation(3600,3603): and
+TokenAnnotation(3604,3614): conditions
+TokenAnnotation(3615,3617): of
+TokenAnnotation(3625,3629): this
+TokenAnnotation(3630,3637): License
+TokenAnnotation(3637,3638): ,
+TokenAnnotation(3639,3643): each
+TokenAnnotation(3644,3655): Contributor
+TokenAnnotation(3656,3662): hereby
+TokenAnnotation(3663,3669): grants
+TokenAnnotation(3670,3672): to
+TokenAnnotation(3673,3676): You
+TokenAnnotation(3677,3678): a
+TokenAnnotation(3679,3688): perpetual
+TokenAnnotation(3688,3689): ,
+TokenAnnotation(3697,3706): worldwide
+TokenAnnotation(3706,3707): ,
+TokenAnnotation(3708,3711): non
+TokenAnnotation(3711,3712): -
+TokenAnnotation(3712,3721): exclusive
+TokenAnnotation(3721,3722): ,
+TokenAnnotation(3723,3725): no
+TokenAnnotation(3725,3726): -
+TokenAnnotation(3726,3732): charge
+TokenAnnotation(3732,3733): ,
+TokenAnnotation(3734,3741): royalty
+TokenAnnotation(3741,3742): -
+TokenAnnotation(3742,3746): free
+TokenAnnotation(3746,3747): ,
+TokenAnnotation(3748,3759): irrevocable
+TokenAnnotation(3767,3776): copyright
+TokenAnnotation(3777,3784): license
+TokenAnnotation(3785,3787): to
+TokenAnnotation(3788,3797): reproduce
+TokenAnnotation(3797,3798): ,
+TokenAnnotation(3799,3806): prepare
+TokenAnnotation(3807,3817): Derivative
+TokenAnnotation(3818,3823): Works
+TokenAnnotation(3824,3826): of
+TokenAnnotation(3826,3827): ,
+TokenAnnotation(3835,3843): publicly
+TokenAnnotation(3844,3851): display
+TokenAnnotation(3851,3852): ,
+TokenAnnotation(3853,3861): publicly
+TokenAnnotation(3862,3869): perform
+TokenAnnotation(3869,3870): ,
+TokenAnnotation(3871,3881): sublicense
+TokenAnnotation(3881,3882): ,
+TokenAnnotation(3883,3886): and
+TokenAnnotation(3887,3897): distribute
+TokenAnnotation(3898,3901): the
+TokenAnnotation(3909,3913): Work
+TokenAnnotation(3914,3917): and
+TokenAnnotation(3918,3922): such
+TokenAnnotation(3923,3933): Derivative
+TokenAnnotation(3934,3939): Works
+TokenAnnotation(3940,3942): in
+TokenAnnotation(3943,3949): Source
+TokenAnnotation(3950,3952): or
+TokenAnnotation(3953,3959): Object
+TokenAnnotation(3960,3964): form
+TokenAnnotation(3964,3965): .
+SentenceAnnotation(3965,3974): 
+
+   3.
+TokenAnnotation(3972,3973): 3
+TokenAnnotation(3973,3974): .
+SentenceAnnotation(3974,3999):  Grant of Patent License.
+TokenAnnotation(3975,3980): Grant
+TokenAnnotation(3981,3983): of
+TokenAnnotation(3984,3990): Patent
+TokenAnnotation(3991,3998): License
+TokenAnnotation(3998,3999): .
+SentenceAnnotation(3999,4609):  Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted.
+TokenAnnotation(4000,4007): Subject
+TokenAnnotation(4008,4010): to
+TokenAnnotation(4011,4014): the
+TokenAnnotation(4015,4020): terms
+TokenAnnotation(4021,4024): and
+TokenAnnotation(4025,4035): conditions
+TokenAnnotation(4036,4038): of
+TokenAnnotation(4046,4050): this
+TokenAnnotation(4051,4058): License
+TokenAnnotation(4058,4059): ,
+TokenAnnotation(4060,4064): each
+TokenAnnotation(4065,4076): Contributor
+TokenAnnotation(4077,4083): hereby
+TokenAnnotation(4084,4090): grants
+TokenAnnotation(4091,4093): to
+TokenAnnotation(4094,4097): You
+TokenAnnotation(4098,4099): a
+TokenAnnotation(4100,4109): perpetual
+TokenAnnotation(4109,4110): ,
+TokenAnnotation(4118,4127): worldwide
+TokenAnnotation(4127,4128): ,
+TokenAnnotation(4129,4132): non
+TokenAnnotation(4132,4133): -
+TokenAnnotation(4133,4142): exclusive
+TokenAnnotation(4142,4143): ,
+TokenAnnotation(4144,4146): no
+TokenAnnotation(4146,4147): -
+TokenAnnotation(4147,4153): charge
+TokenAnnotation(4153,4154): ,
+TokenAnnotation(4155,4162): royalty
+TokenAnnotation(4162,4163): -
+TokenAnnotation(4163,4167): free
+TokenAnnotation(4167,4168): ,
+TokenAnnotation(4169,4180): irrevocable
+TokenAnnotation(4188,4189): (
+TokenAnnotation(4189,4195): except
+TokenAnnotation(4196,4198): as
+TokenAnnotation(4199,4205): stated
+TokenAnnotation(4206,4208): in
+TokenAnnotation(4209,4213): this
+TokenAnnotation(4214,4221): section
+TokenAnnotation(4221,4222): )
+TokenAnnotation(4223,4229): patent
+TokenAnnotation(4230,4237): license
+TokenAnnotation(4238,4240): to
+TokenAnnotation(4241,4245): make
+TokenAnnotation(4245,4246): ,
+TokenAnnotation(4247,4251): have
+TokenAnnotation(4252,4256): made
+TokenAnnotation(4256,4257): ,
+TokenAnnotation(4265,4268): use
+TokenAnnotation(4268,4269): ,
+TokenAnnotation(4270,4275): offer
+TokenAnnotation(4276,4278): to
+TokenAnnotation(4279,4283): sell
+TokenAnnotation(4283,4284): ,
+TokenAnnotation(4285,4289): sell
+TokenAnnotation(4289,4290): ,
+TokenAnnotation(4291,4297): import
+TokenAnnotation(4297,4298): ,
+TokenAnnotation(4299,4302): and
+TokenAnnotation(4303,4312): otherwise
+TokenAnnotation(4313,4321): transfer
+TokenAnnotation(4322,4325): the
+TokenAnnotation(4326,4330): Work
+TokenAnnotation(4330,4331): ,
+TokenAnnotation(4339,4344): where
+TokenAnnotation(4345,4349): such
+TokenAnnotation(4350,4357): license
+TokenAnnotation(4358,4365): applies
+TokenAnnotation(4366,4370): only
+TokenAnnotation(4371,4373): to
+TokenAnnotation(4374,4379): those
+TokenAnnotation(4380,4386): patent
+TokenAnnotation(4387,4393): claims
+TokenAnnotation(4394,4404): licensable
+TokenAnnotation(4412,4414): by
+TokenAnnotation(4415,4419): such
+TokenAnnotation(4420,4431): Contributor
+TokenAnnotation(4432,4436): that
+TokenAnnotation(4437,4440): are
+TokenAnnotation(4441,4452): necessarily
+TokenAnnotation(4453,4462): infringed
+TokenAnnotation(4463,4465): by
+TokenAnnotation(4466,4471): their
+TokenAnnotation(4479,4491): Contribution
+TokenAnnotation(4491,4492): (
+TokenAnnotation(4492,4493): s
+TokenAnnotation(4493,4494): )
+TokenAnnotation(4495,4500): alone
+TokenAnnotation(4501,4503): or
+TokenAnnotation(4504,4506): by
+TokenAnnotation(4507,4518): combination
+TokenAnnotation(4519,4521): of
+TokenAnnotation(4522,4527): their
+TokenAnnotation(4528,4540): Contribution
+TokenAnnotation(4540,4541): (
+TokenAnnotation(4541,4542): s
+TokenAnnotation(4542,4543): )
+TokenAnnotation(4551,4555): with
+TokenAnnotation(4556,4559): the
+TokenAnnotation(4560,4564): Work
+TokenAnnotation(4565,4567): to
+TokenAnnotation(4568,4573): which
+TokenAnnotation(4574,4578): such
+TokenAnnotation(4579,4591): Contribution
+TokenAnnotation(4591,4592): (
+TokenAnnotation(4592,4593): s
+TokenAnnotation(4593,4594): )
+TokenAnnotation(4595,4598): was
+TokenAnnotation(4599,4608): submitted
+TokenAnnotation(4608,4609): .
+SentenceAnnotation(4609,5016):  If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+TokenAnnotation(4610,4612): If
+TokenAnnotation(4613,4616): You
+TokenAnnotation(4624,4633): institute
+TokenAnnotation(4634,4640): patent
+TokenAnnotation(4641,4651): litigation
+TokenAnnotation(4652,4659): against
+TokenAnnotation(4660,4663): any
+TokenAnnotation(4664,4670): entity
+TokenAnnotation(4671,4672): (
+TokenAnnotation(4672,4681): including
+TokenAnnotation(4682,4683): a
+TokenAnnotation(4691,4696): cross
+TokenAnnotation(4696,4697): -
+TokenAnnotation(4697,4702): claim
+TokenAnnotation(4703,4705): or
+TokenAnnotation(4706,4718): counterclaim
+TokenAnnotation(4719,4721): in
+TokenAnnotation(4722,4723): a
+TokenAnnotation(4724,4731): lawsuit
+TokenAnnotation(4731,4732): )
+TokenAnnotation(4733,4741): alleging
+TokenAnnotation(4742,4746): that
+TokenAnnotation(4747,4750): the
+TokenAnnotation(4751,4755): Work
+TokenAnnotation(4763,4765): or
+TokenAnnotation(4766,4767): a
+TokenAnnotation(4768,4780): Contribution
+TokenAnnotation(4781,4793): incorporated
+TokenAnnotation(4794,4800): within
+TokenAnnotation(4801,4804): the
+TokenAnnotation(4805,4809): Work
+TokenAnnotation(4810,4821): constitutes
+TokenAnnotation(4822,4828): direct
+TokenAnnotation(4836,4838): or
+TokenAnnotation(4839,4851): contributory
+TokenAnnotation(4852,4858): patent
+TokenAnnotation(4859,4871): infringement
+TokenAnnotation(4871,4872): ,
+TokenAnnotation(4873,4877): then
+TokenAnnotation(4878,4881): any
+TokenAnnotation(4882,4888): patent
+TokenAnnotation(4889,4897): licenses
+TokenAnnotation(4905,4912): granted
+TokenAnnotation(4913,4915): to
+TokenAnnotation(4916,4919): You
+TokenAnnotation(4920,4925): under
+TokenAnnotation(4926,4930): this
+TokenAnnotation(4931,4938): License
+TokenAnnotation(4939,4942): for
+TokenAnnotation(4943,4947): that
+TokenAnnotation(4948,4952): Work
+TokenAnnotation(4953,4958): shall
+TokenAnnotation(4959,4968): terminate
+TokenAnnotation(4976,4978): as
+TokenAnnotation(4979,4981): of
+TokenAnnotation(4982,4985): the
+TokenAnnotation(4986,4990): date
+TokenAnnotation(4991,4995): such
+TokenAnnotation(4996,5006): litigation
+TokenAnnotation(5007,5009): is
+TokenAnnotation(5010,5015): filed
+TokenAnnotation(5015,5016): .
+SentenceAnnotation(5016,5025): 
+
+   4.
+TokenAnnotation(5023,5024): 4
+TokenAnnotation(5024,5025): .
+SentenceAnnotation(5025,5041):  Redistribution.
+TokenAnnotation(5026,5040): Redistribution
+TokenAnnotation(5040,5041): .
+SentenceAnnotation(5041,6539):  You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear.
+TokenAnnotation(5042,5045): You
+TokenAnnotation(5046,5049): may
+TokenAnnotation(5050,5059): reproduce
+TokenAnnotation(5060,5063): and
+TokenAnnotation(5064,5074): distribute
+TokenAnnotation(5075,5081): copies
+TokenAnnotation(5082,5084): of
+TokenAnnotation(5085,5088): the
+TokenAnnotation(5096,5100): Work
+TokenAnnotation(5101,5103): or
+TokenAnnotation(5104,5114): Derivative
+TokenAnnotation(5115,5120): Works
+TokenAnnotation(5121,5128): thereof
+TokenAnnotation(5129,5131): in
+TokenAnnotation(5132,5135): any
+TokenAnnotation(5136,5142): medium
+TokenAnnotation(5142,5143): ,
+TokenAnnotation(5144,5148): with
+TokenAnnotation(5149,5151): or
+TokenAnnotation(5152,5159): without
+TokenAnnotation(5167,5180): modifications
+TokenAnnotation(5180,5181): ,
+TokenAnnotation(5182,5185): and
+TokenAnnotation(5186,5188): in
+TokenAnnotation(5189,5195): Source
+TokenAnnotation(5196,5198): or
+TokenAnnotation(5199,5205): Object
+TokenAnnotation(5206,5210): form
+TokenAnnotation(5210,5211): ,
+TokenAnnotation(5212,5220): provided
+TokenAnnotation(5221,5225): that
+TokenAnnotation(5226,5229): You
+TokenAnnotation(5237,5241): meet
+TokenAnnotation(5242,5245): the
+TokenAnnotation(5246,5255): following
+TokenAnnotation(5256,5266): conditions
+TokenAnnotation(5266,5267): :
+TokenAnnotation(5277,5278): (
+TokenAnnotation(5278,5279): a
+TokenAnnotation(5279,5280): )
+TokenAnnotation(5281,5284): You
+TokenAnnotation(5285,5289): must
+TokenAnnotation(5290,5294): give
+TokenAnnotation(5295,5298): any
+TokenAnnotation(5299,5304): other
+TokenAnnotation(5305,5315): recipients
+TokenAnnotation(5316,5318): of
+TokenAnnotation(5319,5322): the
+TokenAnnotation(5323,5327): Work
+TokenAnnotation(5328,5330): or
+TokenAnnotation(5342,5352): Derivative
+TokenAnnotation(5353,5358): Works
+TokenAnnotation(5359,5360): a
+TokenAnnotation(5361,5365): copy
+TokenAnnotation(5366,5368): of
+TokenAnnotation(5369,5373): this
+TokenAnnotation(5374,5381): License
+TokenAnnotation(5381,5382): ;
+TokenAnnotation(5383,5386): and
+TokenAnnotation(5396,5397): (
+TokenAnnotation(5397,5398): b
+TokenAnnotation(5398,5399): )
+TokenAnnotation(5400,5403): You
+TokenAnnotation(5404,5408): must
+TokenAnnotation(5409,5414): cause
+TokenAnnotation(5415,5418): any
+TokenAnnotation(5419,5427): modified
+TokenAnnotation(5428,5433): files
+TokenAnnotation(5434,5436): to
+TokenAnnotation(5437,5442): carry
+TokenAnnotation(5443,5452): prominent
+TokenAnnotation(5453,5460): notices
+TokenAnnotation(5472,5479): stating
+TokenAnnotation(5480,5484): that
+TokenAnnotation(5485,5488): You
+TokenAnnotation(5489,5496): changed
+TokenAnnotation(5497,5500): the
+TokenAnnotation(5501,5506): files
+TokenAnnotation(5506,5507): ;
+TokenAnnotation(5508,5511): and
+TokenAnnotation(5521,5522): (
+TokenAnnotation(5522,5523): c
+TokenAnnotation(5523,5524): )
+TokenAnnotation(5525,5528): You
+TokenAnnotation(5529,5533): must
+TokenAnnotation(5534,5540): retain
+TokenAnnotation(5540,5541): ,
+TokenAnnotation(5542,5544): in
+TokenAnnotation(5545,5548): the
+TokenAnnotation(5549,5555): Source
+TokenAnnotation(5556,5560): form
+TokenAnnotation(5561,5563): of
+TokenAnnotation(5564,5567): any
+TokenAnnotation(5568,5578): Derivative
+TokenAnnotation(5579,5584): Works
+TokenAnnotation(5596,5600): that
+TokenAnnotation(5601,5604): You
+TokenAnnotation(5605,5615): distribute
+TokenAnnotation(5615,5616): ,
+TokenAnnotation(5617,5620): all
+TokenAnnotation(5621,5630): copyright
+TokenAnnotation(5630,5631): ,
+TokenAnnotation(5632,5638): patent
+TokenAnnotation(5638,5639): ,
+TokenAnnotation(5640,5649): trademark
+TokenAnnotation(5649,5650): ,
+TokenAnnotation(5651,5654): and
+TokenAnnotation(5666,5677): attribution
+TokenAnnotation(5678,5685): notices
+TokenAnnotation(5686,5690): from
+TokenAnnotation(5691,5694): the
+TokenAnnotation(5695,5701): Source
+TokenAnnotation(5702,5706): form
+TokenAnnotation(5707,5709): of
+TokenAnnotation(5710,5713): the
+TokenAnnotation(5714,5718): Work
+TokenAnnotation(5718,5719): ,
+TokenAnnotation(5731,5740): excluding
+TokenAnnotation(5741,5746): those
+TokenAnnotation(5747,5754): notices
+TokenAnnotation(5755,5759): that
+TokenAnnotation(5760,5762): do
+TokenAnnotation(5763,5766): not
+TokenAnnotation(5767,5774): pertain
+TokenAnnotation(5775,5777): to
+TokenAnnotation(5778,5781): any
+TokenAnnotation(5782,5786): part
+TokenAnnotation(5787,5789): of
+TokenAnnotation(5801,5804): the
+TokenAnnotation(5805,5815): Derivative
+TokenAnnotation(5816,5821): Works
+TokenAnnotation(5821,5822): ;
+TokenAnnotation(5823,5826): and
+TokenAnnotation(5836,5837): (
+TokenAnnotation(5837,5838): d
+TokenAnnotation(5838,5839): )
+TokenAnnotation(5840,5842): If
+TokenAnnotation(5843,5846): the
+TokenAnnotation(5847,5851): Work
+TokenAnnotation(5852,5860): includes
+TokenAnnotation(5861,5862): a
+TokenAnnotation(5863,5864): "
+TokenAnnotation(5864,5870): NOTICE
+TokenAnnotation(5870,5871): "
+TokenAnnotation(5872,5876): text
+TokenAnnotation(5877,5881): file
+TokenAnnotation(5882,5884): as
+TokenAnnotation(5885,5889): part
+TokenAnnotation(5890,5892): of
+TokenAnnotation(5893,5896): its
+TokenAnnotation(5908,5920): distribution
+TokenAnnotation(5920,5921): ,
+TokenAnnotation(5922,5926): then
+TokenAnnotation(5927,5930): any
+TokenAnnotation(5931,5941): Derivative
+TokenAnnotation(5942,5947): Works
+TokenAnnotation(5948,5952): that
+TokenAnnotation(5953,5956): You
+TokenAnnotation(5957,5967): distribute
+TokenAnnotation(5968,5972): must
+TokenAnnotation(5984,5991): include
+TokenAnnotation(5992,5993): a
+TokenAnnotation(5994,6002): readable
+TokenAnnotation(6003,6007): copy
+TokenAnnotation(6008,6010): of
+TokenAnnotation(6011,6014): the
+TokenAnnotation(6015,6026): attribution
+TokenAnnotation(6027,6034): notices
+TokenAnnotation(6035,6044): contained
+TokenAnnotation(6056,6062): within
+TokenAnnotation(6063,6067): such
+TokenAnnotation(6068,6074): NOTICE
+TokenAnnotation(6075,6079): file
+TokenAnnotation(6079,6080): ,
+TokenAnnotation(6081,6090): excluding
+TokenAnnotation(6091,6096): those
+TokenAnnotation(6097,6104): notices
+TokenAnnotation(6105,6109): that
+TokenAnnotation(6110,6112): do
+TokenAnnotation(6113,6116): not
+TokenAnnotation(6128,6135): pertain
+TokenAnnotation(6136,6138): to
+TokenAnnotation(6139,6142): any
+TokenAnnotation(6143,6147): part
+TokenAnnotation(6148,6150): of
+TokenAnnotation(6151,6154): the
+TokenAnnotation(6155,6165): Derivative
+TokenAnnotation(6166,6171): Works
+TokenAnnotation(6171,6172): ,
+TokenAnnotation(6173,6175): in
+TokenAnnotation(6176,6178): at
+TokenAnnotation(6179,6184): least
+TokenAnnotation(6185,6188): one
+TokenAnnotation(6200,6202): of
+TokenAnnotation(6203,6206): the
+TokenAnnotation(6207,6216): following
+TokenAnnotation(6217,6223): places
+TokenAnnotation(6223,6224): :
+TokenAnnotation(6225,6231): within
+TokenAnnotation(6232,6233): a
+TokenAnnotation(6234,6240): NOTICE
+TokenAnnotation(6241,6245): text
+TokenAnnotation(6246,6250): file
+TokenAnnotation(6251,6262): distributed
+TokenAnnotation(6274,6276): as
+TokenAnnotation(6277,6281): part
+TokenAnnotation(6282,6284): of
+TokenAnnotation(6285,6288): the
+TokenAnnotation(6289,6299): Derivative
+TokenAnnotation(6300,6305): Works
+TokenAnnotation(6305,6306): ;
+TokenAnnotation(6307,6313): within
+TokenAnnotation(6314,6317): the
+TokenAnnotation(6318,6324): Source
+TokenAnnotation(6325,6329): form
+TokenAnnotation(6330,6332): or
+TokenAnnotation(6344,6357): documentation
+TokenAnnotation(6357,6358): ,
+TokenAnnotation(6359,6361): if
+TokenAnnotation(6362,6370): provided
+TokenAnnotation(6371,6376): along
+TokenAnnotation(6377,6381): with
+TokenAnnotation(6382,6385): the
+TokenAnnotation(6386,6396): Derivative
+TokenAnnotation(6397,6402): Works
+TokenAnnotation(6402,6403): ;
+TokenAnnotation(6404,6406): or
+TokenAnnotation(6406,6407): ,
+TokenAnnotation(6419,6425): within
+TokenAnnotation(6426,6427): a
+TokenAnnotation(6428,6435): display
+TokenAnnotation(6436,6445): generated
+TokenAnnotation(6446,6448): by
+TokenAnnotation(6449,6452): the
+TokenAnnotation(6453,6463): Derivative
+TokenAnnotation(6464,6469): Works
+TokenAnnotation(6469,6470): ,
+TokenAnnotation(6471,6473): if
+TokenAnnotation(6474,6477): and
+TokenAnnotation(6489,6497): wherever
+TokenAnnotation(6498,6502): such
+TokenAnnotation(6503,6508): third
+TokenAnnotation(6508,6509): -
+TokenAnnotation(6509,6514): party
+TokenAnnotation(6515,6522): notices
+TokenAnnotation(6523,6531): normally
+TokenAnnotation(6532,6538): appear
+TokenAnnotation(6538,6539): .
+SentenceAnnotation(6539,6660):  The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License.
+TokenAnnotation(6540,6543): The
+TokenAnnotation(6544,6552): contents
+TokenAnnotation(6564,6566): of
+TokenAnnotation(6567,6570): the
+TokenAnnotation(6571,6577): NOTICE
+TokenAnnotation(6578,6582): file
+TokenAnnotation(6583,6586): are
+TokenAnnotation(6587,6590): for
+TokenAnnotation(6591,6604): informational
+TokenAnnotation(6605,6613): purposes
+TokenAnnotation(6614,6618): only
+TokenAnnotation(6619,6622): and
+TokenAnnotation(6634,6636): do
+TokenAnnotation(6637,6640): not
+TokenAnnotation(6641,6647): modify
+TokenAnnotation(6648,6651): the
+TokenAnnotation(6652,6659): License
+TokenAnnotation(6659,6660): .
+SentenceAnnotation(6660,6948):  You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+TokenAnnotation(6661,6664): You
+TokenAnnotation(6665,6668): may
+TokenAnnotation(6669,6672): add
+TokenAnnotation(6673,6677): Your
+TokenAnnotation(6678,6681): own
+TokenAnnotation(6682,6693): attribution
+TokenAnnotation(6705,6712): notices
+TokenAnnotation(6713,6719): within
+TokenAnnotation(6720,6730): Derivative
+TokenAnnotation(6731,6736): Works
+TokenAnnotation(6737,6741): that
+TokenAnnotation(6742,6745): You
+TokenAnnotation(6746,6756): distribute
+TokenAnnotation(6756,6757): ,
+TokenAnnotation(6758,6767): alongside
+TokenAnnotation(6779,6781): or
+TokenAnnotation(6782,6784): as
+TokenAnnotation(6785,6787): an
+TokenAnnotation(6788,6796): addendum
+TokenAnnotation(6797,6799): to
+TokenAnnotation(6800,6803): the
+TokenAnnotation(6804,6810): NOTICE
+TokenAnnotation(6811,6815): text
+TokenAnnotation(6816,6820): from
+TokenAnnotation(6821,6824): the
+TokenAnnotation(6825,6829): Work
+TokenAnnotation(6829,6830): ,
+TokenAnnotation(6831,6839): provided
+TokenAnnotation(6851,6855): that
+TokenAnnotation(6856,6860): such
+TokenAnnotation(6861,6871): additional
+TokenAnnotation(6872,6883): attribution
+TokenAnnotation(6884,6891): notices
+TokenAnnotation(6892,6898): cannot
+TokenAnnotation(6899,6901): be
+TokenAnnotation(6902,6911): construed
+TokenAnnotation(6923,6925): as
+TokenAnnotation(6926,6935): modifying
+TokenAnnotation(6936,6939): the
+TokenAnnotation(6940,6947): License
+TokenAnnotation(6947,6948): .
+SentenceAnnotation(6948,7356): 
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+TokenAnnotation(6958,6961): You
+TokenAnnotation(6962,6965): may
+TokenAnnotation(6966,6969): add
+TokenAnnotation(6970,6974): Your
+TokenAnnotation(6975,6978): own
+TokenAnnotation(6979,6988): copyright
+TokenAnnotation(6989,6998): statement
+TokenAnnotation(6999,7001): to
+TokenAnnotation(7002,7006): Your
+TokenAnnotation(7007,7020): modifications
+TokenAnnotation(7021,7024): and
+TokenAnnotation(7032,7035): may
+TokenAnnotation(7036,7043): provide
+TokenAnnotation(7044,7054): additional
+TokenAnnotation(7055,7057): or
+TokenAnnotation(7058,7067): different
+TokenAnnotation(7068,7075): license
+TokenAnnotation(7076,7081): terms
+TokenAnnotation(7082,7085): and
+TokenAnnotation(7086,7096): conditions
+TokenAnnotation(7104,7107): for
+TokenAnnotation(7108,7111): use
+TokenAnnotation(7111,7112): ,
+TokenAnnotation(7113,7125): reproduction
+TokenAnnotation(7125,7126): ,
+TokenAnnotation(7127,7129): or
+TokenAnnotation(7130,7142): distribution
+TokenAnnotation(7143,7145): of
+TokenAnnotation(7146,7150): Your
+TokenAnnotation(7151,7164): modifications
+TokenAnnotation(7164,7165): ,
+TokenAnnotation(7166,7168): or
+TokenAnnotation(7176,7179): for
+TokenAnnotation(7180,7183): any
+TokenAnnotation(7184,7188): such
+TokenAnnotation(7189,7199): Derivative
+TokenAnnotation(7200,7205): Works
+TokenAnnotation(7206,7208): as
+TokenAnnotation(7209,7210): a
+TokenAnnotation(7211,7216): whole
+TokenAnnotation(7216,7217): ,
+TokenAnnotation(7218,7226): provided
+TokenAnnotation(7227,7231): Your
+TokenAnnotation(7232,7235): use
+TokenAnnotation(7235,7236): ,
+TokenAnnotation(7244,7256): reproduction
+TokenAnnotation(7256,7257): ,
+TokenAnnotation(7258,7261): and
+TokenAnnotation(7262,7274): distribution
+TokenAnnotation(7275,7277): of
+TokenAnnotation(7278,7281): the
+TokenAnnotation(7282,7286): Work
+TokenAnnotation(7287,7296): otherwise
+TokenAnnotation(7297,7305): complies
+TokenAnnotation(7306,7310): with
+TokenAnnotation(7318,7321): the
+TokenAnnotation(7322,7332): conditions
+TokenAnnotation(7333,7339): stated
+TokenAnnotation(7340,7342): in
+TokenAnnotation(7343,7347): this
+TokenAnnotation(7348,7355): License
+TokenAnnotation(7355,7356): .
+SentenceAnnotation(7356,7365): 
+
+   5.
+TokenAnnotation(7363,7364): 5
+TokenAnnotation(7364,7365): .
+SentenceAnnotation(7365,7394):  Submission of Contributions.
+TokenAnnotation(7366,7376): Submission
+TokenAnnotation(7377,7379): of
+TokenAnnotation(7380,7393): Contributions
+TokenAnnotation(7393,7394): .
+SentenceAnnotation(7394,7645):  Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+TokenAnnotation(7395,7401): Unless
+TokenAnnotation(7402,7405): You
+TokenAnnotation(7406,7416): explicitly
+TokenAnnotation(7417,7422): state
+TokenAnnotation(7423,7432): otherwise
+TokenAnnotation(7432,7433): ,
+TokenAnnotation(7441,7444): any
+TokenAnnotation(7445,7457): Contribution
+TokenAnnotation(7458,7471): intentionally
+TokenAnnotation(7472,7481): submitted
+TokenAnnotation(7482,7485): for
+TokenAnnotation(7486,7495): inclusion
+TokenAnnotation(7496,7498): in
+TokenAnnotation(7499,7502): the
+TokenAnnotation(7503,7507): Work
+TokenAnnotation(7515,7517): by
+TokenAnnotation(7518,7521): You
+TokenAnnotation(7522,7524): to
+TokenAnnotation(7525,7528): the
+TokenAnnotation(7529,7537): Licensor
+TokenAnnotation(7538,7543): shall
+TokenAnnotation(7544,7546): be
+TokenAnnotation(7547,7552): under
+TokenAnnotation(7553,7556): the
+TokenAnnotation(7557,7562): terms
+TokenAnnotation(7563,7566): and
+TokenAnnotation(7567,7577): conditions
+TokenAnnotation(7578,7580): of
+TokenAnnotation(7588,7592): this
+TokenAnnotation(7593,7600): License
+TokenAnnotation(7600,7601): ,
+TokenAnnotation(7602,7609): without
+TokenAnnotation(7610,7613): any
+TokenAnnotation(7614,7624): additional
+TokenAnnotation(7625,7630): terms
+TokenAnnotation(7631,7633): or
+TokenAnnotation(7634,7644): conditions
+TokenAnnotation(7644,7645): .
+SentenceAnnotation(7645,7844): 
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+TokenAnnotation(7653,7668): Notwithstanding
+TokenAnnotation(7669,7672): the
+TokenAnnotation(7673,7678): above
+TokenAnnotation(7678,7679): ,
+TokenAnnotation(7680,7687): nothing
+TokenAnnotation(7688,7694): herein
+TokenAnnotation(7695,7700): shall
+TokenAnnotation(7701,7710): supersede
+TokenAnnotation(7711,7713): or
+TokenAnnotation(7714,7720): modify
+TokenAnnotation(7728,7731): the
+TokenAnnotation(7732,7737): terms
+TokenAnnotation(7738,7740): of
+TokenAnnotation(7741,7744): any
+TokenAnnotation(7745,7753): separate
+TokenAnnotation(7754,7761): license
+TokenAnnotation(7762,7771): agreement
+TokenAnnotation(7772,7775): you
+TokenAnnotation(7776,7779): may
+TokenAnnotation(7780,7784): have
+TokenAnnotation(7785,7793): executed
+TokenAnnotation(7801,7805): with
+TokenAnnotation(7806,7814): Licensor
+TokenAnnotation(7815,7824): regarding
+TokenAnnotation(7825,7829): such
+TokenAnnotation(7830,7843): Contributions
+TokenAnnotation(7843,7844): .
+SentenceAnnotation(7844,7853): 
+
+   6.
+TokenAnnotation(7851,7852): 6
+TokenAnnotation(7852,7853): .
+SentenceAnnotation(7853,7865):  Trademarks.
+TokenAnnotation(7854,7864): Trademarks
+TokenAnnotation(7864,7865): .
+SentenceAnnotation(7865,8147):  This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+TokenAnnotation(7866,7870): This
+TokenAnnotation(7871,7878): License
+TokenAnnotation(7879,7883): does
+TokenAnnotation(7884,7887): not
+TokenAnnotation(7888,7893): grant
+TokenAnnotation(7894,7904): permission
+TokenAnnotation(7905,7907): to
+TokenAnnotation(7908,7911): use
+TokenAnnotation(7912,7915): the
+TokenAnnotation(7916,7921): trade
+TokenAnnotation(7929,7934): names
+TokenAnnotation(7934,7935): ,
+TokenAnnotation(7936,7946): trademarks
+TokenAnnotation(7946,7947): ,
+TokenAnnotation(7948,7955): service
+TokenAnnotation(7956,7961): marks
+TokenAnnotation(7961,7962): ,
+TokenAnnotation(7963,7965): or
+TokenAnnotation(7966,7973): product
+TokenAnnotation(7974,7979): names
+TokenAnnotation(7980,7982): of
+TokenAnnotation(7983,7986): the
+TokenAnnotation(7987,7995): Licensor
+TokenAnnotation(7995,7996): ,
+TokenAnnotation(8004,8010): except
+TokenAnnotation(8011,8013): as
+TokenAnnotation(8014,8022): required
+TokenAnnotation(8023,8026): for
+TokenAnnotation(8027,8037): reasonable
+TokenAnnotation(8038,8041): and
+TokenAnnotation(8042,8051): customary
+TokenAnnotation(8052,8055): use
+TokenAnnotation(8056,8058): in
+TokenAnnotation(8059,8069): describing
+TokenAnnotation(8070,8073): the
+TokenAnnotation(8081,8087): origin
+TokenAnnotation(8088,8090): of
+TokenAnnotation(8091,8094): the
+TokenAnnotation(8095,8099): Work
+TokenAnnotation(8100,8103): and
+TokenAnnotation(8104,8115): reproducing
+TokenAnnotation(8116,8119): the
+TokenAnnotation(8120,8127): content
+TokenAnnotation(8128,8130): of
+TokenAnnotation(8131,8134): the
+TokenAnnotation(8135,8141): NOTICE
+TokenAnnotation(8142,8146): file
+TokenAnnotation(8146,8147): .
+SentenceAnnotation(8147,8156): 
+
+   7.
+TokenAnnotation(8154,8155): 7
+TokenAnnotation(8155,8156): .
+SentenceAnnotation(8156,8180):  Disclaimer of Warranty.
+TokenAnnotation(8157,8167): Disclaimer
+TokenAnnotation(8168,8170): of
+TokenAnnotation(8171,8179): Warranty
+TokenAnnotation(8179,8180): .
+SentenceAnnotation(8180,8594):  Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE.
+TokenAnnotation(8181,8187): Unless
+TokenAnnotation(8188,8196): required
+TokenAnnotation(8197,8199): by
+TokenAnnotation(8200,8210): applicable
+TokenAnnotation(8211,8214): law
+TokenAnnotation(8215,8217): or
+TokenAnnotation(8225,8231): agreed
+TokenAnnotation(8232,8234): to
+TokenAnnotation(8235,8237): in
+TokenAnnotation(8238,8245): writing
+TokenAnnotation(8245,8246): ,
+TokenAnnotation(8247,8255): Licensor
+TokenAnnotation(8256,8264): provides
+TokenAnnotation(8265,8268): the
+TokenAnnotation(8269,8273): Work
+TokenAnnotation(8274,8275): (
+TokenAnnotation(8275,8278): and
+TokenAnnotation(8279,8283): each
+TokenAnnotation(8291,8302): Contributor
+TokenAnnotation(8303,8311): provides
+TokenAnnotation(8312,8315): its
+TokenAnnotation(8316,8329): Contributions
+TokenAnnotation(8329,8330): )
+TokenAnnotation(8331,8333): on
+TokenAnnotation(8334,8336): an
+TokenAnnotation(8337,8338): "
+TokenAnnotation(8338,8340): AS
+TokenAnnotation(8341,8343): IS
+TokenAnnotation(8343,8344): "
+TokenAnnotation(8345,8350): BASIS
+TokenAnnotation(8350,8351): ,
+TokenAnnotation(8359,8366): WITHOUT
+TokenAnnotation(8367,8377): WARRANTIES
+TokenAnnotation(8378,8380): OR
+TokenAnnotation(8381,8391): CONDITIONS
+TokenAnnotation(8392,8394): OF
+TokenAnnotation(8395,8398): ANY
+TokenAnnotation(8399,8403): KIND
+TokenAnnotation(8403,8404): ,
+TokenAnnotation(8405,8411): either
+TokenAnnotation(8412,8419): express
+TokenAnnotation(8420,8422): or
+TokenAnnotation(8430,8437): implied
+TokenAnnotation(8437,8438): ,
+TokenAnnotation(8439,8448): including
+TokenAnnotation(8448,8449): ,
+TokenAnnotation(8450,8457): without
+TokenAnnotation(8458,8468): limitation
+TokenAnnotation(8468,8469): ,
+TokenAnnotation(8470,8473): any
+TokenAnnotation(8474,8484): warranties
+TokenAnnotation(8485,8487): or
+TokenAnnotation(8488,8498): conditions
+TokenAnnotation(8506,8508): of
+TokenAnnotation(8509,8514): TITLE
+TokenAnnotation(8514,8515): ,
+TokenAnnotation(8516,8519): NON
+TokenAnnotation(8519,8520): -
+TokenAnnotation(8520,8532): INFRINGEMENT
+TokenAnnotation(8532,8533): ,
+TokenAnnotation(8534,8549): MERCHANTABILITY
+TokenAnnotation(8549,8550): ,
+TokenAnnotation(8551,8553): or
+TokenAnnotation(8554,8561): FITNESS
+TokenAnnotation(8562,8565): FOR
+TokenAnnotation(8566,8567): A
+TokenAnnotation(8575,8585): PARTICULAR
+TokenAnnotation(8586,8593): PURPOSE
+TokenAnnotation(8593,8594): .
+SentenceAnnotation(8594,8793):  You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+TokenAnnotation(8595,8598): You
+TokenAnnotation(8599,8602): are
+TokenAnnotation(8603,8609): solely
+TokenAnnotation(8610,8621): responsible
+TokenAnnotation(8622,8625): for
+TokenAnnotation(8626,8637): determining
+TokenAnnotation(8638,8641): the
+TokenAnnotation(8649,8664): appropriateness
+TokenAnnotation(8665,8667): of
+TokenAnnotation(8668,8673): using
+TokenAnnotation(8674,8676): or
+TokenAnnotation(8677,8691): redistributing
+TokenAnnotation(8692,8695): the
+TokenAnnotation(8696,8700): Work
+TokenAnnotation(8701,8704): and
+TokenAnnotation(8705,8711): assume
+TokenAnnotation(8712,8715): any
+TokenAnnotation(8723,8728): risks
+TokenAnnotation(8729,8739): associated
+TokenAnnotation(8740,8744): with
+TokenAnnotation(8745,8749): Your
+TokenAnnotation(8750,8758): exercise
+TokenAnnotation(8759,8761): of
+TokenAnnotation(8762,8773): permissions
+TokenAnnotation(8774,8779): under
+TokenAnnotation(8780,8784): this
+TokenAnnotation(8785,8792): License
+TokenAnnotation(8792,8793): .
+SentenceAnnotation(8793,8802): 
+
+   8.
+TokenAnnotation(8800,8801): 8
+TokenAnnotation(8801,8802): .
+SentenceAnnotation(8802,8827):  Limitation of Liability.
+TokenAnnotation(8803,8813): Limitation
+TokenAnnotation(8814,8816): of
+TokenAnnotation(8817,8826): Liability
+TokenAnnotation(8826,8827): .
+SentenceAnnotation(8827,9575):  In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+TokenAnnotation(8828,8830): In
+TokenAnnotation(8831,8833): no
+TokenAnnotation(8834,8839): event
+TokenAnnotation(8840,8843): and
+TokenAnnotation(8844,8849): under
+TokenAnnotation(8850,8852): no
+TokenAnnotation(8853,8858): legal
+TokenAnnotation(8859,8865): theory
+TokenAnnotation(8865,8866): ,
+TokenAnnotation(8874,8881): whether
+TokenAnnotation(8882,8884): in
+TokenAnnotation(8885,8889): tort
+TokenAnnotation(8890,8891): (
+TokenAnnotation(8891,8900): including
+TokenAnnotation(8901,8911): negligence
+TokenAnnotation(8911,8912): )
+TokenAnnotation(8912,8913): ,
+TokenAnnotation(8914,8922): contract
+TokenAnnotation(8922,8923): ,
+TokenAnnotation(8924,8926): or
+TokenAnnotation(8927,8936): otherwise
+TokenAnnotation(8936,8937): ,
+TokenAnnotation(8945,8951): unless
+TokenAnnotation(8952,8960): required
+TokenAnnotation(8961,8963): by
+TokenAnnotation(8964,8974): applicable
+TokenAnnotation(8975,8978): law
+TokenAnnotation(8979,8980): (
+TokenAnnotation(8980,8984): such
+TokenAnnotation(8985,8987): as
+TokenAnnotation(8988,8998): deliberate
+TokenAnnotation(8999,9002): and
+TokenAnnotation(9003,9010): grossly
+TokenAnnotation(9018,9027): negligent
+TokenAnnotation(9028,9032): acts
+TokenAnnotation(9032,9033): )
+TokenAnnotation(9034,9036): or
+TokenAnnotation(9037,9043): agreed
+TokenAnnotation(9044,9046): to
+TokenAnnotation(9047,9049): in
+TokenAnnotation(9050,9057): writing
+TokenAnnotation(9057,9058): ,
+TokenAnnotation(9059,9064): shall
+TokenAnnotation(9065,9068): any
+TokenAnnotation(9069,9080): Contributor
+TokenAnnotation(9081,9083): be
+TokenAnnotation(9091,9097): liable
+TokenAnnotation(9098,9100): to
+TokenAnnotation(9101,9104): You
+TokenAnnotation(9105,9108): for
+TokenAnnotation(9109,9116): damages
+TokenAnnotation(9116,9117): ,
+TokenAnnotation(9118,9127): including
+TokenAnnotation(9128,9131): any
+TokenAnnotation(9132,9138): direct
+TokenAnnotation(9138,9139): ,
+TokenAnnotation(9140,9148): indirect
+TokenAnnotation(9148,9149): ,
+TokenAnnotation(9150,9157): special
+TokenAnnotation(9157,9158): ,
+TokenAnnotation(9166,9176): incidental
+TokenAnnotation(9176,9177): ,
+TokenAnnotation(9178,9180): or
+TokenAnnotation(9181,9194): consequential
+TokenAnnotation(9195,9202): damages
+TokenAnnotation(9203,9205): of
+TokenAnnotation(9206,9209): any
+TokenAnnotation(9210,9219): character
+TokenAnnotation(9220,9227): arising
+TokenAnnotation(9228,9230): as
+TokenAnnotation(9231,9232): a
+TokenAnnotation(9240,9246): result
+TokenAnnotation(9247,9249): of
+TokenAnnotation(9250,9254): this
+TokenAnnotation(9255,9262): License
+TokenAnnotation(9263,9265): or
+TokenAnnotation(9266,9269): out
+TokenAnnotation(9270,9272): of
+TokenAnnotation(9273,9276): the
+TokenAnnotation(9277,9280): use
+TokenAnnotation(9281,9283): or
+TokenAnnotation(9284,9293): inability
+TokenAnnotation(9294,9296): to
+TokenAnnotation(9297,9300): use
+TokenAnnotation(9301,9304): the
+TokenAnnotation(9312,9316): Work
+TokenAnnotation(9317,9318): (
+TokenAnnotation(9318,9327): including
+TokenAnnotation(9328,9331): but
+TokenAnnotation(9332,9335): not
+TokenAnnotation(9336,9343): limited
+TokenAnnotation(9344,9346): to
+TokenAnnotation(9347,9354): damages
+TokenAnnotation(9355,9358): for
+TokenAnnotation(9359,9363): loss
+TokenAnnotation(9364,9366): of
+TokenAnnotation(9367,9375): goodwill
+TokenAnnotation(9375,9376): ,
+TokenAnnotation(9384,9388): work
+TokenAnnotation(9389,9397): stoppage
+TokenAnnotation(9397,9398): ,
+TokenAnnotation(9399,9407): computer
+TokenAnnotation(9408,9415): failure
+TokenAnnotation(9416,9418): or
+TokenAnnotation(9419,9430): malfunction
+TokenAnnotation(9430,9431): ,
+TokenAnnotation(9432,9434): or
+TokenAnnotation(9435,9438): any
+TokenAnnotation(9439,9442): and
+TokenAnnotation(9443,9446): all
+TokenAnnotation(9454,9459): other
+TokenAnnotation(9460,9470): commercial
+TokenAnnotation(9471,9478): damages
+TokenAnnotation(9479,9481): or
+TokenAnnotation(9482,9488): losses
+TokenAnnotation(9488,9489): )
+TokenAnnotation(9489,9490): ,
+TokenAnnotation(9491,9495): even
+TokenAnnotation(9496,9498): if
+TokenAnnotation(9499,9503): such
+TokenAnnotation(9504,9515): Contributor
+TokenAnnotation(9523,9526): has
+TokenAnnotation(9527,9531): been
+TokenAnnotation(9532,9539): advised
+TokenAnnotation(9540,9542): of
+TokenAnnotation(9543,9546): the
+TokenAnnotation(9547,9558): possibility
+TokenAnnotation(9559,9561): of
+TokenAnnotation(9562,9566): such
+TokenAnnotation(9567,9574): damages
+TokenAnnotation(9574,9575): .
+SentenceAnnotation(9575,9584): 
+
+   9.
+TokenAnnotation(9582,9583): 9
+TokenAnnotation(9583,9584): .
+SentenceAnnotation(9584,9628):  Accepting Warranty or Additional Liability.
+TokenAnnotation(9585,9594): Accepting
+TokenAnnotation(9595,9603): Warranty
+TokenAnnotation(9604,9606): or
+TokenAnnotation(9607,9617): Additional
+TokenAnnotation(9618,9627): Liability
+TokenAnnotation(9627,9628): .
+SentenceAnnotation(9628,9881):  While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License.
+TokenAnnotation(9629,9634): While
+TokenAnnotation(9635,9649): redistributing
+TokenAnnotation(9657,9660): the
+TokenAnnotation(9661,9665): Work
+TokenAnnotation(9666,9668): or
+TokenAnnotation(9669,9679): Derivative
+TokenAnnotation(9680,9685): Works
+TokenAnnotation(9686,9693): thereof
+TokenAnnotation(9693,9694): ,
+TokenAnnotation(9695,9698): You
+TokenAnnotation(9699,9702): may
+TokenAnnotation(9703,9709): choose
+TokenAnnotation(9710,9712): to
+TokenAnnotation(9713,9718): offer
+TokenAnnotation(9718,9719): ,
+TokenAnnotation(9727,9730): and
+TokenAnnotation(9731,9737): charge
+TokenAnnotation(9738,9739): a
+TokenAnnotation(9740,9743): fee
+TokenAnnotation(9744,9747): for
+TokenAnnotation(9747,9748): ,
+TokenAnnotation(9749,9759): acceptance
+TokenAnnotation(9760,9762): of
+TokenAnnotation(9763,9770): support
+TokenAnnotation(9770,9771): ,
+TokenAnnotation(9772,9780): warranty
+TokenAnnotation(9780,9781): ,
+TokenAnnotation(9782,9791): indemnity
+TokenAnnotation(9791,9792): ,
+TokenAnnotation(9800,9802): or
+TokenAnnotation(9803,9808): other
+TokenAnnotation(9809,9818): liability
+TokenAnnotation(9819,9830): obligations
+TokenAnnotation(9831,9834): and
+TokenAnnotation(9834,9835): /
+TokenAnnotation(9835,9837): or
+TokenAnnotation(9838,9844): rights
+TokenAnnotation(9845,9855): consistent
+TokenAnnotation(9856,9860): with
+TokenAnnotation(9861,9865): this
+TokenAnnotation(9873,9880): License
+TokenAnnotation(9880,9881): .
+SentenceAnnotation(9881,10291):  However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+TokenAnnotation(9882,9889): However
+TokenAnnotation(9889,9890): ,
+TokenAnnotation(9891,9893): in
+TokenAnnotation(9894,9903): accepting
+TokenAnnotation(9904,9908): such
+TokenAnnotation(9909,9920): obligations
+TokenAnnotation(9920,9921): ,
+TokenAnnotation(9922,9925): You
+TokenAnnotation(9926,9929): may
+TokenAnnotation(9930,9933): act
+TokenAnnotation(9934,9938): only
+TokenAnnotation(9946,9948): on
+TokenAnnotation(9949,9953): Your
+TokenAnnotation(9954,9957): own
+TokenAnnotation(9958,9964): behalf
+TokenAnnotation(9965,9968): and
+TokenAnnotation(9969,9971): on
+TokenAnnotation(9972,9976): Your
+TokenAnnotation(9977,9981): sole
+TokenAnnotation(9982,9996): responsibility
+TokenAnnotation(9996,9997): ,
+TokenAnnotation(9998,10001): not
+TokenAnnotation(10002,10004): on
+TokenAnnotation(10005,10011): behalf
+TokenAnnotation(10019,10021): of
+TokenAnnotation(10022,10025): any
+TokenAnnotation(10026,10031): other
+TokenAnnotation(10032,10043): Contributor
+TokenAnnotation(10043,10044): ,
+TokenAnnotation(10045,10048): and
+TokenAnnotation(10049,10053): only
+TokenAnnotation(10054,10056): if
+TokenAnnotation(10057,10060): You
+TokenAnnotation(10061,10066): agree
+TokenAnnotation(10067,10069): to
+TokenAnnotation(10070,10079): indemnify
+TokenAnnotation(10079,10080): ,
+TokenAnnotation(10088,10094): defend
+TokenAnnotation(10094,10095): ,
+TokenAnnotation(10096,10099): and
+TokenAnnotation(10100,10104): hold
+TokenAnnotation(10105,10109): each
+TokenAnnotation(10110,10121): Contributor
+TokenAnnotation(10122,10130): harmless
+TokenAnnotation(10131,10134): for
+TokenAnnotation(10135,10138): any
+TokenAnnotation(10139,10148): liability
+TokenAnnotation(10156,10164): incurred
+TokenAnnotation(10165,10167): by
+TokenAnnotation(10167,10168): ,
+TokenAnnotation(10169,10171): or
+TokenAnnotation(10172,10178): claims
+TokenAnnotation(10179,10187): asserted
+TokenAnnotation(10188,10195): against
+TokenAnnotation(10195,10196): ,
+TokenAnnotation(10197,10201): such
+TokenAnnotation(10202,10213): Contributor
+TokenAnnotation(10214,10216): by
+TokenAnnotation(10217,10223): reason
+TokenAnnotation(10231,10233): of
+TokenAnnotation(10234,10238): your
+TokenAnnotation(10239,10248): accepting
+TokenAnnotation(10249,10252): any
+TokenAnnotation(10253,10257): such
+TokenAnnotation(10258,10266): warranty
+TokenAnnotation(10267,10269): or
+TokenAnnotation(10270,10280): additional
+TokenAnnotation(10281,10290): liability
+TokenAnnotation(10290,10291): .
+SentenceAnnotation(10291,10387): 
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+TokenAnnotation(10298,10301): END
+TokenAnnotation(10302,10304): OF
+TokenAnnotation(10305,10310): TERMS
+TokenAnnotation(10311,10314): AND
+TokenAnnotation(10315,10325): CONDITIONS
+TokenAnnotation(10332,10340): APPENDIX
+TokenAnnotation(10340,10341): :
+TokenAnnotation(10342,10345): How
+TokenAnnotation(10346,10348): to
+TokenAnnotation(10349,10354): apply
+TokenAnnotation(10355,10358): the
+TokenAnnotation(10359,10365): Apache
+TokenAnnotation(10366,10373): License
+TokenAnnotation(10374,10376): to
+TokenAnnotation(10377,10381): your
+TokenAnnotation(10382,10386): work
+TokenAnnotation(10386,10387): .
+SentenceAnnotation(10387,10583): 
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information.
+TokenAnnotation(10397,10399): To
+TokenAnnotation(10400,10405): apply
+TokenAnnotation(10406,10409): the
+TokenAnnotation(10410,10416): Apache
+TokenAnnotation(10417,10424): License
+TokenAnnotation(10425,10427): to
+TokenAnnotation(10428,10432): your
+TokenAnnotation(10433,10437): work
+TokenAnnotation(10437,10438): ,
+TokenAnnotation(10439,10445): attach
+TokenAnnotation(10446,10449): the
+TokenAnnotation(10450,10459): following
+TokenAnnotation(10467,10478): boilerplate
+TokenAnnotation(10479,10485): notice
+TokenAnnotation(10485,10486): ,
+TokenAnnotation(10487,10491): with
+TokenAnnotation(10492,10495): the
+TokenAnnotation(10496,10502): fields
+TokenAnnotation(10503,10511): enclosed
+TokenAnnotation(10512,10514): by
+TokenAnnotation(10515,10523): brackets
+TokenAnnotation(10524,10525): "
+TokenAnnotation(10525,10526): [
+TokenAnnotation(10526,10527): ]
+TokenAnnotation(10527,10528): "
+TokenAnnotation(10536,10544): replaced
+TokenAnnotation(10545,10549): with
+TokenAnnotation(10550,10554): your
+TokenAnnotation(10555,10558): own
+TokenAnnotation(10559,10570): identifying
+TokenAnnotation(10571,10582): information
+TokenAnnotation(10582,10583): .
+SentenceAnnotation(10583,10711):  (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format.
+TokenAnnotation(10584,10585): (
+TokenAnnotation(10585,10588): Don
+TokenAnnotation(10588,10589): '
+TokenAnnotation(10589,10590): t
+TokenAnnotation(10591,10598): include
+TokenAnnotation(10606,10609): the
+TokenAnnotation(10610,10618): brackets
+TokenAnnotation(10618,10619): !
+TokenAnnotation(10619,10620): )
+TokenAnnotation(10622,10625): The
+TokenAnnotation(10626,10630): text
+TokenAnnotation(10631,10637): should
+TokenAnnotation(10638,10640): be
+TokenAnnotation(10641,10649): enclosed
+TokenAnnotation(10650,10652): in
+TokenAnnotation(10653,10656): the
+TokenAnnotation(10657,10668): appropriate
+TokenAnnotation(10676,10683): comment
+TokenAnnotation(10684,10690): syntax
+TokenAnnotation(10691,10694): for
+TokenAnnotation(10695,10698): the
+TokenAnnotation(10699,10703): file
+TokenAnnotation(10704,10710): format
+TokenAnnotation(10710,10711): .
+SentenceAnnotation(10711,10921):  We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+TokenAnnotation(10712,10714): We
+TokenAnnotation(10715,10719): also
+TokenAnnotation(10720,10729): recommend
+TokenAnnotation(10730,10734): that
+TokenAnnotation(10735,10736): a
+TokenAnnotation(10744,10748): file
+TokenAnnotation(10749,10751): or
+TokenAnnotation(10752,10757): class
+TokenAnnotation(10758,10762): name
+TokenAnnotation(10763,10766): and
+TokenAnnotation(10767,10778): description
+TokenAnnotation(10779,10781): of
+TokenAnnotation(10782,10789): purpose
+TokenAnnotation(10790,10792): be
+TokenAnnotation(10793,10801): included
+TokenAnnotation(10802,10804): on
+TokenAnnotation(10805,10808): the
+TokenAnnotation(10816,10820): same
+TokenAnnotation(10821,10822): "
+TokenAnnotation(10822,10829): printed
+TokenAnnotation(10830,10834): page
+TokenAnnotation(10834,10835): "
+TokenAnnotation(10836,10838): as
+TokenAnnotation(10839,10842): the
+TokenAnnotation(10843,10852): copyright
+TokenAnnotation(10853,10859): notice
+TokenAnnotation(10860,10863): for
+TokenAnnotation(10864,10870): easier
+TokenAnnotation(10878,10892): identification
+TokenAnnotation(10893,10899): within
+TokenAnnotation(10900,10905): third
+TokenAnnotation(10905,10906): -
+TokenAnnotation(10906,10911): party
+TokenAnnotation(10912,10920): archives
+TokenAnnotation(10920,10921): .
+SentenceAnnotation(10921,11109): 
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+TokenAnnotation(10928,10937): Copyright
+TokenAnnotation(10938,10939): [
+TokenAnnotation(10939,10943): yyyy
+TokenAnnotation(10943,10944): ]
+TokenAnnotation(10945,10946): [
+TokenAnnotation(10946,10950): name
+TokenAnnotation(10951,10953): of
+TokenAnnotation(10954,10963): copyright
+TokenAnnotation(10964,10969): owner
+TokenAnnotation(10969,10970): ]
+TokenAnnotation(10977,10985): Licensed
+TokenAnnotation(10986,10991): under
+TokenAnnotation(10992,10995): the
+TokenAnnotation(10996,11002): Apache
+TokenAnnotation(11003,11010): License
+TokenAnnotation(11010,11011): ,
+TokenAnnotation(11012,11019): Version
+TokenAnnotation(11020,11021): 2
+TokenAnnotation(11021,11022): .
+TokenAnnotation(11022,11023): 0
+TokenAnnotation(11024,11025): (
+TokenAnnotation(11025,11028): the
+TokenAnnotation(11029,11030): "
+TokenAnnotation(11030,11037): License
+TokenAnnotation(11037,11038): "
+TokenAnnotation(11038,11039): )
+TokenAnnotation(11039,11040): ;
+TokenAnnotation(11045,11048): you
+TokenAnnotation(11049,11052): may
+TokenAnnotation(11053,11056): not
+TokenAnnotation(11057,11060): use
+TokenAnnotation(11061,11065): this
+TokenAnnotation(11066,11070): file
+TokenAnnotation(11071,11077): except
+TokenAnnotation(11078,11080): in
+TokenAnnotation(11081,11091): compliance
+TokenAnnotation(11092,11096): with
+TokenAnnotation(11097,11100): the
+TokenAnnotation(11101,11108): License
+TokenAnnotation(11108,11109): .
+SentenceAnnotation(11109,11427): 
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+TokenAnnotation(11114,11117): You
+TokenAnnotation(11118,11121): may
+TokenAnnotation(11122,11128): obtain
+TokenAnnotation(11129,11130): a
+TokenAnnotation(11131,11135): copy
+TokenAnnotation(11136,11138): of
+TokenAnnotation(11139,11142): the
+TokenAnnotation(11143,11150): License
+TokenAnnotation(11151,11153): at
+TokenAnnotation(11164,11168): http
+TokenAnnotation(11168,11169): :
+TokenAnnotation(11169,11170): /
+TokenAnnotation(11170,11171): /
+TokenAnnotation(11171,11174): www
+TokenAnnotation(11174,11175): .
+TokenAnnotation(11175,11181): apache
+TokenAnnotation(11181,11182): .
+TokenAnnotation(11182,11185): org
+TokenAnnotation(11185,11186): /
+TokenAnnotation(11186,11194): licenses
+TokenAnnotation(11194,11195): /
+TokenAnnotation(11195,11202): LICENSE
+TokenAnnotation(11202,11203): -
+TokenAnnotation(11203,11204): 2
+TokenAnnotation(11204,11205): .
+TokenAnnotation(11205,11206): 0
+TokenAnnotation(11213,11219): Unless
+TokenAnnotation(11220,11228): required
+TokenAnnotation(11229,11231): by
+TokenAnnotation(11232,11242): applicable
+TokenAnnotation(11243,11246): law
+TokenAnnotation(11247,11249): or
+TokenAnnotation(11250,11256): agreed
+TokenAnnotation(11257,11259): to
+TokenAnnotation(11260,11262): in
+TokenAnnotation(11263,11270): writing
+TokenAnnotation(11270,11271): ,
+TokenAnnotation(11272,11280): software
+TokenAnnotation(11285,11296): distributed
+TokenAnnotation(11297,11302): under
+TokenAnnotation(11303,11306): the
+TokenAnnotation(11307,11314): License
+TokenAnnotation(11315,11317): is
+TokenAnnotation(11318,11329): distributed
+TokenAnnotation(11330,11332): on
+TokenAnnotation(11333,11335): an
+TokenAnnotation(11336,11337): "
+TokenAnnotation(11337,11339): AS
+TokenAnnotation(11340,11342): IS
+TokenAnnotation(11342,11343): "
+TokenAnnotation(11344,11349): BASIS
+TokenAnnotation(11349,11350): ,
+TokenAnnotation(11355,11362): WITHOUT
+TokenAnnotation(11363,11373): WARRANTIES
+TokenAnnotation(11374,11376): OR
+TokenAnnotation(11377,11387): CONDITIONS
+TokenAnnotation(11388,11390): OF
+TokenAnnotation(11391,11394): ANY
+TokenAnnotation(11395,11399): KIND
+TokenAnnotation(11399,11400): ,
+TokenAnnotation(11401,11407): either
+TokenAnnotation(11408,11415): express
+TokenAnnotation(11416,11418): or
+TokenAnnotation(11419,11426): implied
+TokenAnnotation(11426,11427): .
+SentenceAnnotation(11427,11534): 
+   See the License for the specific language governing permissions and
+   limitations under the License.
+TokenAnnotation(11432,11435): See
+TokenAnnotation(11436,11439): the
+TokenAnnotation(11440,11447): License
+TokenAnnotation(11448,11451): for
+TokenAnnotation(11452,11455): the
+TokenAnnotation(11456,11464): specific
+TokenAnnotation(11465,11473): language
+TokenAnnotation(11474,11483): governing
+TokenAnnotation(11484,11495): permissions
+TokenAnnotation(11496,11499): and
+TokenAnnotation(11504,11515): limitations
+TokenAnnotation(11516,11521): under
+TokenAnnotation(11522,11525): the
+TokenAnnotation(11526,11533): License
+TokenAnnotation(11533,11534): .

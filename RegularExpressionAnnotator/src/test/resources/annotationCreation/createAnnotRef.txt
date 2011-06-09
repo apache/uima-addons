@@ -1,0 +1,5 @@
+TestAnnot(0,59): AnnotationCreationTestThatTestsTheVariousMatchGroupsNumbers  { testFeature=AnnotationCreationTestThatTestsTheVariousMatchGroupsNumbers, testFeature1=Annotation }
+TestAnnot1(18,22): Test  { testFeature=Creation, testFeature1=That }
+TestAnnot2(18,22): Test  { testFeature=The, testFeature1=Match }
+TestAnnot4(26,59): TestsTheVariousMatchGroupsNumbers
+TestAnnot3(26,26):   { testFeature=Various, testFeature1=Groups }

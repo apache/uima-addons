@@ -1,0 +1,141 @@
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.  
+  
+    
+app-1.0.0-v20070423.jar
+  org.eclipse.equinox groupId;
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+    and includes OSGi Materials licensed under the Apache v2 license
+  about directory has a LICENSE file holding Apache v2 license
+  
+common-2.3.0-v200706262000.jar
+  groupId: org.eclipse.emf
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+  
+common-3.3.0-v20070426.jar
+  groupId: org.eclipse.equinox
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+  
+commons-jxpath-1.3.jar
+  groupId: commons-jxpath
+  Notice file is standard minimal Apache Notice file
+  LICENSE is standard Apache v2
+    
+contenttype-3.2.100-v20070319.jar
+  groupId: org.eclipse.core
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+  
+ecore-2.3.0-v200706262000.jar
+  groupId: org.eclipse.emf
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+    and includes Apache XML4J 4.3 derivative works 
+
+jobs-3.3.0-v20070423.jar
+  groupId: org.eclipse.core
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+  
+osgi-3.3.0-v20070530.jar
+  groupId: org.eclipse
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+    and includes OSGi Materials licensed under the Apache v2 license
+  about directory has a LICENSE file holding Apache v2 license
+
+preferences-3.2.100-v20070522.jar
+  groupId: org.eclipse.equinox
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+    and includes OSGi Materials licensed under the Apache v2 license
+  about directory has a LICENSE file holding Apache v2 license
+
+registry-3.3.0-v20070522.jar
+  groupId: org.eclipse.equinox
+  NOTICE file holding a standard minimal Apache Notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+    and includes Jakarta Commons Collection licensed under the Apache v2 license
+  about directory has a LICENSE file holding Apache v2 license
+    and a NOTICE file holding a standard minimal Apache Notice file
+
+runtime-3.3.100-v20070530.jar
+  groupId: org.eclipse.core
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+  
+xmi-2.3.0-v200706262000.jar
+  groupId: org.eclipse.emf
+  no notice file;
+  about.html indicates its under EPL http://www.eclipse.org/legal/epl-v10.html
+
+xmlbeans-2.4.0.jar
+  groupId: org.apache.xmlbeans
+  Notice File has several notices in it, but nothing that states the notices
+    need to be copied to a project which includes it.
+  License: Apache v2
+  xmlbeans depends on stax:stax-api
+  
+ 
+  stax:stax-api dependency replaced with
+  org.apache.geronimo.specs:geronimo-stax-api_1.0_spec
+  version 1.0.1  
+  see https://issues.apache.org/jira/browse/LEGAL-42
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

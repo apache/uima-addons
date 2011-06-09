@@ -1,0 +1,1 @@
+TestAnnot(0,13): RuleRegex32.4  { testFeature0={Rule}$, testFeature1=RuleRegex32.4, testFeature2=Regex with additions, testFeature3=value only, testFeature4=first Rule, testFeature7=2.4 }

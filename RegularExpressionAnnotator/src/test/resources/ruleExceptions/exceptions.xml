@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ -->
+<conceptSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://incubator.apache.org/uima/regex">
+	
+	<!-- testing with the DocumentAnnotation -->
+    <concept name="DocAnnotException">
+    	<rules>
+			<rule regEx="simpleMatch" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation">
+			 	<ruleExceptions>	
+	  				<exception matchType="uima.tcas.DocumentAnnotation">\d\d-\w\w\w-test</exception>
+  				</ruleExceptions>
+			</rule>
+	    </rules>
+	    <createAnnotations>	
+			<annotation id="testannot" type="org.apache.uima.TestAnnot">
+				<begin group="0" location="start"/>
+				<end group="0" location="end"/>
+				<setFeature name="testFeature" type="String">$0</setFeature>
+		 	</annotation>
+	 	</createAnnotations>
+    </concept>
+
+	<!-- testing with the SentenceAnnotation as exception-->
+    <concept name="createSentenceAnnotAndTokens">
+    	<rules>
+			<rule regEx=".*((car) (carbon) (test)? (cat) (cart)).*" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
+	    </rules>
+	    <createAnnotations>	  
+			<annotation id="sentence" type="org.apache.uima.SentenceAnnot">
+				<begin group="1" location="start"/>
+				<end group="1" location="end"/>
+		 	</annotation>
+		 	<annotation id="token1" type="org.apache.uima.TokenAnnot">
+				<begin group="2" location="start"/>
+				<end group="2" location="end"/>
+		 	</annotation>
+		 	<annotation id="token2" type="org.apache.uima.TokenAnnot">
+				<begin group="3" location="start"/>
+				<end group="3" location="end"/>
+		 	</annotation>
+		 	<annotation id="token3" type="org.apache.uima.TokenAnnot">
+				<begin group="4" location="start"/>
+				<end group="4" location="end"/>
+		 	</annotation>
+		 	<annotation id="token4" type="org.apache.uima.TokenAnnot">
+				<begin group="5" location="start"/>
+				<end group="5" location="end"/>
+		 	</annotation>	
+		 	<annotation id="token5" type="org.apache.uima.TokenAnnot">
+				<begin group="6" location="start"/>
+				<end group="6" location="end"/>
+		 	</annotation>	
+	 	</createAnnotations> 	
+    </concept>
+
+    <concept name="matchTokensWithSentenceException">
+    	<rules>
+			<rule regEx="(car)(.)*" matchStrategy="matchAll" matchType="org.apache.uima.TokenAnnot">
+			 	<ruleExceptions>	
+	  				<exception matchType="org.apache.uima.SentenceAnnot">test</exception>
+  				</ruleExceptions>
+			</rule>
+	    </rules>
+	    <createAnnotations>	
+			<annotation id="annot" type="org.apache.uima.TestAnnot">
+				<begin group="0" location="start"/>
+				<end group="0" location="end"/>
+		 	</annotation>
+	 	</createAnnotations>
+    </concept>
+
+</conceptSet>

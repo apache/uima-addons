@@ -1,0 +1,653 @@
+SentenceAnnotation(0,139): "License" shall mean the terms and conditions for use, reproduction,
+and distribution as defined by Sections 1 through 9 of this document.
+TokenAnnotation(0,1): "
+TokenAnnotation(1,8): License
+TokenAnnotation(8,9): "
+TokenAnnotation(10,15): shall
+TokenAnnotation(16,20): mean
+TokenAnnotation(21,24): the
+TokenAnnotation(25,30): terms
+TokenAnnotation(31,34): and
+TokenAnnotation(35,45): conditions
+TokenAnnotation(46,49): for
+TokenAnnotation(50,53): use
+TokenAnnotation(53,54): ,
+TokenAnnotation(55,67): reproduction
+TokenAnnotation(67,68): ,
+TokenAnnotation(70,73): and
+TokenAnnotation(74,86): distribution
+TokenAnnotation(87,89): as
+TokenAnnotation(90,97): defined
+TokenAnnotation(98,100): by
+TokenAnnotation(101,109): Sections
+TokenAnnotation(110,111): 1
+TokenAnnotation(112,119): through
+TokenAnnotation(120,121): 9
+TokenAnnotation(122,124): of
+TokenAnnotation(125,129): this
+TokenAnnotation(130,138): document
+TokenAnnotation(138,139): .
+SentenceAnnotation(139,257): 
+"Licensor" shall mean the copyright owner or entity authorized by
+the copyright owner that is granting the License.
+TokenAnnotation(141,142): "
+TokenAnnotation(142,150): Licensor
+TokenAnnotation(150,151): "
+TokenAnnotation(152,157): shall
+TokenAnnotation(158,162): mean
+TokenAnnotation(163,166): the
+TokenAnnotation(167,176): copyright
+TokenAnnotation(177,182): owner
+TokenAnnotation(183,185): or
+TokenAnnotation(186,192): entity
+TokenAnnotation(193,203): authorized
+TokenAnnotation(204,206): by
+TokenAnnotation(208,211): the
+TokenAnnotation(212,221): copyright
+TokenAnnotation(222,227): owner
+TokenAnnotation(228,232): that
+TokenAnnotation(233,235): is
+TokenAnnotation(236,244): granting
+TokenAnnotation(245,248): the
+TokenAnnotation(249,256): License
+TokenAnnotation(256,257): .
+SentenceAnnotation(257,419): 
+"Legal Entity" shall mean the union of the acting entity and all
+other entities that control, are controlled by, or are under common
+control with that entity.
+TokenAnnotation(259,260): "
+TokenAnnotation(260,265): Legal
+TokenAnnotation(266,272): Entity
+TokenAnnotation(272,273): "
+TokenAnnotation(274,279): shall
+TokenAnnotation(280,284): mean
+TokenAnnotation(285,288): the
+TokenAnnotation(289,294): union
+TokenAnnotation(295,297): of
+TokenAnnotation(298,301): the
+TokenAnnotation(302,308): acting
+TokenAnnotation(309,315): entity
+TokenAnnotation(316,319): and
+TokenAnnotation(320,323): all
+TokenAnnotation(325,330): other
+TokenAnnotation(331,339): entities
+TokenAnnotation(340,344): that
+TokenAnnotation(345,352): control
+TokenAnnotation(352,353): ,
+TokenAnnotation(354,357): are
+TokenAnnotation(358,368): controlled
+TokenAnnotation(369,371): by
+TokenAnnotation(371,372): ,
+TokenAnnotation(373,375): or
+TokenAnnotation(376,379): are
+TokenAnnotation(380,385): under
+TokenAnnotation(386,392): common
+TokenAnnotation(394,401): control
+TokenAnnotation(402,406): with
+TokenAnnotation(407,411): that
+TokenAnnotation(412,418): entity
+TokenAnnotation(418,419): .
+SentenceAnnotation(419,720):  For the purposes of this definition,
+"control" means (i) the power, direct or indirect, to cause the
+direction or management of such entity, whether by contract or
+otherwise, or (ii) ownership of fifty percent (50%) or more of the
+outstanding shares, or (iii) beneficial ownership of such entity.
+TokenAnnotation(420,423): For
+TokenAnnotation(424,427): the
+TokenAnnotation(428,436): purposes
+TokenAnnotation(437,439): of
+TokenAnnotation(440,444): this
+TokenAnnotation(445,455): definition
+TokenAnnotation(455,456): ,
+TokenAnnotation(458,459): "
+TokenAnnotation(459,466): control
+TokenAnnotation(466,467): "
+TokenAnnotation(468,473): means
+TokenAnnotation(474,475): (
+TokenAnnotation(475,476): i
+TokenAnnotation(476,477): )
+TokenAnnotation(478,481): the
+TokenAnnotation(482,487): power
+TokenAnnotation(487,488): ,
+TokenAnnotation(489,495): direct
+TokenAnnotation(496,498): or
+TokenAnnotation(499,507): indirect
+TokenAnnotation(507,508): ,
+TokenAnnotation(509,511): to
+TokenAnnotation(512,517): cause
+TokenAnnotation(518,521): the
+TokenAnnotation(523,532): direction
+TokenAnnotation(533,535): or
+TokenAnnotation(536,546): management
+TokenAnnotation(547,549): of
+TokenAnnotation(550,554): such
+TokenAnnotation(555,561): entity
+TokenAnnotation(561,562): ,
+TokenAnnotation(563,570): whether
+TokenAnnotation(571,573): by
+TokenAnnotation(574,582): contract
+TokenAnnotation(583,585): or
+TokenAnnotation(587,596): otherwise
+TokenAnnotation(596,597): ,
+TokenAnnotation(598,600): or
+TokenAnnotation(601,602): (
+TokenAnnotation(602,604): ii
+TokenAnnotation(604,605): )
+TokenAnnotation(606,615): ownership
+TokenAnnotation(616,618): of
+TokenAnnotation(619,624): fifty
+TokenAnnotation(625,632): percent
+TokenAnnotation(633,634): (
+TokenAnnotation(634,636): 50
+TokenAnnotation(636,637): %
+TokenAnnotation(637,638): )
+TokenAnnotation(639,641): or
+TokenAnnotation(642,646): more
+TokenAnnotation(647,649): of
+TokenAnnotation(650,653): the
+TokenAnnotation(655,666): outstanding
+TokenAnnotation(667,673): shares
+TokenAnnotation(673,674): ,
+TokenAnnotation(675,677): or
+TokenAnnotation(678,679): (
+TokenAnnotation(679,682): iii
+TokenAnnotation(682,683): )
+TokenAnnotation(684,694): beneficial
+TokenAnnotation(695,704): ownership
+TokenAnnotation(705,707): of
+TokenAnnotation(708,712): such
+TokenAnnotation(713,719): entity
+TokenAnnotation(719,720): .
+SentenceAnnotation(720,1114): 
+
+email addresses:
+foo@bar.de
+foo.bar@foo.de
+foo-bar@foo.bar.com
+foo_bar@foo-bar_de.com
+foo@bar
+
+URLs and URIs
+www.incubator.apache.org/uima/index.html
+http://192.168.200.1:80/login.jsp
+http://myserver.location.com:8080/MyApplication
+\\apache.people.com\SharedDocs
+\\192.168.200.1\shared
+file:/foo/bar
+d:\Folder\myfile.txt
+file:///d:/folder/file-name.html
+c:\Folder\subFolder.
+TokenAnnotation(724,729): email
+TokenAnnotation(730,739): addresses
+TokenAnnotation(739,740): :
+TokenAnnotation(742,745): foo
+TokenAnnotation(745,746): @
+TokenAnnotation(746,749): bar
+TokenAnnotation(749,750): .
+TokenAnnotation(750,752): de
+TokenAnnotation(754,757): foo
+TokenAnnotation(757,758): .
+TokenAnnotation(758,761): bar
+TokenAnnotation(761,762): @
+TokenAnnotation(762,765): foo
+TokenAnnotation(765,766): .
+TokenAnnotation(766,768): de
+TokenAnnotation(770,773): foo
+TokenAnnotation(773,774): -
+TokenAnnotation(774,777): bar
+TokenAnnotation(777,778): @
+TokenAnnotation(778,781): foo
+TokenAnnotation(781,782): .
+TokenAnnotation(782,785): bar
+TokenAnnotation(785,786): .
+TokenAnnotation(786,789): com
+TokenAnnotation(791,794): foo
+TokenAnnotation(794,795): _
+TokenAnnotation(795,798): bar
+TokenAnnotation(798,799): @
+TokenAnnotation(799,802): foo
+TokenAnnotation(802,803): -
+TokenAnnotation(803,806): bar
+TokenAnnotation(806,807): _
+TokenAnnotation(807,809): de
+TokenAnnotation(809,810): .
+TokenAnnotation(810,813): com
+TokenAnnotation(815,818): foo
+TokenAnnotation(818,819): @
+TokenAnnotation(819,822): bar
+TokenAnnotation(826,830): URLs
+TokenAnnotation(831,834): and
+TokenAnnotation(835,839): URIs
+TokenAnnotation(841,844): www
+TokenAnnotation(844,845): .
+TokenAnnotation(845,854): incubator
+TokenAnnotation(854,855): .
+TokenAnnotation(855,861): apache
+TokenAnnotation(861,862): .
+TokenAnnotation(862,865): org
+TokenAnnotation(865,866): /
+TokenAnnotation(866,870): uima
+TokenAnnotation(870,871): /
+TokenAnnotation(871,876): index
+TokenAnnotation(876,877): .
+TokenAnnotation(877,881): html
+TokenAnnotation(883,887): http
+TokenAnnotation(887,888): :
+TokenAnnotation(888,889): /
+TokenAnnotation(889,890): /
+TokenAnnotation(890,893): 192
+TokenAnnotation(893,894): .
+TokenAnnotation(894,897): 168
+TokenAnnotation(897,898): .
+TokenAnnotation(898,901): 200
+TokenAnnotation(901,902): .
+TokenAnnotation(902,903): 1
+TokenAnnotation(903,904): :
+TokenAnnotation(904,906): 80
+TokenAnnotation(906,907): /
+TokenAnnotation(907,912): login
+TokenAnnotation(912,913): .
+TokenAnnotation(913,916): jsp
+TokenAnnotation(918,922): http
+TokenAnnotation(922,923): :
+TokenAnnotation(923,924): /
+TokenAnnotation(924,925): /
+TokenAnnotation(925,933): myserver
+TokenAnnotation(933,934): .
+TokenAnnotation(934,942): location
+TokenAnnotation(942,943): .
+TokenAnnotation(943,946): com
+TokenAnnotation(946,947): :
+TokenAnnotation(947,951): 8080
+TokenAnnotation(951,952): /
+TokenAnnotation(952,965): MyApplication
+TokenAnnotation(967,968): \
+TokenAnnotation(968,969): \
+TokenAnnotation(969,975): apache
+TokenAnnotation(975,976): .
+TokenAnnotation(976,982): people
+TokenAnnotation(982,983): .
+TokenAnnotation(983,986): com
+TokenAnnotation(986,987): \
+TokenAnnotation(987,997): SharedDocs
+TokenAnnotation(999,1000): \
+TokenAnnotation(1000,1001): \
+TokenAnnotation(1001,1004): 192
+TokenAnnotation(1004,1005): .
+TokenAnnotation(1005,1008): 168
+TokenAnnotation(1008,1009): .
+TokenAnnotation(1009,1012): 200
+TokenAnnotation(1012,1013): .
+TokenAnnotation(1013,1014): 1
+TokenAnnotation(1014,1015): \
+TokenAnnotation(1015,1021): shared
+TokenAnnotation(1023,1027): file
+TokenAnnotation(1027,1028): :
+TokenAnnotation(1028,1029): /
+TokenAnnotation(1029,1032): foo
+TokenAnnotation(1032,1033): /
+TokenAnnotation(1033,1036): bar
+TokenAnnotation(1038,1039): d
+TokenAnnotation(1039,1040): :
+TokenAnnotation(1040,1041): \
+TokenAnnotation(1041,1047): Folder
+TokenAnnotation(1047,1048): \
+TokenAnnotation(1048,1054): myfile
+TokenAnnotation(1054,1055): .
+TokenAnnotation(1055,1058): txt
+TokenAnnotation(1060,1064): file
+TokenAnnotation(1064,1065): :
+TokenAnnotation(1065,1066): /
+TokenAnnotation(1066,1067): /
+TokenAnnotation(1067,1068): /
+TokenAnnotation(1068,1069): d
+TokenAnnotation(1069,1070): :
+TokenAnnotation(1070,1071): /
+TokenAnnotation(1071,1077): folder
+TokenAnnotation(1077,1078): /
+TokenAnnotation(1078,1082): file
+TokenAnnotation(1082,1083): -
+TokenAnnotation(1083,1087): name
+TokenAnnotation(1087,1088): .
+TokenAnnotation(1088,1092): html
+TokenAnnotation(1094,1095): c
+TokenAnnotation(1095,1096): :
+TokenAnnotation(1096,1097): \
+TokenAnnotation(1097,1103): Folder
+TokenAnnotation(1103,1104): \
+TokenAnnotation(1104,1113): subFolder
+TokenAnnotation(1113,1114): .
+SentenceAnnotation(1114,1177): 
+192.168.200.6
+myfile.txt
+
+Abbreviations and numbers:
+e.g.
+TokenAnnotation(1116,1119): 192
+TokenAnnotation(1119,1120): .
+TokenAnnotation(1120,1123): 168
+TokenAnnotation(1123,1124): .
+TokenAnnotation(1124,1127): 200
+TokenAnnotation(1127,1128): .
+TokenAnnotation(1128,1129): 6
+TokenAnnotation(1131,1137): myfile
+TokenAnnotation(1137,1138): .
+TokenAnnotation(1138,1141): txt
+TokenAnnotation(1145,1158): Abbreviations
+TokenAnnotation(1159,1162): and
+TokenAnnotation(1163,1170): numbers
+TokenAnnotation(1170,1171): :
+TokenAnnotation(1173,1174): e
+TokenAnnotation(1174,1175): .
+TokenAnnotation(1175,1176): g
+TokenAnnotation(1176,1177): .
+SentenceAnnotation(1177,1181):  Dr.
+TokenAnnotation(1178,1180): Dr
+TokenAnnotation(1180,1181): .
+SentenceAnnotation(1181,1204):  Marc Rainbow is great.
+TokenAnnotation(1182,1186): Marc
+TokenAnnotation(1187,1194): Rainbow
+TokenAnnotation(1195,1197): is
+TokenAnnotation(1198,1203): great
+TokenAnnotation(1203,1204): .
+SentenceAnnotation(1204,1254): 
+Germany:England (9:3)
+1/2 is better than -5
+A.
+TokenAnnotation(1206,1213): Germany
+TokenAnnotation(1213,1214): :
+TokenAnnotation(1214,1221): England
+TokenAnnotation(1222,1223): (
+TokenAnnotation(1223,1224): 9
+TokenAnnotation(1224,1225): :
+TokenAnnotation(1225,1226): 3
+TokenAnnotation(1226,1227): )
+TokenAnnotation(1229,1230): 1
+TokenAnnotation(1230,1231): /
+TokenAnnotation(1231,1232): 2
+TokenAnnotation(1233,1235): is
+TokenAnnotation(1236,1242): better
+TokenAnnotation(1243,1247): than
+TokenAnnotation(1248,1249): -
+TokenAnnotation(1249,1250): 5
+TokenAnnotation(1252,1253): A
+TokenAnnotation(1253,1254): .
+SentenceAnnotation(1254,1289):  Donald
+0.12
+...12
+Next steps...
+TokenAnnotation(1255,1261): Donald
+TokenAnnotation(1263,1264): 0
+TokenAnnotation(1264,1265): .
+TokenAnnotation(1265,1267): 12
+TokenAnnotation(1269,1270): .
+TokenAnnotation(1270,1271): .
+TokenAnnotation(1271,1272): .
+TokenAnnotation(1272,1274): 12
+TokenAnnotation(1276,1280): Next
+TokenAnnotation(1281,1286): steps
+TokenAnnotation(1286,1287): .
+TokenAnnotation(1287,1288): .
+TokenAnnotation(1288,1289): .
+SentenceAnnotation(1289,1305): 
+Next steps ...
+TokenAnnotation(1291,1295): Next
+TokenAnnotation(1296,1301): steps
+TokenAnnotation(1302,1303): .
+TokenAnnotation(1303,1304): .
+TokenAnnotation(1304,1305): .
+SentenceAnnotation(1305,1313): 
+Next..
+TokenAnnotation(1307,1311): Next
+TokenAnnotation(1311,1312): .
+TokenAnnotation(1312,1313): .
+SentenceAnnotation(1313,1334): 
+.Net
+6-5=1
+F.B.I.
+TokenAnnotation(1315,1316): .
+TokenAnnotation(1316,1319): Net
+TokenAnnotation(1321,1322): 6
+TokenAnnotation(1322,1323): -
+TokenAnnotation(1323,1324): 5
+TokenAnnotation(1324,1325): =
+TokenAnnotation(1325,1326): 1
+TokenAnnotation(1328,1329): F
+TokenAnnotation(1329,1330): .
+TokenAnnotation(1330,1331): B
+TokenAnnotation(1331,1332): .
+TokenAnnotation(1332,1333): I
+TokenAnnotation(1333,1334): .
+SentenceAnnotation(1334,1902):  
+Apache 2.0.40 Red Hat Linux
+
+Phone numbers and dates:
++1 023 555-5355
+1-555-555-0037
+(029) 555 2554 
+03/20/2006
+20.03.2006
+11/2006
+02-03-2005
+0,12
+12,0
+,,,
+1,000 1, 0
+12%
+12$
+$12
+12€
+€12
+12£
+£12
+12¥
+¥12
+
+
+Hyphen segmentation:
+house-house
+umghts-alskdjf
+house-lkajsdf
+laksjdf-house-mice-isdf
+2132-123
+a12-b13
+12a-13b
+-12a-13b-
+-13b -13-
+---------
+aa----bb
+i--
+--i
+;-)
+unicode‐hyphen
+non‑breaking‑hyphen
+my-address 002D
+my‐address 2010
+my‑address 2011
+my−address 2212
+my‒address 2012
+my–address 2013
+my—address 2014
+
+
+TokenAnnotation(1337,1343): Apache
+TokenAnnotation(1344,1345): 2
+TokenAnnotation(1345,1346): .
+TokenAnnotation(1346,1347): 0
+TokenAnnotation(1347,1348): .
+TokenAnnotation(1348,1350): 40
+TokenAnnotation(1351,1354): Red
+TokenAnnotation(1355,1358): Hat
+TokenAnnotation(1359,1364): Linux
+TokenAnnotation(1368,1373): Phone
+TokenAnnotation(1374,1381): numbers
+TokenAnnotation(1382,1385): and
+TokenAnnotation(1386,1391): dates
+TokenAnnotation(1391,1392): :
+TokenAnnotation(1394,1395): +
+TokenAnnotation(1395,1396): 1
+TokenAnnotation(1397,1400): 023
+TokenAnnotation(1401,1404): 555
+TokenAnnotation(1404,1405): -
+TokenAnnotation(1405,1409): 5355
+TokenAnnotation(1411,1412): 1
+TokenAnnotation(1412,1413): -
+TokenAnnotation(1413,1416): 555
+TokenAnnotation(1416,1417): -
+TokenAnnotation(1417,1420): 555
+TokenAnnotation(1420,1421): -
+TokenAnnotation(1421,1425): 0037
+TokenAnnotation(1427,1428): (
+TokenAnnotation(1428,1431): 029
+TokenAnnotation(1431,1432): )
+TokenAnnotation(1433,1436): 555
+TokenAnnotation(1437,1441): 2554
+TokenAnnotation(1444,1446): 03
+TokenAnnotation(1446,1447): /
+TokenAnnotation(1447,1449): 20
+TokenAnnotation(1449,1450): /
+TokenAnnotation(1450,1454): 2006
+TokenAnnotation(1456,1458): 20
+TokenAnnotation(1458,1459): .
+TokenAnnotation(1459,1461): 03
+TokenAnnotation(1461,1462): .
+TokenAnnotation(1462,1466): 2006
+TokenAnnotation(1468,1470): 11
+TokenAnnotation(1470,1471): /
+TokenAnnotation(1471,1475): 2006
+TokenAnnotation(1477,1479): 02
+TokenAnnotation(1479,1480): -
+TokenAnnotation(1480,1482): 03
+TokenAnnotation(1482,1483): -
+TokenAnnotation(1483,1487): 2005
+TokenAnnotation(1489,1490): 0
+TokenAnnotation(1490,1491): ,
+TokenAnnotation(1491,1493): 12
+TokenAnnotation(1495,1497): 12
+TokenAnnotation(1497,1498): ,
+TokenAnnotation(1498,1499): 0
+TokenAnnotation(1501,1502): ,
+TokenAnnotation(1502,1503): ,
+TokenAnnotation(1503,1504): ,
+TokenAnnotation(1506,1507): 1
+TokenAnnotation(1507,1508): ,
+TokenAnnotation(1508,1511): 000
+TokenAnnotation(1512,1513): 1
+TokenAnnotation(1513,1514): ,
+TokenAnnotation(1515,1516): 0
+TokenAnnotation(1518,1520): 12
+TokenAnnotation(1520,1521): %
+TokenAnnotation(1523,1525): 12
+TokenAnnotation(1525,1526): $
+TokenAnnotation(1528,1529): $
+TokenAnnotation(1529,1531): 12
+TokenAnnotation(1533,1535): 12
+TokenAnnotation(1535,1536): €
+TokenAnnotation(1538,1539): €
+TokenAnnotation(1539,1541): 12
+TokenAnnotation(1543,1545): 12
+TokenAnnotation(1545,1546): £
+TokenAnnotation(1548,1549): £
+TokenAnnotation(1549,1551): 12
+TokenAnnotation(1553,1555): 12
+TokenAnnotation(1555,1556): ¥
+TokenAnnotation(1558,1559): ¥
+TokenAnnotation(1559,1561): 12
+TokenAnnotation(1567,1573): Hyphen
+TokenAnnotation(1574,1586): segmentation
+TokenAnnotation(1586,1587): :
+TokenAnnotation(1589,1594): house
+TokenAnnotation(1594,1595): -
+TokenAnnotation(1595,1600): house
+TokenAnnotation(1602,1608): umghts
+TokenAnnotation(1608,1609): -
+TokenAnnotation(1609,1616): alskdjf
+TokenAnnotation(1618,1623): house
+TokenAnnotation(1623,1624): -
+TokenAnnotation(1624,1631): lkajsdf
+TokenAnnotation(1633,1640): laksjdf
+TokenAnnotation(1640,1641): -
+TokenAnnotation(1641,1646): house
+TokenAnnotation(1646,1647): -
+TokenAnnotation(1647,1651): mice
+TokenAnnotation(1651,1652): -
+TokenAnnotation(1652,1656): isdf
+TokenAnnotation(1658,1662): 2132
+TokenAnnotation(1662,1663): -
+TokenAnnotation(1663,1666): 123
+TokenAnnotation(1668,1671): a12
+TokenAnnotation(1671,1672): -
+TokenAnnotation(1672,1675): b13
+TokenAnnotation(1677,1680): 12a
+TokenAnnotation(1680,1681): -
+TokenAnnotation(1681,1684): 13b
+TokenAnnotation(1686,1687): -
+TokenAnnotation(1687,1690): 12a
+TokenAnnotation(1690,1691): -
+TokenAnnotation(1691,1694): 13b
+TokenAnnotation(1694,1695): -
+TokenAnnotation(1697,1698): -
+TokenAnnotation(1698,1701): 13b
+TokenAnnotation(1702,1703): -
+TokenAnnotation(1703,1705): 13
+TokenAnnotation(1705,1706): -
+TokenAnnotation(1708,1709): -
+TokenAnnotation(1709,1710): -
+TokenAnnotation(1710,1711): -
+TokenAnnotation(1711,1712): -
+TokenAnnotation(1712,1713): -
+TokenAnnotation(1713,1714): -
+TokenAnnotation(1714,1715): -
+TokenAnnotation(1715,1716): -
+TokenAnnotation(1716,1717): -
+TokenAnnotation(1719,1721): aa
+TokenAnnotation(1721,1722): -
+TokenAnnotation(1722,1723): -
+TokenAnnotation(1723,1724): -
+TokenAnnotation(1724,1725): -
+TokenAnnotation(1725,1727): bb
+TokenAnnotation(1729,1730): i
+TokenAnnotation(1730,1731): -
+TokenAnnotation(1731,1732): -
+TokenAnnotation(1734,1735): -
+TokenAnnotation(1735,1736): -
+TokenAnnotation(1736,1737): i
+TokenAnnotation(1739,1740): ;
+TokenAnnotation(1740,1741): -
+TokenAnnotation(1741,1742): )
+TokenAnnotation(1744,1751): unicode
+TokenAnnotation(1751,1752): ‐
+TokenAnnotation(1752,1758): hyphen
+TokenAnnotation(1760,1763): non
+TokenAnnotation(1763,1764): ‑
+TokenAnnotation(1764,1772): breaking
+TokenAnnotation(1772,1773): ‑
+TokenAnnotation(1773,1779): hyphen
+TokenAnnotation(1781,1783): my
+TokenAnnotation(1783,1784): -
+TokenAnnotation(1784,1791): address
+TokenAnnotation(1792,1796): 002D
+TokenAnnotation(1798,1800): my
+TokenAnnotation(1800,1801): ‐
+TokenAnnotation(1801,1808): address
+TokenAnnotation(1809,1813): 2010
+TokenAnnotation(1815,1817): my
+TokenAnnotation(1817,1818): ‑
+TokenAnnotation(1818,1825): address
+TokenAnnotation(1826,1830): 2011
+TokenAnnotation(1832,1834): my
+TokenAnnotation(1834,1835): −
+TokenAnnotation(1835,1842): address
+TokenAnnotation(1843,1847): 2212
+TokenAnnotation(1849,1851): my
+TokenAnnotation(1851,1852): ‒
+TokenAnnotation(1852,1859): address
+TokenAnnotation(1860,1864): 2012
+TokenAnnotation(1866,1868): my
+TokenAnnotation(1868,1869): –
+TokenAnnotation(1869,1876): address
+TokenAnnotation(1877,1881): 2013
+TokenAnnotation(1883,1885): my
+TokenAnnotation(1885,1886): —
+TokenAnnotation(1886,1893): address
+TokenAnnotation(1894,1898): 2014

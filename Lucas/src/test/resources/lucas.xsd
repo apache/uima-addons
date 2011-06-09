@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.    
+-->
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.    
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   elementFormDefault="qualified">
+
+	<xs:simpleType name="indexType">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="yes"/>
+    		<xs:enumeration value="no"/>
+    		<xs:enumeration value="no_norms"/>
+    		<xs:enumeration value="no_tf"/>
+    		<xs:enumeration value="no_norms_tf"/>
+  		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="termVectorType">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="no"/>
+    		<xs:enumeration value="positions"/>
+    		<xs:enumeration value="offsets"/>
+    		<xs:enumeration value="positions_offsets"/>
+  		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="storedType">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="yes"/>
+    		<xs:enumeration value="no"/>
+    		<xs:enumeration value="compress"/>
+  		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="tokenizerType">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="cas"/>
+    		<xs:enumeration value="whitespace"/>
+    		<xs:enumeration value="standard"/>
+  		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="positionType">
+  		<xs:restriction base="xs:string">
+    		<xs:enumeration value="first"/>
+    		<xs:enumeration value="last"/>
+  		</xs:restriction>
+	</xs:simpleType>	
+	
+	<xs:element name="feature">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="uppercase" type="xs:boolean"/>
+			<xs:attribute name="lowercase" type="xs:boolean"/>
+			<xs:attribute name="numberFormat" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="annotation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="feature" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>				
+			<xs:attribute name="type" type="xs:string"/>
+			<xs:attribute name="sofa" type="xs:string"/>
+			<xs:attribute name="featurePath" type="xs:string"/>
+			<xs:attribute name="concatString" type="xs:string"/>
+			<xs:attribute name="splittString" type="xs:string"/>
+			<xs:attribute name="prefix" type="xs:string"/>
+			<xs:attribute name="uppercase" type="xs:boolean"/>
+			<xs:attribute name="lowercase" type="xs:boolean"/>
+			<xs:attribute name="stopwordRemove" type="xs:boolean"/>
+			<xs:attribute name="position" type="positionType"/>
+			<xs:attribute name="addHypernyms" type="xs:boolean"/>
+			<xs:attribute name="mappingFile" type="xs:string"/>
+			<xs:attribute name="snowballFilter" type="xs:string"/>
+			<xs:attribute name="unique" type="xs:boolean"/>
+			<xs:attribute name="tokenizer" type="tokenizerType"/>			
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="field">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="annotation" maxOccurs="unbounded"/>
+			</xs:sequence>				
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="index" type="indexType"/>
+			<xs:attribute name="termVector" type="termVectorType"/>
+			<xs:attribute name="delimiter" type="xs:string"/>
+			<xs:attribute name="stored" type="storedType"/>
+			<xs:attribute name="merge" type="xs:boolean"/>			
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="fields">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="field" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

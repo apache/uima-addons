@@ -1,0 +1,95 @@
+"License" shall mean the terms and conditions for use, reproduction,
+and distribution as defined by Sections 1 through 9 of this document.
+"Licensor" shall mean the copyright owner or entity authorized by
+the copyright owner that is granting the License.
+"Legal Entity" shall mean the union of the acting entity and all
+other entities that control, are controlled by, or are under common
+control with that entity. For the purposes of this definition,
+"control" means (i) the power, direct or indirect, to cause the
+direction or management of such entity, whether by contract or
+otherwise, or (ii) ownership of fifty percent (50%) or more of the
+outstanding shares, or (iii) beneficial ownership of such entity.
+
+email addresses:
+foo@bar.de
+foo.bar@foo.de
+foo-bar@foo.bar.com
+foo_bar@foo-bar_de.com
+foo@bar
+
+URLs and URIs
+www.incubator.apache.org/uima/index.html
+http://192.168.200.1:80/login.jsp
+http://myserver.location.com:8080/MyApplication
+\\apache.people.com\SharedDocs
+\\192.168.200.1\shared
+file:/foo/bar
+d:\Folder\myfile.txt
+file:///d:/folder/file-name.html
+c:\Folder\subFolder.
+192.168.200.6
+myfile.txt
+
+Abbreviations and numbers:
+e.g. Dr. Marc Rainbow is great.
+Germany:England (9:3)
+1/2 is better than -5
+A. Donald
+0.12
+...12
+Next steps...
+Next steps ...
+Next..
+.Net
+6-5=1
+F.B.I. 
+Apache 2.0.40 Red Hat Linux
+
+Phone numbers and dates:
++1 023 555-5355
+1-555-555-0037
+(029) 555 2554 
+03/20/2006
+20.03.2006
+11/2006
+02-03-2005
+0,12
+12,0
+,,,
+1,000 1, 0
+12%
+12$
+$12
+12€
+€12
+12£
+£12
+12¥
+¥12
+
+
+Hyphen segmentation:
+house-house
+umghts-alskdjf
+house-lkajsdf
+laksjdf-house-mice-isdf
+2132-123
+a12-b13
+12a-13b
+-12a-13b-
+-13b -13-
+---------
+aa----bb
+i--
+--i
+;-)
+unicode‐hyphen
+non‑breaking‑hyphen
+my-address 002D
+my‐address 2010
+my‑address 2011
+my−address 2212
+my‒address 2012
+my–address 2013
+my—address 2014
+

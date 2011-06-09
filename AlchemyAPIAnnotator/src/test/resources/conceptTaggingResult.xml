@@ -1,0 +1,39 @@
+
+  <!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements. See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to you under the Apache License, Version
+    2.0 (the "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+    applicable law or agreed to in writing, software distributed under
+    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES
+    OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and
+    limitations under the License.
+  -->
+<results>
+  <status>OK</status>
+  <url>niente</url>
+  <language>it</language>
+  <text>Non e' bello cio' che e' bello ma invero e' bello cio' che piace</text>
+  <concepts>
+    <concept>
+      <text>bello</text>
+      <relevance>0.6</relevance>
+      <website>WEBSITE</website>
+      <geo>LATITUDE LONGITUDE</geo>
+      <dbpedia>LINKED_DATA_DBPEDIA</dbpedia>
+      <yago>LINKED_DATA_YAGO</yago>
+      <opencyc>LINKED_DATA_OPENCYC</opencyc>
+      <freebase>LINKED_DATA_FREEBASE</freebase>
+      <ciaFactbook>LINKED_DATA_FACTBOOK</ciaFactbook>
+      <census>LINKED_DATA_CENSUS</census>
+      <geonames>LINKED_DATA_GEONAMES</geonames>
+      <crunchbase>CRUNCHBASE_WEB_LINK</crunchbase>
+      <semanticCrunchbase>LINKED_DATA_CRUNCHBASE</semanticCrunchbase>
+    </concept>
+  </concepts>
+</results>

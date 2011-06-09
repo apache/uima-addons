@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.uima</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>2</version>
+  </parent>
+  <groupId>org.apache.uima</groupId>
+  <artifactId>addons-osgi-runtime</artifactId>
+  <packaging>pom</packaging>
+  <version>2.3.1-SNAPSHOT</version>
+  <name>OSGi version of Apache UIMA Addons</name>
+  <modules>
+    <module>OpenCalaisAnnotator-osgi</module>
+    <module>AlchemyAPIAnnotator-osgi</module>
+    <module>BSFAnnotator-osgi</module>
+    <module>ConfigurableFeatureExtractor-osgi</module>
+    <module>ConceptMapper-osgi</module>
+    <module>DictionaryAnnotator-osgi</module>
+    <module>Tagger-osgi</module>
+    <module>Lucas-osgi</module>
+    <module>RegularExpressionAnnotator-osgi</module>
+    <module>SnowballAnnotator-osgi</module>
+    <module>TikaAnnotator-osgi</module>
+    <module>WhitespaceTokenizer-osgi</module>
+    <module>Solrcas-osgi</module>
+  </modules>
+  <properties>
+    <singleton>singleton:=true</singleton>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-ep-runtime</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>${project.groupId}.${project.artifactId}.${parsedVersion.osgiVersion}</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>uima-bundle</id>
+              <configuration>
+                <instructions>
+                  <Import-Package>org.apache.log.*;resolution:=optional</Import-Package>
+                  <Embed-Dependency>*;scope=compile;inline=true</Embed-Dependency>
+                  <Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
+                  <Eclipse-ExtensibleAPI>true</Eclipse-ExtensibleAPI>
+                  <Eclipse-BuddyPolicy>registered</Eclipse-BuddyPolicy>
+                  <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
+                  <Bundle-SymbolicName>>${project.groupId}.${project.artifactId};${singleton}</Bundle-SymbolicName>
+                </instructions>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpackDependentJars</id>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+              <excludes>**\/*.MF,**\/*.txt,**\/DEPENDENCIES,**\/NOTICE,**\/eclipse.inf,**\/ECLIPSE.RSA,**\/ECLIPSE.SF,
+                **\/ECLIPSEF.RSA,**\/ECLIPSEF.SF,**\/INDEX.LIST,**\/info.xml,**/BCKEY.DSA,**/BCKEY.SF</excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>${project.build.directory}/classes/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

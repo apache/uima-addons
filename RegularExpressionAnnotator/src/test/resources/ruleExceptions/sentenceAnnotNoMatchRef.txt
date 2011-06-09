@@ -1,0 +1,7 @@
+DocumentAnnotation(0,59): My text starts here: car carbon test cat cart and ends here
+SentenceAnnot(21,45): car carbon test cat cart
+TokenAnnot(21,24): car
+TokenAnnot(25,31): carbon
+TokenAnnot(32,36): test
+TokenAnnot(37,40): cat
+TokenAnnot(41,45): cart

@@ -1,0 +1,1 @@
+TestAnnot(0,21): Minimal Configuration  { confidenceValue=0.0, ruleId=null }

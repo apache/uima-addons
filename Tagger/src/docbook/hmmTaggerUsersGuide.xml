@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+
+<book lang="en">
+
+	<title>Tagger Annotator Documentation</title>
+	
+
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="../../target/docbook-shared/common_book_info.xml" />
+
+	<preface id="sandbox.tagger.introduction">
+		<title>Introduction</title>
+		<para>
+			Tagger Annotator is an Apache UIMA statistical analysis
+			engine that annotates tokens with corresponding grammatical
+			types (parts of speech, or just POS). The tagger is a
+			standard hidden Markov model (HMM) tagger.
+		</para>
+	</preface>
+
+	<chapter id="sandbox.tagger.prerequisites">
+		<title>Prerequisites</title>
+		<para>
+			The UIMA HMM Tagger annotator assumes that sentences and
+			tokens have already been annotated in the CAS with Sentence
+			and Token annotations respectively (see e.g.
+			<code>Whitespace Tokenizer Annotator</code>
+			).
+
+			Further, the tagger requires a parameter file which
+			specifies a number of necessary parameters for tagging
+			procedure (see
+			<xref
+				linkend="sandbox.tagger.annotatorDescriptor.configParam" />
+			).
+
+			Two trained models for English and German are included in
+			the package (in the
+			<code>resources</code>
+			folder). Other models can be trained outside of the UIMA
+			framework (see
+			<xref linkend="sandbox.tagger.training" />
+			).
+		</para>
+	</chapter>
+
+	<chapter id="sandbox.tagger.processingOverview">
+		<title>Processing Overview</title>
+		<para>
+			The algorithm iterates over sentences and tokens in turn to
+			accumulate a list of words. These are then sent to a
+			processing engine of HMM tagger. For each
+			<code>Token</code>
+			, the
+			<code>posTag</code>
+			field is updated with the corresponding part of speech (e.g.
+			<code>posTag = "NN"</code>
+			where
+			<code>NN</code>
+			stands for
+			<emphasis>common noun</emphasis>
+			).
+		</para>
+	</chapter>
+
+	<chapter id="sandbox.tagger.annotatorDescriptor">
+		<title>Annotator Descriptor</title>
+		<para>
+			Two descriptors are employed to configure tagger's
+			functionality:
+			<itemizedlist>
+				<listitem>
+					<para>
+						<code>HmmTagger.xml</code>
+						- is a primitive analysis engine descriptor,
+						which defines the tagger basic functionality and
+						can be combined in an aggregate analysis engine
+						with an arbitrary tokenizer. This descriptor
+						cannot be used on itself as the tagger alone
+						does not perfom tokenization.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<code>HmmTaggerTAE.xml</code>
+						- is an aggregate analysis engine whose only
+						function is to combine UIMA
+						<code>Whitespace Tokenizer Annotator</code>
+						with
+						<code>HMM Tagger Annotator</code>
+						and is thereby a "ready to use" tagging
+						descriptor.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<section id="sandbox.tagger.annotatorDescriptor.configParam">
+			<title>Configuration Parameters</title>
+			<para>
+				The HMM tagger annotator (
+				<code>HmmTagger.xml</code>
+				) requires the following configuration parameters:
+			</para>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<code>NGRAM_SIZE</code>
+							- this parameter is an Integer, defining
+							whether a bi- or trigram model should be
+							used for tagging (default is N=3).
+							<programlisting><emphasis><![CDATA[    <configurationParameters>
+      <configurationParameter>
+        <name>NGRAM_SIZE</name>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>NGRAM_SIZE</name>
+        <value>
+          <integer>3</integer>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>]]></emphasis></programlisting>
+	</para>
+						</listitem>
+				  	
+				  	
+	<listitem>
+						<para>
+							<code>ModelFile</code>
+							- binary file containing the statistical model which should be used for tagging is defined as an external resource
+<programlisting><emphasis><![CDATA[   
+    <externalResources>
+      <externalResource>
+        <name>ModelFile</name>
+        <description>HMM Tagger model file</description>
+        <fileResourceSpecifier>
+          <fileUrl>file:german/TuebaModel.dat</fileUrl>
+        </fileResourceSpecifier>
+        <implementationName>
+        org.apache.uima.examples.tagger.ModelResource
+        </implementationName>
+      </externalResource>
+    </externalResources>]]></emphasis></programlisting>
+
+Thus, one can easily use a different model by changing the <code>fileUrl</code> line: 
+<code>file:german/TuebaModel.dat</code>. 
+(NB. <emphasis>New models must be located in the <code>resources</code> folder</emphasis>.)
+After these two parameters have been set, the tagger is ready to use.  
+	
+							</para>
+						</listitem>
+				  	</itemizedlist>
+				  	</para>
+				
+			</section>
+			<section id="sandbox.tagger.annotatorDescriptor.capabilities">
+				<title>Capabilities</title>
+				<para>
+				  As the tagger inherits tokenization indexes from the CAS, 
+				<code>uima.SentenceAnnotation</code>  and <code>uima.TokenAnnotation</code> with their 
+				<code>begin</code> and <code>end</code> features respectively have to be defined as
+				input capabilities in the HMM Tagger annotator descriptor. <code>Token</code> receives 
+				also an additional <code>posTag</code> feature as an output capability.
+				</para>
+				<para>
+				<programlisting><emphasis><![CDATA[<capabilities>
+      <capability>
+        <inputs>
+          <type>org.apache.uima.TokenAnnotation</type>
+          <type allAnnotatorFeatures="true">
+          org.apache.uima.SentenceAnnotation
+          </type>
+          <feature>org.apache.uima.TokenAnnotation:end</feature>
+          <feature>org.apache.uima.TokenAnnotation:begin</feature>
+        </inputs>
+        <outputs>
+          <type>org.apache.uima.TokenAnnotation</type>
+          <feature>org.apache.uima.TokenAnnotation:posTag</feature>
+          <feature>org.apache.uima.TokenAnnotation:end</feature>
+          <feature>org.apache.uima.TokenAnnotation:begin</feature>
+        </outputs>
+      </capability>
+    </capabilities>]]></emphasis></programlisting>
+				</para>
+			</section>
+	</chapter>
+	
+	<chapter id="sandbox.tagger.unittest">
+		<title>Functionality Test</title>
+		<para>
+			The <code>TaggerTest</code> is a JUnit test file (available in the <code>test</code> folder), 
+			which provides an opportunity to test provided models for English and German, 
+			as well as the basic functionality of the tagger. In order to check whether 
+			the tagger's configuration is correct, just run this file as JUnit Test and you should get the following output:
+			
+			<programlisting><![CDATA[Tesing German Model... 
+The used model is:resources/german/TuebaModel.dat
+61646 distinct words in the model
+Number of part-of-speech tags used: 54
+These are:  [$(, $,, $., ADJA, ADJD, ADV, APPO,
+ APPR, APPRART, APZR, ART, CARD, ... ]
+Testing German trigram tagger..
+[Jerry, liebt, Wansley, .]
+expected: [NE, VVFIN, NE, $.]
+tagger output: [NE, VVFIN, NE, $.]
+Very Good!
+==========================================================
+Tesing English Model... 
+The used model is:resources/english/BrownModel.dat
+56012 distinct words in the model
+Number of part-of-speech tags used: 473
+These are:  [', '', (, ), *, ,, --, ., :, ``, abl,
+ abn, abx, ap, ap$, at, be, bed, ...]
+Testing English trigram tagger...
+[Jerry, loves, Wansley, .]
+expected: [np, vbz, np, .]
+tagger output: [np, vbz, np, .]
+Very Good!]]></programlisting>
+			
+		</para>
+	</chapter>
+	
+	<chapter id="sandbox.tagger.tagger">
+		<title>Overview of the Tagger package</title>
+		<para>
+			The package <code>org.apache.uima.examples.tagger</code> contains:
+			<itemizedlist>
+					<listitem>
+						<para>
+							two interfaces:
+							<orderedlist>
+								<listitem>
+									<para>
+									<code>IModelResource</code>
+									- model resource interface
+									 </para>
+								</listitem>
+								<listitem>
+									<para>
+									 <code>Tagger</code>
+									 - general tagger interface, in case one would want to integrate further tagger types. 
+									</para>
+								</listitem>
+							</orderedlist>
+							
+							</para>
+					</listitem>
+					<listitem>
+						<para> three classes:
+						<orderedlist>
+								<listitem>
+									<para>
+									 <code>HMMTagger</code>
+									- hidden Markov model tagger for UIMA, that is using Viterbi algorithm to compute the most 
+									probable part-of-speech sequence for a given list of tokens.
+							</para>
+								</listitem>
+								
+								<listitem>
+									<para>
+									 <code>Viterbi</code>
+									 - implementation of the Viterbi Algorithm. This class makes up the core of the tagger.
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									 <code>ModelResource.java</code>
+									 - implementation of the <code>IModelResource</code>
+									</para>
+								</listitem>
+							</orderedlist>
+						
+						</para>
+					</listitem>
+			</itemizedlist>
+				</para>
+	</chapter>
+	
+	
+	<chapter id="sandbox.tagger.training">
+		<title>Training Own Models</title>
+		<para>
+			Though we decide not to include training directly into UIMA framework, one can easily 
+			train other models for different pre-annotated corpora outside of the UIMA using <code>ModelGeneration</code> class,
+			available in the subpackage <code>org.apache.uima.examples.tagger.trainAndTest</code>.
+			This subpackage includes some further files needed for training of own models:
+		
+			 
+			<itemizedlist>
+				<listitem>
+						<para>
+							<code>MappingInterface</code>
+									 - defines mapping for a tagset. For example, one may wish to map a more detailed tagset 
+									 to a less distinctive one (i.e. tell a program to tag all verbs as just <code>VERB</code>
+									 instead of differentiating between <code>verb infinitive</code>, <code>verb imperative</code>, etc.
+									
+									Two sample implementations for <code>MappingInterface</code> are included, 
+									namely <code>TagMappingBrown</code> (mapping reducing Brown corpus tagset from more than 400 tags to 93) and 
+									<code>GrobMappingTueba</code>(mapping German STTS tagset from 54 tags to basic 11 categories plus special symbols and punctuation)
+ 						</para>
+					</listitem>
+					
+					<listitem>
+						<para>
+							<code>ModelGeneration</code>
+							- trains an N-gram model for the tagger, iterating over a List of <code>Token</code>s. 
+							Writes the resulting model to a binary file. At the moment,
+							only bi-and trigram models are supported. Further N-grams can be easily integrated.
+							<code>ModelGeneration</code> is not concerned with the fact, 
+							whether the training corpus is given as a single file or as a directory containing a number of files,
+							as this is a <code>CORPUS_READER</code> implementation issue. Two supplied readers include both a reader 
+							for a corpus as a single file (<code>TT_FormatReader</code>code>) or as a directory (<code>BrownReader</code>code>)
+							</para>
+					</listitem>
+					<listitem>
+					
+						<para>
+							Interface <code>CorpusReader</code>
+							- should be used to implement corpus readers for own corpora; the objective 
+							of the reader is to take charge of the preprocessing and transform tokenized units 
+							(usually <emphasis>words</emphasis>) into a List of <code>Token</code> objects. 
+							Two sample implementations of <code>CorpusReader</code> are included: 
+							
+							<orderedlist>
+							
+							<listitem>
+									<para>
+									 <code>BrownReader</code>
+									-  for the Brown corpus from the nltk distribution (nltk.sourceforge.net) 
+									</para>
+							</listitem>
+							
+							<listitem>
+									<para>
+									 <code>TT_FormatReader</code>
+									-  for the corpora in TreeTagger format, i.e. one word per line 
+									with tags separated from the words by tabs. 
+									</para>
+							</listitem>
+							
+							
+							</orderedlist>
+							
+							</para>
+					</listitem>
+					
+				</itemizedlist>
+				</para>
+		<para>
+		To train a new model, one should  adjust a number of parameters in the <code>"tagger.properties"</code> file, 
+		which is in Java properties file format (see <xref linkend="properties.file"/>). After the parameters are set, you just need to run 
+		<code>ModelGeneration.java</code>
+				<programlisting id="properties.file" xreflabel="tagger.properties file"><emphasis><![CDATA[######## This is the default tagger.properties file
+######## This file is used for training and testing only,
+######## The configuration for tagging is directly
+######## tuned in the descriptor "HmmTagger.xml"
+
+
+##########################  BOTH FOR TRAINING AND EVALUATION  ########
+
+######## THESE ARE THE DEFAULT MODEL FILES FOR GERMAN AND ENGLISH
+######## You can either uncomment one of them, if you want to replace
+######## given models with your own one,
+
+#MODEL_FILE = resources/german/TuebaModel.dat
+#MODEL_FILE = resources/english/BrownModel.dat
+
+######## or specify a completely different name
+MODEL_FILE = 
+
+######## If mapping of tags is desired, uncomment the following
+#DO_MAPPING = true
+
+
+#######	EXAMPLES OF MAPPING CLASSES 
+
+## Basic mapping for the Brown corpus (nltk distribution) tagset:
+## to get 93 tags out of 473
+#MAPPING = org.apache.uima.examples.tagger.TagMappingBrown
+## Basic mapping for STTS tagset: from 54 tags onto the basic
+## ca. 15 classes plus punctuation
+#MAPPING = org.apache.uima.examples.tagger.GrobMappingTueba
+
+## If you implement your own mapping, you should specify here in
+## the same manner as above a java-path to the class
+MAPPING = 
+
+####### FILE CONTAINING TRAINING CORPUS:
+####### can be in specified either as an absolute or as a relative path
+####### e.g. FILE = ../../tueba_tigerFormat.txt or FILE = C:/Data/tueba.txt
+FILE = 
+
+######## If corpus is in a different format and
+######## cannot be read with the provided READERS,
+######## you should specify here a java-path to the
+######## class (s. examples below)
+
+#CORPUS_READER=org.apache.uima.examples.tagger.trainAndTest.TT_FormatReader
+#CORPUS_READER=org.apache.uima.examples.tagger.trainAndTest.BrownReader
+CORPUS_READER = 
+
+#################      ONLY FOR EVALUATION   ######################
+
+######### GOLD STANDARD CORPUS FILE: 
+######### can be specified as an absolute or as a relative path 
+## e.g. GOLD_STANDARD = ../../tueba_tigerFormat.txt or
+## GOLD_STANDARD = C:/Data/tueba.txt
+GOLD_STANDARD = 
+
+######### Here we specify whether one intends to test a bi- or a
+######### trigram model (default is a trigram model)  
+N=3
+]]></emphasis>
+				</programlisting>
+			
+				</para>
+	
+	</chapter>
+	
+	<chapter id="sandbox.tagger.evaluation">
+		<title>Evaluation</title>
+		<para>
+		To evaluate performance if a "gold standard" corpus is available, one can use the following provided file:
+		<itemizedlist>
+			<listitem>
+				<para>
+					<code>TaggerEvaluation.java</code>
+						- can be used to evaluate the tagger and/or new models on a manually annotated corpus. 
+				</para>
+			</listitem>
+		</itemizedlist>
+		</para>
+		<para>
+		<code>HMMTagger</code> was evaluated for English and German. For English, it was trained on 80% of the Brown corpus 
+		(180,000 tokens) and tested on the rest unseen 20%. The achieved accuracy was about 96%, test corpus contained 4.5% of unknown tokens.
+		</para>
+		<para>
+		For German, it achieves between 95% and 96% accuracy when trained and tested on the same type of corpus, i.e. with 80% of corpus used for training and 20% for testing.
+		The accuracy goes a bit down when tagging is performed for different types of corpora than the training one, mostly due to the growing number of unknown words.  
+		</para>
+	</chapter>
+
+
+	<appendix id="sandbox.tagger.theory">
+		<title>Theory Behind</title>
+
+		<para>
+			This chapter is just a sketch of the statistical model
+			undelying the tagger.
+
+			Hidden Markov Models (HMMs) are the mainstay of the
+			applications employing statistical modeling in any form,
+			like speech recognition and production systems, signal
+			processing, part of speech tagging.
+
+			A Hidden Markov Model is a probabilistic function of a
+			Markov process. A Markov process is a process that fulfills
+			Markov assumptions.
+
+
+			Markov assumptions are:
+			<itemizedlist>
+				<listitem>
+					<para>
+						<code>limited horizon</code>
+						- Markov processes are states without memory,
+						except for condition of the current state.
+						Though we usually consider sequences of
+						variables that are not independent of each
+						other, it often suffices to know the value of
+						the current situation without going deep into
+						the past happenings. As [
+						<biblioref linkend="schuetze" />
+						] put it, we do not really need to know, how
+						many books were in the library last week or last
+						year in order to predict how many books there
+						will be tomorrow. It is often enough to know the
+						current situation. Thereby, future states in the
+						Markov process are independent of the past, they
+						only depend on the present. Let
+						<inlineequation>
+							<mathphrase>
+								X = (X
+								<subscript>1</subscript>
+								, ..., X
+								<subscript>T</subscript>
+								)
+							</mathphrase>
+						</inlineequation>
+						be a sequence of random variables taking the
+						values from the finite state space
+						<inlineequation>
+							<mathphrase>
+								S = (s
+								<subscript>1</subscript>
+								, ..., s
+								<subscript>N</subscript>
+								)
+							</mathphrase>
+						</inlineequation>
+						, then a limited horizon property could be
+						formalized by:
+						<informalequation>
+							<mathphrase>
+								P(X
+								<subscript>t+1</subscript>
+								= s
+								<subscript>k</subscript>
+								|X
+								<subscript>1</subscript>
+								, ..., X
+								<subscript>t</subscript>
+								) = P(X
+								<subscript>t+1</subscript>
+								= s
+								<subscript>k</subscript>
+								|X
+								<subscript>t</subscript>
+								)
+							</mathphrase>
+						</informalequation>
+
+
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<code>time invariance</code>
+					</para>
+
+					<para>
+						The probabilities do not change over time, i.e.
+						if we know that the probability of observing a
+						rainbow after the rain is equal to 90\%, we know
+						that it should be true for today as well as for
+						tomorrow.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+
+			If
+			<code>X</code>
+			conforms to these two properties, then it is said to be a
+			Markov chain.
+
+			One can describe a Markov chain by a transition matrix:
+			<informalequation>
+				<mathphrase>
+					A = a
+					<subscript>i,j</subscript>
+					= P(X
+					<subscript>t+1</subscript>
+					= s
+					<subscript>j</subscript>
+					|X
+					<subscript>t</subscript>
+					=s
+					<subscript>i</subscript>
+					)
+				</mathphrase>
+			</informalequation>
+
+
+			<informalequation>
+				<mathphrase>
+					- with a
+					<subscript>i,j</subscript>
+					>= 0 (for all
+					<emphasis>i,j</emphasis>
+					) and the sum of all transition probabilities from
+					state
+					<emphasis>i</emphasis>
+					(a
+					<subscript>i,j</subscript>
+					) should be equal to 1 (for all
+					<emphasis>i</emphasis>
+					)
+				</mathphrase>
+			</informalequation>
+
+		</para>
+
+		<para>
+
+			Markov models can be used whenever one needs to model the
+			probability of a linear sequence of variables.
+
+			One distinguishes Visible Markov Models (VMM) vs. Hidden
+			Markov Models. The difference is that when we work with
+			"visible" events, we can directly estimate the corresponding
+			probabilities (which is the case if training corpus is
+			available to train own models for HMM taggers).
+
+			Finding a sequence of part of speech tags (i.e. Viterbi part
+			of the tagger) in contrast is a hidden Markov model as the
+			states (tags) are not directly observable.
+		</para>
+
+		<para>
+			<emphasis>The goal of HMM - based tagger</emphasis>
+			is to find part of speech tags ( = hidden states) that
+			generate a sequence of words ( = observable states). Most of
+			the known implementations of POS taggers are viewing text as
+			being produced by a hidden Markov model, so that tagging can
+			be regarded as a Markov process deciding which states the
+			system went through to generate a given text.
+
+		</para>
+		<para>
+			<emphasis>General Form of HMM</emphasis>
+		</para>
+		<para>
+			A HMM is a five-tuple:
+			<inlineequation>
+				<mathphrase>(S, O, &pgr;, A, B)</mathphrase>
+			</inlineequation>
+			<informalexample>
+				<para>where:</para>
+				<para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<code>S</code>
+								- the set of states (here: parts of
+								speech)
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<code>K</code>
+								- the set of observations (here: words)
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<code>&pgr;</code>
+								- initial state probabilities
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<code>A</code>
+								- state transitions probabilities
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<code>B</code>
+								- symbol emissions probabilities
+							</para>
+						</listitem>
+					</itemizedlist>
+				</para>
+
+			</informalexample>
+		</para>
+
+        <para>
+		Further,
+		<code>
+			X
+			<subscript>t</subscript>
+		</code>
+		(state sequence) and
+		<code>
+			O
+			<subscript>t</subscript>
+		</code>
+		(output sequence) are given.
+
+		Tagging procedure is then the following:
+		<informalexample>
+			<orderedlist>
+				<listitem>
+					<para>
+						<code>t := 1</code>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<code>
+							Start in state s
+							<subscript>i</subscript>
+							with probability &pgr;
+							<subscript>i</subscript>
+							(i.e., X
+							<subscript>1</subscript>
+							= i)
+						</code>
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<code>forever do:</code>
+					</para>
+
+					<itemizedlist>
+						<listitem>
+							<para>
+								<code>
+									Move from s
+									<subscript>i</subscript>
+									to s
+									<subscript>j</subscript>
+									with probability a
+									<subscript>i,j</subscript>
+									(i.e. X
+									<subscript>t+1</subscript>
+									= j)
+								</code>
+							</para>
+						</listitem>
+
+						<listitem>
+							<para>
+								<code>
+									Emit observation symbol o
+									<subscript>t</subscript>
+									= k with probability b
+									<subscript>i,j,k</subscript>
+								</code>
+							</para>
+						</listitem>
+
+						<listitem>
+							<para>
+								<code>t := T+1</code>
+							</para>
+
+						</listitem>
+					</itemizedlist>
+				</listitem>
+
+				<listitem>
+					<para>
+						<code>end</code>
+					</para>
+				</listitem>
+
+			</orderedlist>
+		</informalexample>
+</para>
+
+		<para>
+			Despite their limitations, HMM-s are one of the most
+			successful techniques in natural language processing and are
+			widely used, especially in sequence tagging applications.
+			The best statistical taggers all perform at about the same
+			level of accuracy.
+		</para>
+	</appendix>
+
+	<!-- ... -->
+	<glossary>
+		<title>Glossary</title>
+
+		<glossdiv>
+			<title>HMM</title>
+
+			<glossentry id="hmm">
+				<glossterm>Hidden Markov Model</glossterm>
+				<acronym>HMM</acronym>
+				<glossdef>
+					<para></para>
+				</glossdef>
+			</glossentry>
+		</glossdiv>
+
+		<glossdiv>
+			<title>POS</title>
+			<glossentry id="pos">
+				<glossterm>Part of Speech</glossterm>
+				<acronym>POS</acronym>
+				<glossdef>
+					<para></para>
+				</glossdef>
+			</glossentry>
+		</glossdiv>
+
+	</glossary>
+
+	<bibliography>
+		<biblioentry xreflabel="ManningSchuetze99" id="schuetze">
+			<authorgroup>
+				<author>
+					<firstname>Christopher</firstname>
+					<surname>Manning</surname>
+				</author>
+				<author>
+					<firstname>Hinrich</firstname>
+					<surname>Schuetze</surname>
+				</author>
+			</authorgroup>
+			
+			<title>
+				Foundations of Statistical Natural Language Processing
+			</title>
+			<copyright>
+				<year>1999</year>
+			</copyright>
+			<publisher>
+				<publishername>MIT Press</publishername>
+			</publisher>
+		</biblioentry>
+	</bibliography>
+
+</book>

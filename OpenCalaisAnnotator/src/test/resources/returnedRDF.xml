@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ -->
+<string xmlns="http://clearforest.com/">&lt;!--Use of the Calais Web Service is governed by
+  the Terms of Service located at http://www.opencalais.com. By using
+  this service or the results of the service you agree to these terms of
+  service.--&gt;&lt;!--Relations: ManMadeDisaster, PersonCareer
+
+  Company: Gulf oil
+  Country: United States
+  IndustryTerm: oil
+  Person: Obama
+  Position: President--&gt;&lt;rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:c="http://s.opencalais.com/1/pred/"&gt;&lt;rdf:Description
+  c:allowDistribution="false" c:allowSearch="false"
+  c:calaisRequestID="f12a4c4b-2f82-0cba-129a-20dae936d2c7"
+  c:externalID="UIMACalaisAnnotWrapper-1278324092434"
+  c:id="http://id.opencalais.com/c9T-0PIYdMlgiRTgpv-9eQ"
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/DocInfo"/&gt;&lt;c:document&gt;&lt;![CDATA[&lt;body&gt;
+  President Obama vows to make BP pay for the Gulf oil spill, and says
+  the US must end its fossil fuel
+  addiction&lt;/body&gt;]]&gt;&lt;/c:document&gt;&lt;c:docTitle/&gt;&lt;c:docDate&gt;2010-07-05
+  06:01:32.703&lt;/c:docDate&gt;&lt;c:externalMetadata/&gt;&lt;c:submitter/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  c:contentType="TEXT/html" c:emVer="7.1.1103.5"
+  c:langIdVer="DefaultLangId" c:language="English"
+  c:processingVer="CalaisJob01" c:submissionDate="2010-07-05
+  06:01:32.563"
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/meta"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/DocInfoMeta"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:submitterCode&gt;596f0d42-503d-c70f-1e0e-4efb394163bd&lt;/c:submitterCode&gt;&lt;c:signature&gt;digestalg-1|NTiWKU0XrcpEfbf1Kjj7d84bzpE=|SVTE3TimiYhYx8To2AT7TJFP8+AG72+0eB6bbjlhGXQPDfQltgE+/g==&lt;/c:signature&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/lid/DefaultLangId"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/lid/DefaultLangId"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:lang
+  rdf:resource="http://d.opencalais.com/lid/DefaultLangId/English"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/cat/1"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/cat/DocCat"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:category
+  rdf:resource="http://d.opencalais.com/cat/Calais/DisasterAccident"/&gt;&lt;c:classifierName&gt;Calais&lt;/c:classifierName&gt;&lt;c:categoryName&gt;Disaster_Accident&lt;/c:categoryName&gt;&lt;c:score&gt;1.000&lt;/c:score&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/comphash-1/07a0f805-2794-3765-9569-9334a45aa9c4"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/e/Company"/&gt;&lt;c:name&gt;Gulf
+  oil&lt;/c:name&gt;&lt;c:nationality&gt;N/A&lt;/c:nationality&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/1"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/comphash-1/07a0f805-2794-3765-9569-9334a45aa9c4"/&gt;&lt;!--Company:
+  Gulf oil; --&gt;&lt;c:detection&gt;[President Obama vows to make BP
+  pay for the ]Gulf oil[ spill, and says the US must end its fossil
+  fuel]&lt;/c:detection&gt;&lt;c:prefix&gt;President Obama vows to make
+  BP pay for the &lt;/c:prefix&gt;&lt;c:exact&gt;Gulf
+  oil&lt;/c:exact&gt;&lt;c:suffix&gt; spill, and says the US must end
+  its fossil
+  fuel&lt;/c:suffix&gt;&lt;c:offset&gt;51&lt;/c:offset&gt;&lt;c:length&gt;8&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/genericHasher-1/0d87e8a5-fb41-33c9-a1fb-bedf134b384e"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/e/Position"/&gt;&lt;c:name&gt;President&lt;/c:name&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/2"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/genericHasher-1/0d87e8a5-fb41-33c9-a1fb-bedf134b384e"/&gt;&lt;!--Position:
+  President; --&gt;&lt;c:detection&gt;[&amp;lt;body&amp;gt; ]President[
+  Obama vows to make BP pay for the Gulf
+  oil]&lt;/c:detection&gt;&lt;c:prefix&gt;&amp;lt;body&amp;gt;
+  &lt;/c:prefix&gt;&lt;c:exact&gt;President&lt;/c:exact&gt;&lt;c:suffix&gt;
+  Obama vows to make BP pay for the Gulf
+  oil&lt;/c:suffix&gt;&lt;c:offset&gt;7&lt;/c:offset&gt;&lt;c:length&gt;9&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/genericHasher-1/31ec6404-85fe-33f5-af02-cb37fec6b170"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/e/IndustryTerm"/&gt;&lt;c:name&gt;oil&lt;/c:name&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/3"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/genericHasher-1/31ec6404-85fe-33f5-af02-cb37fec6b170"/&gt;&lt;!--IndustryTerm:
+  oil; --&gt;&lt;c:detection&gt;[ President Obama vows to make BP pay
+  for the Gulf ]oil[ spill, and says the US must end its fossil
+  fuel]&lt;/c:detection&gt;&lt;c:prefix&gt; President Obama vows to make
+  BP pay for the Gulf
+  &lt;/c:prefix&gt;&lt;c:exact&gt;oil&lt;/c:exact&gt;&lt;c:suffix&gt;
+  spill, and says the US must end its fossil
+  fuel&lt;/c:suffix&gt;&lt;c:offset&gt;56&lt;/c:offset&gt;&lt;c:length&gt;3&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/genericHasher-1/104afbe3-c373-382b-9fc6-f9df7a5e588c"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/r/ManMadeDisaster"/&gt;&lt;!--United
+  States--&gt;&lt;c:location
+  rdf:resource="http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305"/&gt;&lt;c:manmadedisaster&gt;oil
+  spill&lt;/c:manmadedisaster&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/4"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/genericHasher-1/104afbe3-c373-382b-9fc6-f9df7a5e588c"/&gt;&lt;!--ManMadeDisaster:
+  location: United States; manmadedisaster: oil spill;
+  --&gt;&lt;c:detection&gt;[President Obama vows to make BP pay for ]the
+  Gulf oil spill, and says the US[ must end its fossil
+  fuel]&lt;/c:detection&gt;&lt;c:prefix&gt;President Obama vows to make
+  BP pay for &lt;/c:prefix&gt;&lt;c:exact&gt;the Gulf oil spill, and
+  says the US&lt;/c:exact&gt;&lt;c:suffix&gt; must end its fossil
+  fuel&lt;/c:suffix&gt;&lt;c:offset&gt;47&lt;/c:offset&gt;&lt;c:length&gt;35&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/genericHasher-1/0146cea0-79f2-3571-b518-c52480cdf71b"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/r/PersonCareer"/&gt;&lt;!--Obama--&gt;&lt;c:person
+  rdf:resource="http://d.opencalais.com/pershash-1/cbc8c069-5e3f-3778-b9e5-e93f1c6d323a"/&gt;&lt;!--President--&gt;&lt;c:position
+  rdf:resource="http://d.opencalais.com/genericHasher-1/0d87e8a5-fb41-33c9-a1fb-bedf134b384e"/&gt;&lt;c:careertype&gt;political&lt;/c:careertype&gt;&lt;c:status&gt;current&lt;/c:status&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/5"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/genericHasher-1/0146cea0-79f2-3571-b518-c52480cdf71b"/&gt;&lt;!--PersonCareer:
+  person: Obama; position: President; careertype: political; status:
+  current; --&gt;&lt;c:detection&gt;[&amp;lt;body&amp;gt; ]President
+  Obama[ vows to make BP pay for the Gulf oil spill,
+  and]&lt;/c:detection&gt;&lt;c:prefix&gt;&amp;lt;body&amp;gt;
+  &lt;/c:prefix&gt;&lt;c:exact&gt;President
+  Obama&lt;/c:exact&gt;&lt;c:suffix&gt; vows to make BP pay for the Gulf
+  oil spill,
+  and&lt;/c:suffix&gt;&lt;c:offset&gt;7&lt;/c:offset&gt;&lt;c:length&gt;15&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/er/geo/country/ralg-geo1/152649df-347e-e289-1a9e-acc883e07d17"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/er/Geo/Country"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;!--United
+  States--&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305"/&gt;&lt;c:name&gt;United
+  States&lt;/c:name&gt;&lt;c:latitude&gt;40.4230003233&lt;/c:latitude&gt;&lt;c:longitude&gt;-98.7372244786&lt;/c:longitude&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/er/company/ralg-tr1r/47a1035d-81d5-372e-9065-ad657badf3d5"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/er/Company"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;!--Gulf
+  oil--&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/comphash-1/07a0f805-2794-3765-9569-9334a45aa9c4"/&gt;&lt;c:score&gt;1.0&lt;/c:score&gt;&lt;c:name&gt;Gulf
+  Oil LP&lt;/c:name&gt;&lt;c:shortname&gt;Gulf Oil
+  LP&lt;/c:shortname&gt;&lt;c:ticker&gt;GUFOL&lt;/c:ticker&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/pershash-1/cbc8c069-5e3f-3778-b9e5-e93f1c6d323a"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/e/Person"/&gt;&lt;c:name&gt;Obama&lt;/c:name&gt;&lt;c:persontype&gt;political&lt;/c:persontype&gt;&lt;c:nationality&gt;N/A&lt;/c:nationality&gt;&lt;c:commonname&gt;Barack
+  Obama&lt;/c:commonname&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/6"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/pershash-1/cbc8c069-5e3f-3778-b9e5-e93f1c6d323a"/&gt;&lt;!--Person:
+  Obama; --&gt;&lt;c:detection&gt;[&amp;lt;body&amp;gt; President
+  ]Obama[ vows to make BP pay for the Gulf oil spill,
+  and]&lt;/c:detection&gt;&lt;c:prefix&gt;&amp;lt;body&amp;gt; President
+  &lt;/c:prefix&gt;&lt;c:exact&gt;Obama&lt;/c:exact&gt;&lt;c:suffix&gt;
+  vows to make BP pay for the Gulf oil spill,
+  and&lt;/c:suffix&gt;&lt;c:offset&gt;17&lt;/c:offset&gt;&lt;c:length&gt;5&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/em/e/Country"/&gt;&lt;c:name&gt;United
+  States&lt;/c:name&gt;&lt;/rdf:Description&gt;&lt;rdf:Description
+  rdf:about="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb/Instance/7"&gt;&lt;rdf:type
+  rdf:resource="http://s.opencalais.com/1/type/sys/InstanceInfo"/&gt;&lt;c:docId
+  rdf:resource="http://d.opencalais.com/dochash-1/4325c163-1016-37d6-85d1-cb65a6c222fb"/&gt;&lt;c:subject
+  rdf:resource="http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305"/&gt;&lt;!--Country:
+  United States; --&gt;&lt;c:detection&gt;[ make BP pay for the Gulf oil
+  spill, and says the ]US[ must end its fossil
+  fuel]&lt;/c:detection&gt;&lt;c:prefix&gt; make BP pay for the Gulf oil
+  spill, and says the
+  &lt;/c:prefix&gt;&lt;c:exact&gt;US&lt;/c:exact&gt;&lt;c:suffix&gt;
+  must end its fossil
+  fuel&lt;/c:suffix&gt;&lt;c:offset&gt;80&lt;/c:offset&gt;&lt;c:length&gt;2&lt;/c:length&gt;&lt;/rdf:Description&gt;&lt;/rdf:RDF&gt;
+</string>

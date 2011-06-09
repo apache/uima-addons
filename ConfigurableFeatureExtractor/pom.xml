@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
+	
+	http://www.apache.org/licenses/LICENSE-2.0
+	
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.    
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.apache.uima</groupId>
+    <artifactId>uima-addons-parent</artifactId>
+    <version>2.3.1-SNAPSHOT</version>
+    <relativePath>../uima-addons-parent</relativePath>
+  </parent>
+  <artifactId>ConfigurableFeatureExtractor</artifactId>
+  <version>2.3.1-SNAPSHOT</version>
+  <name>UIMA Annotator: ${project.artifactId}</name>
+  <description>Extracts Features specified in a feature-specification language, from a CAS</description>
+  <url>${uimaWebsiteUrl}</url>
+
+  <!-- Special inheritance note
+       even though the <scm> element that follows is exactly the 
+       same as those in super poms, it cannot be inherited because 
+       there is some special code that computes the connection elements
+       from the chain of parent poms, if this is omitted. 
+       
+       Keeping this a bit factored allows cutting/pasting the <scm>
+       element, and just changing the following two properties -->  
+  <scm>
+    <connection>
+      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+    </connection>
+    <developerConnection>
+      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+    </developerConnection>
+    <url>
+      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+    </url>
+  </scm>
+  
+  <properties>
+    <uimaScmRoot>sandbox</uimaScmRoot>
+    <uimaScmProject>${project.artifactId}</uimaScmProject>
+    <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
+    <pearMainDescriptor>desc/cas_consumers/UIMAFeatureConsumer.xml</pearMainDescriptor>
+    <bookNameRoot>CFE_UG</bookNameRoot>
+  </properties>
+
+    
+  <dependencies>
+    <!-- dependencies checked using the dependency plugin dependency:analyze - no issues 9/2009 -->
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-core</artifactId>
+      <version>${uimaDependencyVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-jxpath</groupId>
+      <artifactId>commons-jxpath</artifactId>
+      <version>1.3</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.xmlbeans</groupId>
+      <artifactId>xmlbeans</artifactId>
+      <version>2.4.0</version>
+      <exclusions>
+        <exclusion> <!-- licensing issues, use geronimo instead -->
+          <groupId>stax</groupId>
+          <artifactId>stax-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.eclipse.emf.ecore</groupId>
+      <artifactId>xmi</artifactId>
+      <version>2.3.0-v200706262000</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>common</artifactId>
+      <version>2.3.0-v200706262000</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>ecore</artifactId>
+      <version>2.3.0-v200706262000</version>
+    </dependency>
+
+    <!-- testing resources -->
+    <!-- uimaj-core is already "provided" and this seems to let it be 
+         available for testing
+         If you make it test scope, it removes it from the 'provided'
+         category and the main code won't compile -->
+    <!--dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-core</artifactId>
+      <scope>test</scope>
+    </dependency-->
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-test-util</artifactId>
+      <version>${uimaDependencyVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-component-test-util</artifactId>
+      <version>${uimaDependencyVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-examples</artifactId>
+      <version>${uimaDependencyVersion}</version>
+      <scope>test</scope>
+    </dependency> 
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-document-annotation</artifactId>
+      <version>${uimaDependencyVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+    
+	<build>
+		<finalName>uima-tool-configurableFeatureExtractor</finalName>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>default-cli</id>
+              <configuration>
+                <excludes>
+                  <exclude>release.properties</exclude> <!-- release generated artifact -->
+                  <exclude>README*</exclude>
+                  <exclude>RELEASE_NOTES*</exclude>
+                  <exclude>issuesFixed/**</exclude> <!-- generated file -->
+                  <exclude>marker-file-identifying-*</exclude> <!-- empty file -->
+                  <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
+                  
+                  <exclude>cfeModelGen/*</exclude> <!-- generated model -->
+                  <exclude>src/test/java/example/PersonTitle*.java</exclude> <!-- JCasgen generated file -->
+                  <exclude>src/test/java/org/apache/uima/examples/SourceDocumentInformation*.java</exclude> <!-- JCasgen generated file -->
+                  <exclude>src/test/resources/testData*.txt*</exclude> <!-- test data -->
+                </excludes>              
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>         
+      </plugins>
+    </pluginManagement> 
+    <!-- next causes failure in eclipse:eclipse goal, so is
+         commented out and replaced with the maven-resources-plugin -->
+    <!--resources>
+      <resource>
+        <targetPath>${project.build.directory}/pearPackaging/desc</targetPath>
+        <directory>src/main/resources/descriptors</directory>
+      </resource>
+    </resources-->
+
+    <plugins>
+      <!-- generate XML parser from .xsd file -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xmlbeans-maven-plugin</artifactId>
+        <version>2.3.3</version>
+        <executions>
+          <execution>
+            <goals><goal>xmlbeans</goal></goals>
+            <configuration>
+              <schemaDirectory>src/main/xsdForXMLBeans</schemaDirectory>
+              <javaSource>1.5</javaSource>
+            </configuration>        
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <!-- copy resources for the PEAR -->      
+          <execution>
+            <goals><goal>copy-resources</goal></goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <outputDirectory>${project.build.directory}/pearPackaging/desc</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/resources/descriptors</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <!-- copy non-typical resources for src assembly -->      
+          <execution>
+            <id>copy special resources to assembly-src</id>
+            <goals><goal>copy-resources</goal></goals>  
+            <phase>process-resources</phase>  <!-- required -->
+            <configuration>
+              <outputDirectory>${project.build.directory}/assembly-src/${project.artifactId}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>.</directory>
+                  <includes>
+                    <include>cfeModelGen/**</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+ 
+    </plugins>
+	</build>
+</project>

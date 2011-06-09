@@ -1,0 +1,9 @@
+SentenceAnnotation(0,51): Tab	space-tab 	2tabs		tabFollowedByNL	
+textAfterNL
+TokenAnnotation(0,3): Tab
+TokenAnnotation(4,9): space
+TokenAnnotation(9,10): -
+TokenAnnotation(10,13): tab
+TokenAnnotation(15,20): 2tabs
+TokenAnnotation(22,37): tabFollowedByNL
+TokenAnnotation(40,51): textAfterNL

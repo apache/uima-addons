@@ -1,0 +1,2 @@
+TestAnnot(3,14): SimpleRegex  { testFeature=SimpleFeaturePathMatchingTest }
+TestAnnot1(3,14): SimpleRegex  { testFeature=FeaturePath }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/ConfigurableFeatureExtractor/src/main/java"
+    modelPluginID="" modelName="CFE" importerID="org.eclipse.xsd.ecore.importer" bundleManifest="false"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>../src/main/xsdForEmf/CFEConfigModel.xsd</foreignModel>
+  <genPackages prefix="Config" basePackage="org.apache.uima.tools.cfe" resource="XML"
+      disposableProviderFactory="true" ecorePackage="config.ecore#/">
+    <genClasses ecoreClass="config.ecore#//BitsetFeatureValuesXML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//BitsetFeatureValuesXML/bitmask"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//BitsetFeatureValuesXML/exactMatch"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//CFEDescriptorXML">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//CFEDescriptorXML/targetAnnotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//CFEDescriptorXML/nullValueImage"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference config.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference config.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//DocumentRoot/cFEConfig"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//EnumFeatureValuesXML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//EnumFeatureValuesXML/values"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//EnumFeatureValuesXML/caseSensitive"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//FeatureObjectMatcherXML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/distance"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/orientation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/windowFlags"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/windowsizeEnclosed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/windowsizeInside"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/windowsizeLeft"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//FeatureObjectMatcherXML/windowsizeRight"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//GroupFeatureMatcherXML">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//GroupFeatureMatcherXML/featureMatchers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//GroupFeatureMatcherXML/exclude"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//ObjectPathFeatureValuesXML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//ObjectPathFeatureValuesXML/objectPath"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//PartialObjectMatcherXML">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//PartialObjectMatcherXML/groupFeatureMatchers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//PartialObjectMatcherXML/annotationTypeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//PartialObjectMatcherXML/fullPath"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//PatternFeatureValuesXML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//PatternFeatureValuesXML/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//RangeFeatureValuesXML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//RangeFeatureValuesXML/lowerBoundary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//RangeFeatureValuesXML/lowerBoundaryInclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//RangeFeatureValuesXML/upperBoundary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//RangeFeatureValuesXML/upperBoundaryInclusive"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//SingleFeatureMatcherXML">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//SingleFeatureMatcherXML/rangeFeatureValues"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//SingleFeatureMatcherXML/enumFeatureValues"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//SingleFeatureMatcherXML/bitsetFeatureValues"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//SingleFeatureMatcherXML/objectPathFeatureValues"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//SingleFeatureMatcherXML/patternFeatureValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//SingleFeatureMatcherXML/exclude"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//SingleFeatureMatcherXML/featurePath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//SingleFeatureMatcherXML/featureTypeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//SingleFeatureMatcherXML/quiet"/>
+    </genClasses>
+    <genClasses ecoreClass="config.ecore#//TargetAnnotationXML">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//TargetAnnotationXML/targetAnnotationMatcher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference config.ecore#//TargetAnnotationXML/featureAnnotationMatchers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//TargetAnnotationXML/className"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute config.ecore#//TargetAnnotationXML/enclosingAnnotation"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

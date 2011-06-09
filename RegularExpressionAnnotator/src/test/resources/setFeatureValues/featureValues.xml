@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ -->
+<conceptSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://incubator.apache.org/uima/regex">
+	
+    <concept name="featureValues">
+    	<rules>
+			<rule ruleId="ID1" regEx="(Rule)(Regex)(1)(2.4)" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" confidence="1.0">
+				<updateMatchTypeAnnotation>
+			 		<setFeature name="language" type="String">$0 Test</setFeature>
+			 		<setFeature name="language1" type="String" normalization="ToUpperCase">$0 Test</setFeature>
+			 		<setFeature name="language2" type="String" normalization="Custom" class="org.apache.uima.annotator.regex.CustomTestNormalizer">$0</setFeature>
+			 		<setFeature name="refFeature" type="Reference">testannot</setFeature>
+			 		<setFeature name="ruleID" type="RuleId"/>
+			 	</updateMatchTypeAnnotation>	
+			</rule>
+      		<rule ruleId="ID2" regEx="(Rule)(Regex)(2)(2.4)" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" confidence="0.7">
+				<updateMatchTypeAnnotation>
+			 		<setFeature name="language" type="String">$1</setFeature>
+			 	</updateMatchTypeAnnotation>	
+			</rule>
+	    </rules>
+	    <createAnnotations>	
+			<annotation id="testannot" type="org.apache.uima.TestAnnot">
+				<begin group="0"/>
+				<end group="0"/>
+				<setFeature name="testFeature0" type="String">$0</setFeature>		
+				<setFeature name="testFeature1" type="String">$1$2$3</setFeature>
+				<setFeature name="testFeature2" type="String">$2 with additions</setFeature>
+				<setFeature name="testFeature3" type="String">value only</setFeature>
+				<setFeature name="testFeature4" type="String">frist $0</setFeature>	
+				<setFeature name="testFeature10" type="String" normalization="ToLowerCase">VALUE OnLy</setFeature>			
+				<setFeature name="testFeature11" type="String" normalization="ToUpperCase">value only</setFeature>
+				<setFeature name="testFeature12" type="String" normalization="Trim">$0</setFeature>			
+				<setFeature name="testFeature13" type="String" normalization="ToUpperCase">$1 test $2</setFeature>
+				<setFeature name="testFeature14" type="String" normalization="Custom" class="org.apache.uima.annotator.regex.CustomTestNormalizer">$1 test $2</setFeature>
+				
+				<setFeature name="testFeature6" type="Float">2343.34</setFeature>				
+	    		<setFeature name="testFeature7" type="Float">$4</setFeature>				
+	    		
+				<setFeature name="testFeature8" type="Integer">12345</setFeature>				
+    			<setFeature name="testFeature9" type="Integer">$3</setFeature>				
+    			
+				<setFeature name="testFeature5" type="Reference">testannot1</setFeature>
+				<setFeature name="confidenceValue" type="Confidence"/>
+				<setFeature name="ruleId" type="RuleId"/>
+		 	</annotation>
+		 			 	
+		 	<annotation id="testannot1" type="org.apache.uima.TestAnnot1">
+				<begin group="0"/>
+				<end group="0"/>
+		 	</annotation>
+	 	</createAnnotations>
+    </concept>    
+
+    <concept name="matchGroupNames">
+    	<rules>
+      		<rule ruleId="ID1" regEx="\m{group1}(Rule)\m{group2}(Regex)\m{group3}(3)\m{group4}(2.4)" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" confidence="0.5"/>
+	    </rules>
+	    <createAnnotations>	
+			<annotation id="testannot" type="org.apache.uima.TestAnnot">
+				<begin group="0"/>
+				<end group="0"/>
+				<setFeature name="testFeature0" type="String">{${group1}}\$</setFeature>		
+				<setFeature name="testFeature1" type="String">${GroUp1}${group2}${group3}${group4}</setFeature>
+				<setFeature name="testFeature2" type="String">${group2} with additions</setFeature>
+				<setFeature name="testFeature3" type="String">value only</setFeature>
+				<setFeature name="testFeature4" type="String">first $1</setFeature>	
+	    		<setFeature name="testFeature7" type="Float">${group4}</setFeature>				
+		 	</annotation>
+	 	</createAnnotations>
+    </concept>    
+    
+    <concept name="minimalConfigWithoutHavingRuleIDAndConfidence">
+    	<rules>
+			<rule regEx="Minimal Configuration" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
+ 	    </rules>
+	    <createAnnotations>	
+			<annotation id="testannot2" type="org.apache.uima.TestAnnot">
+				<begin group="0"/>
+				<end group="0"/>
+				<setFeature name="confidenceValue" type="Confidence"/>
+				<setFeature name="ruleId" type="RuleId"/>
+		 	</annotation>
+	 	</createAnnotations>
+    </concept>    
+    
+</conceptSet>

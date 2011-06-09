@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+
+<!-- This pom serves as the the Apache UIMA Addons common parent pom,
+     and may include overrides to the project-wide parent-pom.
+     Over time, things in this pom which apply to
+     other projects within UIMA are migrated to the
+     project-wide parent pom.
+ -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache.uima</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>2</version>
+    <relativePath />
+  </parent>
+
+  <groupId>org.apache.uima</groupId>
+  <artifactId>uima-addons-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>2.3.1-SNAPSHOT</version>
+  <name>UIMA-AddOns: ${project.artifactId}</name>
+  <description>The common parent pom for uima-addons</description>
+  <url>${uimaWebsiteUrl}</url>
+
+  <scm>
+    <connection>
+      scm:svn:http://svn.apache.org/repos/asf/uima/sandbox/trunk/uima-addons-parent
+    </connection>
+    <developerConnection>
+      scm:svn:https://svn.apache.org/repos/asf/uima/sandbox/trunk/uima-addons-parent
+    </developerConnection>
+    <url>
+      http://svn.apache.org/viewvc/uima/sandbox/trunk/uima-addons-parent
+    </url>
+  </scm>
+
+  <!-- The repositories section is duplicated from
+       the parent pom one, and adds the Apache Snapshot Nexus repository
+       where UIMA snapshots are deployed.  This is needed if for instance,
+       a project depends on some new SNAPSHOT level of a build tool,
+       where the users hasn't checked out the build tooling.
+
+       This allows maven to find the snapshots when looking for the parent of
+       this pom -->
+  <repositories>
+    <repository>
+      <id>eclipsePlugins</id>
+      <name>Eclipse components</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/eclipse</url>
+
+      <releases>
+        <updatePolicy>never</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- modify central repository access:
+         Turn on checksum checking-->
+    <repository>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/maven2</url>
+
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+
+    </repository>
+  </repositories>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots.plugins</id>
+      <name>Apache Snapshot Repository - Maven plugins</name>
+      <url>http://repository.apache.org/snapshots</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </pluginRepository>
+  
+  </pluginRepositories>
+
+  <properties>
+    <uimaScmRoot>sandbox</uimaScmRoot>
+    <uimaScmProject>${project.artifactId}</uimaScmProject>
+  </properties>
+
+  <build>
+    <!-- temp fix until parent-pom-3 is released -->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.7</version>
+          <configuration>
+            <source>5</source> <!-- needed to do Enums -->
+            <encoding>UTF-8</encoding>
+            <!-- if next is omitted, causes all projects in reactor that don't
+                     already have full javadocs built, to have them built -->
+            <detectOfflineLinks>false</detectOfflineLinks>
+            <quiet>true</quiet>            
+            <!-- fix java api links because Oracle bought Sun -->
+            <javaApiLinks>
+              <property>
+                <name>api_1.5</name>
+                <value>http://download.oracle.com/javase/1.5.0/docs/api/</value>
+              </property>
+            </javaApiLinks>
+            <!-- identify tags we use so we don't get warning messages for them -->
+            <tags>
+              <tag>
+                <name>generated</name>
+                <placement>X</placement>
+              </tag>
+              <tag>
+                <name>ordered</name>
+                <placement>X</placement>
+              </tag>
+              <tag>
+                <name>modifiable</name>
+                <placement>X</placement>
+              </tag>
+              <tag>
+                <name>model</name>
+                <placement>X</placement>
+              </tag>
+              <tag>
+                <name>pre</name>
+                <placement>X</placement>
+              </tag>
+            </tags>                          
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <mavenExecutorId>forked-path</mavenExecutorId>
+            <tagBase>https://svn.apache.org/repos/asf/uima/sandbox/tags/</tagBase>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <!-- temp fix until parent-pom-3 -->  
+  <profiles>
+    <profile>
+    <!-- ************************************ -->
+    <!-- * Build Custom Binary Distribution * -->
+    <!-- ************************************ -->
+      <id>build distribution</id>
+      <activation>
+        <file><exists>src/main/assembly/bin.xml</exists></file>
+      </activation>
+      <build>
+        <plugins>
+    
+          <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
+          <!-- no maven deployment of this project's artifacts -->
+          <!-- binary build artifact deployed from apache mirror system after release -->
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>      
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate checksums for binary artifacts</id>
+                <goals><goal>run</goal></goals>
+                <phase>verify</phase>
+                <configuration>
+                  <target>
+                    <checksum algorithm="sha1" format="MD5SUM">
+                      <fileset dir="${project.build.directory}">
+                        <include name="*.zip" />
+                        <include name="*.gz" />
+                      </fileset>
+                    </checksum>
+                    <checksum algorithm="md5" format="MD5SUM">
+                      <fileset dir="${project.build.directory}">
+                        <include name="*.zip" />
+                        <include name="*.gz" />
+                      </fileset>
+                    </checksum>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+        </plugins>                    
+      </build>
+    </profile>
+    <profile>
+      <id>build simple project binary assembly</id>
+      <activation>
+        <file>
+          <exists>marker-file-identifying-single-project</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <!--
+              Copy the dependencies to the target/assembly-bin folder for the PEAR to copy
+              -->
+              <execution>
+                <id>copy dependencies to lib</id>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <phase>process-resources</phase>
+                <configuration>
+                  <outputDirectory>target/assembly-bin/lib</outputDirectory>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>true</excludeTransitive>
+                  <excludeGroupIds>org.apache.uima</excludeGroupIds>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <!--
+              copy the License/notice/readme/release/keys notes files into the component assembly-bin at the top level
+              -->
+              <execution>
+                <id>Copy Component Lic/Not/Readme/Relnotes</id>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <phase>process-resources</phase>
+                <configuration>
+                  <outputDirectory>target/assembly-bin</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>.</directory>
+                      <includes>
+                        <include>LICENSE*</include>
+                        <include>NOTICE*</include>
+                        <include>README*</include>
+                        <include>readme*</include>
+                        <include>RELEASE_NOTES*</include>
+                        <include>ReleaseNotes*</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <!-- copy generated Jar to target/assembly-bin/lib spot -->
+              <execution>
+                <id>
+                  copy standard sandbox target jar to target/assembly-bin/lib
+                </id>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <phase>pre-integration-test</phase>
+                <!-- a phase after jar -->
+                <configuration>
+                  <outputDirectory>target/assembly-bin/lib</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}</directory>
+                      <includes>
+                        <include>*.jar</include>
+                      </includes>
+                      <excludes>
+                        <exclude>*-sources.jar</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <!--
+              copy generated docbook artifacts to pearPackaging/doc folder
+              -->
+              <execution>
+                <id>
+                  copy generated docbook artifacts to target/assembly-bin/doc folder
+                </id>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <phase>pre-integration-test</phase>
+                <!-- a phase after docbkx (package) phase -->
+                <configuration>
+                  <outputDirectory>target/assembly-bin/doc</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/docbkx</directory>
+                      <excludes>
+                        <exclude>**/*.fo</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <!-- turn on javadoc build for each module -->
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
