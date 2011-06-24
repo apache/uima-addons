@@ -46,19 +46,18 @@
        element, and just changing the following two properties -->
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/
     </url>
   </scm>
 
   <properties>
-    <uimaScmRoot>uimaj</uimaScmRoot>
-    <uimaScmProject>${project.artifactId}</uimaScmProject>
+    <uimaScmRoot>addons</uimaScmRoot>
   </properties>
 
   <modules>
