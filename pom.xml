@@ -26,7 +26,7 @@
     <groupId>org.apache.uima</groupId>
     <artifactId>uima-addons-parent</artifactId>
     <version>2.3.1-SNAPSHOT</version>
-    <relativePath>../uima-addons-parent</relativePath>
+    <relativePath>uima-addons-parent</relativePath>
   </parent>
 
   <artifactId>aggregate-addons</artifactId>
@@ -62,23 +62,23 @@
   </properties>
 
   <modules>
-    <module>../AlchemyAPIAnnotator</module>
-    <module>../BSFAnnotator</module>
-    <module>../ConceptMapper</module>
-    <module>../ConfigurableFeatureExtractor</module>
-    <module>../DictionaryAnnotator</module>
-    <module>../FsVariables</module>
-    <module>../Lucas</module>
-    <module>../OpenCalaisAnnotator</module>
-    <module>../PearPackagingAntTask</module>
-    <module>../RegularExpressionAnnotator</module>
-    <module>../SimpleServer</module>
-    <module>../SnowballAnnotator</module>
-    <module>../Solrcas</module>
-    <module>../Tagger</module>
-    <module>../TikaAnnotator</module>
-    <module>../WhitespaceTokenizer</module>
-    <module>../addons-osgi-runtime</module>
+    <module>AlchemyAPIAnnotator</module>
+    <module>BSFAnnotator</module>
+    <module>ConceptMapper</module>
+    <module>ConfigurableFeatureExtractor</module>
+    <module>DictionaryAnnotator</module>
+    <module>FsVariables</module>
+    <module>Lucas</module>
+    <module>OpenCalaisAnnotator</module>
+    <module>PearPackagingAntTask</module>
+    <module>RegularExpressionAnnotator</module>
+    <module>SimpleServer</module>
+    <module>SnowballAnnotator</module>
+    <module>Solrcas</module>
+    <module>Tagger</module>
+    <module>TikaAnnotator</module>
+    <module>WhitespaceTokenizer</module>
+    <module>addons-osgi-runtime</module>
   </modules>
 
   <profiles>
