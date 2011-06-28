@@ -56,10 +56,6 @@
     </url>
   </scm>
 
-  <properties>
-    <uimaScmRoot>addons</uimaScmRoot>
-  </properties>
-
   <modules>
     <module>AlchemyAPIAnnotator</module>
     <module>BSFAnnotator</module>
@@ -83,6 +79,9 @@
   <profiles>
     <profile>
       <id>apache-release</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
       <properties>
         <jiraVersion>12316093</jiraVersion>
         <!-- for 2.3.1 Addons -->
