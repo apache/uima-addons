@@ -22,7 +22,7 @@
      Runs only at the top level -->
 
 <assembly>
-  <id>uima-addons-source-release</id>
+  <id>source-release</id>
   <formats>
     <format>zip</format>
   </formats>
