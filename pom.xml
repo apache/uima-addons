@@ -247,10 +247,18 @@
             <executions>
               <execution>
                 <id>source-release-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
                 <configuration>
                   <descriptors>
                     <descriptor>src/main/assembly/src.xml</descriptor>
                   </descriptors>
+                  <ignoreMissingDescriptor>true</ignoreMissingDescriptor>
+                  <descriptorRefs>
+                    <descriptorRef>none</descriptorRef>
+                  </descriptorRefs>
                 </configuration>
               </execution>
               <execution>
