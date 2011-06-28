@@ -23,12 +23,11 @@ under the License.
     <format>tar.gz</format>
     <format>zip</format>
   </formats>
-  
+
   <includeBaseDirectory>true</includeBaseDirectory>
-  
+
   <baseDirectory>apache-uima/addons</baseDirectory>
-  
-  
+
   <dependencySets>
     <dependencySet>
       <includes>
@@ -389,97 +388,97 @@ under the License.
   <fileSets>
     <fileSet>
       <outputDirectory>annotator/AlchemyAPIAnnotator/</outputDirectory>
-      <directory>../AlchemyAPIAnnotator/target/pearPackaging</directory>
+      <directory>AlchemyAPIAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/BSFAnnotator</outputDirectory>
-      <directory>../BSFAnnotator/target/pearPackaging</directory>
+      <directory>BSFAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/ConceptMapper/</outputDirectory>
-      <directory>../ConceptMapper/target/pearPackaging</directory>
+      <directory>ConceptMapper/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/ConfigurableFeatureExtractor</outputDirectory>
-      <directory>../ConfigurableFeatureExtractor/target/pearPackaging</directory>
+      <directory>ConfigurableFeatureExtractor/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/DictionaryAnnotator</outputDirectory>
-      <directory>../DictionaryAnnotator/target/pearPackaging</directory>
+      <directory>DictionaryAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>FsVariables</outputDirectory>
-      <directory>../FsVariables/target/pearPackaging</directory>
+      <directory>FsVariables/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/Lucas</outputDirectory>
-      <directory>../Lucas/target/pearPackaging</directory>
+      <directory>Lucas/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/OpenCalaisAnnotator</outputDirectory>
-      <directory>../OpenCalaisAnnotator/target/pearPackaging</directory>
+      <directory>OpenCalaisAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>PearPackagingAntTask</outputDirectory>
-      <directory>../PearPackagingAntTask/target/assembly-bin</directory>
+      <directory>PearPackagingAntTask/target/assembly-bin</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/RegularExpressionAnnotator</outputDirectory>
-      <directory>../RegularExpressionAnnotator/target/pearPackaging</directory>
+      <directory>RegularExpressionAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>SimpleServer</outputDirectory>
-      <directory>../SimpleServer/target/assembly-bin</directory>
+      <directory>SimpleServer/target/assembly-bin</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/SnowballAnnotator</outputDirectory>
-      <directory>../SnowballAnnotator/target/pearPackaging</directory>
+      <directory>SnowballAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/Tagger</outputDirectory>
-      <directory>../Tagger/target/pearPackaging</directory>
+      <directory>Tagger/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/TikaAnnotator</outputDirectory>
-      <directory>../TikaAnnotator/target/pearPackaging</directory>
+      <directory>TikaAnnotator/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/WhitespaceTokenizer</outputDirectory>
-      <directory>../WhitespaceTokenizer/target/pearPackaging</directory>
+      <directory>WhitespaceTokenizer/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/Solrcas</outputDirectory>
-      <directory>../Solrcas/target/pearPackaging</directory>
+      <directory>Solrcas/target/pearPackaging</directory>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
@@ -525,7 +524,7 @@ under the License.
         <include>RELEASE_NOTES*</include>
         <include>Release-Notes*</include>
         <include>issuesFixed/**</include>      
-      </includes>       
+      </includes>
     </fileSet>
 
     <fileSet>

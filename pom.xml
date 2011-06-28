@@ -81,6 +81,271 @@
   </modules>
 
   <profiles>
+    <profile>
+      <id>apache-release</id>
+      <properties>
+        <jiraVersion>12316093</jiraVersion>
+        <!-- for 2.3.1 Addons -->
+        <assemblyFinalName>uima-addons-${project.version}</assemblyFinalName>
+      </properties>
 
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>AlchemyAPIAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>BSFAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>ConceptMapper</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>ConfigurableFeatureExtractor</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>DictionaryAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>FsVariables</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>Lucas</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>OpenCalaisAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>PearPackagingAntTask</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>RegularExpressionAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>SimpleServer</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>SnowballAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>Solrcas</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>Tagger</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>TikaAnnotator</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>WhitespaceTokenizer</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+
+        <!-- addons-osgi-runtime dependencies -->
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>AlchemyAPIAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>BSFAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>ConceptMapper-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>ConfigurableFeatureExtractor-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>DictionaryAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>Lucas-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>OpenCalaisAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>RegularExpressionAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>SnowballAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>Solrcas-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>Tagger-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>TikaAnnotator-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>WhitespaceTokenizer-osgi</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.2</version>
+            <executions>
+              <execution>
+                <id>source-release-assembly</id>
+                <configuration>
+                  <descriptors>
+                    <descriptor>src/main/assembly/src.xml</descriptor>
+                  </descriptors>
+                </configuration>
+              </execution>
+              <execution>
+                <id>build distribution</id>
+                <configuration>
+                  <descriptors>
+                    <descriptor>src/main/assembly/bin.xml</descriptor>
+                  </descriptors>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
+          <!-- no maven deployment of this project's artifacts -->
+          <!-- binary build artifact deployed from apache mirror system after 
+            release -->
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate checksums for binary artifacts</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <target>
+                    <checksum algorithm="sha1" format="MD5SUM">
+                      <fileset dir="${project.build.directory}">
+                        <include name="*.zip" />
+                        <include name="*.gz" />
+                      </fileset>
+                    </checksum>
+                    <checksum algorithm="md5" format="MD5SUM">
+                      <fileset dir="${project.build.directory}">
+                        <include name="*.zip" />
+                        <include name="*.gz" />
+                      </fileset>
+                    </checksum>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-changes-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-cli</id>
+                <configuration>
+                  <fixVersionIds>${jiraVersion}</fixVersionIds>
+                  <sortColumnNames>Status, Key, Type</sortColumnNames>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
+          <!-- no maven deployment, do manual checksums -->
+          <!-- source-release artifact deployed from apache mirrors -->
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate checksums for source-release</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <target>
+                    <checksum algorithm="sha1" format="MD5SUM"
+                      file="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
+                    <checksum algorithm="md5" format="MD5SUM"
+                      file="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
