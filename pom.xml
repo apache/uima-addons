@@ -55,7 +55,6 @@
   </scm>
   
   <properties>
-    <uimaScmRoot>sandbox</uimaScmRoot>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
     <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
     <pearMainDescriptor>desc/analysis_engine/primitive/ConceptMapperOffsetTokenizer.xml</pearMainDescriptor>
