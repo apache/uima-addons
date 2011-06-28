@@ -56,7 +56,6 @@
   </scm>
   
   <properties>
-    <uimaScmRoot>sandbox</uimaScmRoot>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
     <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
     <bookNameRoot>fsVariablesUserGuide</bookNameRoot>

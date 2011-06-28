@@ -45,13 +45,13 @@
 
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/sandbox/trunk/uima-addons-parent
+      scm:svn:http://svn.apache.org/repos/asf/uima/addons/trunk/uima-addons-parent
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/sandbox/trunk/uima-addons-parent
+      scm:svn:https://svn.apache.org/repos/asf/uima/addons/trunk/uima-addons-parent
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/sandbox/trunk/uima-addons-parent
+      http://svn.apache.org/viewvc/uima/sandbox/addons/uima-addons-parent
     </url>
   </scm>
 
@@ -120,7 +120,7 @@
   </pluginRepositories>
 
   <properties>
-    <uimaScmRoot>sandbox</uimaScmRoot>
+    <uimaScmRoot>addons</uimaScmRoot>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
   </properties>
 
@@ -299,7 +299,7 @@
               <!-- copy generated Jar to target/assembly-bin/lib spot -->
               <execution>
                 <id>
-                  copy standard sandbox target jar to target/assembly-bin/lib
+                  copy standard addons target jar to target/assembly-bin/lib
                 </id>
                 <goals>
                   <goal>copy-resources</goal>

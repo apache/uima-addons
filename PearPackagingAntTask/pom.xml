@@ -56,7 +56,6 @@
   </scm>
   
   <properties>
-    <uimaScmRoot>sandbox</uimaScmRoot>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
     <bookNameRoot>PearPackagingAntTaskUserGuide</bookNameRoot>
     <uimaDependencyVersion>2.3.1</uimaDependencyVersion>

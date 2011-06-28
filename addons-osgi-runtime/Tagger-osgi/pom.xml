@@ -30,6 +30,22 @@
   <description>HmmTagger OSGi bundle</description>
   <packaging>jar</packaging>
 
+  <scm>
+    <connection>
+      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/addons-osgi-runtime/${uimaScmProject}
+    </connection>
+    <developerConnection>
+      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/addons-osgi-runtime/${uimaScmProject}
+    </developerConnection>
+    <url>
+      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/addons-osgi-runtime/${uimaScmProject}
+    </url>
+  </scm>
+  
+  <properties>
+    <uimaScmProject>${project.artifactId}</uimaScmProject>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.uima</groupId>

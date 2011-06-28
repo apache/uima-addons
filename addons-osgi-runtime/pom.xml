@@ -29,6 +29,25 @@
   <packaging>pom</packaging>
   <version>2.3.1-SNAPSHOT</version>
   <name>OSGi version of Apache UIMA Addons</name>
+
+  <scm>
+    <connection>
+      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+    </connection>
+    <developerConnection>
+      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+    </developerConnection>
+    <url>
+      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+    </url>
+  </scm>
+  
+  <properties>
+    <uimaScmProject>${project.artifactId}</uimaScmProject>
+    <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
+    <singleton>singleton:=true</singleton>
+  </properties>
+
   <modules>
     <module>OpenCalaisAnnotator-osgi</module>
     <module>AlchemyAPIAnnotator-osgi</module>
@@ -44,14 +63,11 @@
     <module>WhitespaceTokenizer-osgi</module>
     <module>Solrcas-osgi</module>
   </modules>
-  <properties>
-    <singleton>singleton:=true</singleton>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.apache.uima</groupId>
       <artifactId>uimaj-ep-runtime</artifactId>
-      <version>2.3.1</version>
+      <version>${uimaDependencyVersion}</version>
     </dependency>
   </dependencies>
   <build>
