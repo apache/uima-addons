@@ -24,12 +24,11 @@
 
   <parent>
     <groupId>org.apache.uima</groupId>
-    <artifactId>uima-addons-parent</artifactId>
-    <version>2.3.1-SNAPSHOT</version>
-    <relativePath>uima-addons-parent</relativePath>
+    <artifactId>parent-pom</artifactId>
+    <version>2</version>
   </parent>
-
-  <artifactId>aggregate-addons</artifactId>
+  <groupId>org.apache.uima</groupId>
+  <artifactId>uima-addons</artifactId>
   <packaging>pom</packaging>
   <version>2.3.1-SNAPSHOT</version>
   <name>UIMA Aggregate: ${project.artifactId}</name>
@@ -55,8 +54,12 @@
       http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/
     </url>
   </scm>
+  <properties>
+    <uimaScmRoot>addons</uimaScmRoot>
+  </properties>
 
   <modules>
+    <module>uima-addons-parent</module>
     <module>AlchemyAPIAnnotator</module>
     <module>BSFAnnotator</module>
     <module>ConceptMapper</module>

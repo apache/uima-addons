@@ -32,7 +32,6 @@
     <groupId>org.apache.uima</groupId>
     <artifactId>parent-pom</artifactId>
     <version>2</version>
-    <relativePath />
   </parent>
 
   <groupId>org.apache.uima</groupId>
@@ -182,9 +181,8 @@
       </plugins>
     </pluginManagement>
   </build>
-
-  <!-- temp fix until parent-pom-3 -->  
   <profiles>
+    <!-- temp fix until parent-pom-3 -->
     <profile>
     <!-- ************************************ -->
     <!-- * Build Custom Binary Distribution * -->
@@ -195,12 +193,12 @@
       </activation>
       <build>
         <plugins>
-    
+
           <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
           <!-- no maven deployment of this project's artifacts -->
           <!-- binary build artifact deployed from apache mirror system after release -->
           <plugin>
-            <artifactId>maven-deploy-plugin</artifactId>      
+            <artifactId>maven-deploy-plugin</artifactId>
             <configuration>
               <skip>true</skip>
             </configuration>
@@ -231,8 +229,8 @@
               </execution>
             </executions>
           </plugin>
-          
-        </plugins>                    
+
+        </plugins>
       </build>
     </profile>
     <profile>
