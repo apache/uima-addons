@@ -324,36 +324,6 @@
               </execution>
             </executions>
           </plugin>
-
-          <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
-          <!-- no maven deployment, do manual checksums -->
-          <!-- source-release artifact deployed from apache mirrors -->
-          <plugin>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>generate checksums for source-release</id>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <phase>verify</phase>
-                <configuration>
-                  <target>
-                    <checksum algorithm="sha1" format="MD5SUM"
-                      file="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
-                    <checksum algorithm="md5" format="MD5SUM"
-                      file="${project.build.directory}/${project.artifactId}-${project.version}-source-release.zip" />
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
       </build>
     </profile>
