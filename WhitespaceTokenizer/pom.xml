@@ -23,13 +23,13 @@
   <parent>
     <groupId>org.apache.uima</groupId>
     <artifactId>uima-addons-parent</artifactId>
-    <version>2.3.1</version>
+    <version>2.3.2-SNAPSHOT</version>
     <relativePath>../uima-addons-parent</relativePath>
   </parent>
   
   <artifactId>WhitespaceTokenizer</artifactId>
   <packaging>jar</packaging>
-  <version>2.3.1</version>
+  <version>2.3.2-SNAPSHOT</version>
   <name>UIMA Annotator: ${project.artifactId}</name>
   <description>A simple white-space annotator to identify Tokens in text using whitespace as the delimiters</description>
   <url>${uimaWebsiteUrl}</url>
@@ -44,13 +44,13 @@
        element, and just changing the following two properties -->  
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3/${uimaScmProject}
+      scm:svn:http://svn.apache.org/repos/asf/uima/addons/trunk/WhitespaceTokenizer
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3/${uimaScmProject}
+      scm:svn:https://svn.apache.org/repos/asf/uima/addons/trunk/WhitespaceTokenizer
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3/${uimaScmProject}
+      http://svn.apache.org/viewvc/uima/addons/trunk/WhitespaceTokenizer
     </url>
   </scm>
   

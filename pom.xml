@@ -28,7 +28,7 @@
   <groupId>org.apache.uima</groupId>
   <artifactId>uima-addons</artifactId>
   <packaging>pom</packaging>
-  <version>2.3.1</version>
+  <version>2.3.2-SNAPSHOT</version>
   <name>UIMA Aggregate: ${project.artifactId}</name>
   <description>A convenience aggregate for the UIMA addons</description>
   <url>${uimaWebsiteUrl}</url>
@@ -43,13 +43,13 @@
        element, and just changing the following two properties -->
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3
+      scm:svn:http://svn.apache.org/repos/asf/uima/addons/trunk/
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3
+      scm:svn:https://svn.apache.org/repos/asf/uima/addons/trunk/
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3
+      http://svn.apache.org/viewvc/uima/addons/trunk/
     </url>
   </scm>
   <properties>

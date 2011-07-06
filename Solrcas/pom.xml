@@ -20,12 +20,12 @@
   <parent>
     <groupId>org.apache.uima</groupId>
     <artifactId>uima-addons-parent</artifactId>
-    <version>2.3.1</version>
+    <version>2.3.2-SNAPSHOT</version>
     <relativePath>../uima-addons-parent</relativePath>
   </parent>
 
   <artifactId>Solrcas</artifactId>
-  <version>2.3.1</version>
+  <version>2.3.2-SNAPSHOT</version>
   <name>UIMA Annotator: ${project.artifactId}</name>
   <description>Writes information contained in CAS objects to fields of a Solr server; mapping is done in a mapping
     file.
@@ -41,13 +41,13 @@
   -->
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3/${uimaScmProject}
+      scm:svn:http://svn.apache.org/repos/asf/uima/addons/trunk/Solrcas
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3/${uimaScmProject}
+      scm:svn:https://svn.apache.org/repos/asf/uima/addons/trunk/Solrcas
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc3/${uimaScmProject}
+      http://svn.apache.org/viewvc/uima/addons/trunk/Solrcas
     </url>
   </scm>
 
