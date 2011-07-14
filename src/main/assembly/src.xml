@@ -166,5 +166,11 @@
         <include>pom.xml</include>
       </includes>
     </fileSet>
+    <fileSet>
+      <directory>src</directory>
+      <outputDirectory>src</outputDirectory>
+      <fileMode>644</fileMode>
+      <directoryMode>755</directoryMode>        
+    </fileSet>
   </fileSets>
 </assembly>
