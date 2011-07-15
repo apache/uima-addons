@@ -1,6 +1,4 @@
-<project
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-        xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <!--
    Licensed to the Apache Software Foundation (ASF) under one
    or more contributor license agreements.  See the NOTICE file
@@ -23,7 +21,7 @@
   <parent>
     <artifactId>addons-osgi-runtime</artifactId>
     <groupId>org.apache.uima</groupId>
-    <version>2.3.1-SNAPSHOT</version>
+    <version>2.3.1</version>
   </parent>
   <artifactId>Tagger-osgi</artifactId>
   <name>HmmTagger bundle</name>
@@ -32,13 +30,13 @@
 
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/addons-osgi-runtime/${uimaScmProject}
+      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc4/addons-osgi-runtime/${uimaScmProject}
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/addons-osgi-runtime/${uimaScmProject}
+      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc4/addons-osgi-runtime/${uimaScmProject}
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/addons-osgi-runtime/${uimaScmProject}
+      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc4/addons-osgi-runtime/${uimaScmProject}
     </url>
   </scm>
   
@@ -50,7 +48,7 @@
     <dependency>
       <groupId>org.apache.uima</groupId>
       <artifactId>Tagger</artifactId>
-      <version>2.3.1-SNAPSHOT</version>
+      <version>2.3.1</version>
     </dependency>
   </dependencies>
 

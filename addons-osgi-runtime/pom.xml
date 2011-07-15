@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <!--
    Licensed to the Apache Software Foundation (ASF) under one
    or more contributor license agreements.  See the NOTICE file
@@ -27,18 +26,18 @@
   <groupId>org.apache.uima</groupId>
   <artifactId>addons-osgi-runtime</artifactId>
   <packaging>pom</packaging>
-  <version>2.3.1-SNAPSHOT</version>
+  <version>2.3.1</version>
   <name>OSGi version of Apache UIMA Addons</name>
 
   <scm>
     <connection>
-      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+      scm:svn:http://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc4/${uimaScmProject}
     </connection>
     <developerConnection>
-      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+      scm:svn:https://svn.apache.org/repos/asf/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc4/${uimaScmProject}
     </developerConnection>
     <url>
-      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/trunk/${uimaScmProject}
+      http://svn.apache.org/viewvc/uima/${uimaScmRoot}/tags/uima-addons-2.3.1-rc4/${uimaScmProject}
     </url>
   </scm>
   
@@ -88,7 +87,7 @@
                   <Eclipse-ExtensibleAPI>true</Eclipse-ExtensibleAPI>
                   <Eclipse-BuddyPolicy>registered</Eclipse-BuddyPolicy>
                   <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
-                  <Bundle-SymbolicName>>${project.groupId}.${project.artifactId};${singleton}</Bundle-SymbolicName>
+                  <Bundle-SymbolicName>&gt;${project.groupId}.${project.artifactId};${singleton}</Bundle-SymbolicName>
                 </instructions>
               </configuration>
             </execution>
