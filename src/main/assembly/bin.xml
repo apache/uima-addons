@@ -28,517 +28,288 @@ under the License.
 
   <baseDirectory>apache-uima/addons</baseDirectory>
 
-  <dependencySets>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:AlchemyAPIAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-an-alchemy.jar</outputFileNameMapping>
-      <outputDirectory>annotator/AlchemyAPIAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:AlchemyAPIAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputDirectory>annotator/AlchemyAPIAnnotator/osgi</outputDirectory>
-      <outputFileNameMapping>uima-an-alchemy-osgi.jar</outputFileNameMapping>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:BSFAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uimaj-an-bsf.jar</outputFileNameMapping>
-      <outputDirectory>annotator/BSFAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode> 
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:BSFAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uimaj-an-bsf-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/BSFAnnotator/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:ConceptMapper</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-an-conceptMapper.jar</outputFileNameMapping>
-      <outputDirectory>annotator/ConceptMapper</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:ConceptMapper-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-an-conceptMapper-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/ConceptMapper/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:ConfigurableFeatureExtractor</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-tool-configurableFeatureExtractor.jar</outputFileNameMapping>
-      <outputDirectory>annotator/ConfigurableFeatureExtractor</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:ConfigurableFeatureExtractor-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-tool-configurableFeatureExtractor-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/ConfigurableFeatureExtractor/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:DictionaryAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-an-dictionary.jar</outputFileNameMapping>
-      <outputDirectory>annotator/DictionaryAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:DictionaryAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uima-an-dictionary-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/DictionaryAnnotator/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:FsVariables</include>
-      </includes>
-      <unpack>false</unpack>
-      <outputFileNameMapping>uimaj-fsvars.jar</outputFileNameMapping>
-      <outputDirectory>FsVariables</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:Lucas</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-lucas.jar</outputFileNameMapping>
-      <outputDirectory>annotator/Lucas</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:Lucas-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-lucas-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/Lucas/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:OpenCalaisAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-calais.jar</outputFileNameMapping>
-      <outputDirectory>annotator/OpenCalaisAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:OpenCalaisAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-calais-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/OpenCalaisAnnotator/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:PearPackagingAntTask</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-pear-ant-task.jar</outputFileNameMapping>
-      <outputDirectory>PearPackagingAntTask</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:RegularExpressionAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-regex.jar</outputFileNameMapping>
-      <outputDirectory>annotator/RegularExpressionAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode> 
-      <directoryMode>755</directoryMode>        
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:RegularExpressionAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-regex-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/RegularExpressionAnnotator/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:SimpleServer</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-simple-server.jar</outputFileNameMapping>
-      <outputDirectory>SimpleServer</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:SnowballAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-snowball.jar</outputFileNameMapping>
-      <outputDirectory>annotator/SnowballAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:SnowballAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-snowball-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/SnowballAnnotator/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:Solrcas</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-solrcas.jar</outputFileNameMapping>
-      <outputDirectory>annotator/Solrcas</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:Solrcas-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-solrcas-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/Solrcas/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:Tagger</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-tagger.jar</outputFileNameMapping>
-      <outputDirectory>annotator/Tagger</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:Tagger-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-tagger-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/Tagger/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:TikaAnnotator</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-tika.jar</outputFileNameMapping>
-      <outputDirectory>annotator/TikaAnnotator</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:TikaAnnotator-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-tika-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/TikaAnnotator/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:WhitespaceTokenizer</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-wst.jar</outputFileNameMapping>
-      <outputDirectory>annotator/WhitespaceTokenizer</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-    <dependencySet>
-      <includes>
-        <include>org.apache.uima:WhitespaceTokenizer-osgi</include>
-      </includes>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-      <outputFileNameMapping>uima-an-wst-osgi.jar</outputFileNameMapping>
-      <outputDirectory>annotator/WhitespaceTokenizer/osgi</outputDirectory>
-      <useProjectArtifact>false</useProjectArtifact>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </dependencySet>
-
-  </dependencySets>
+  <fileSets>  
+  <!-- incorporate base-bin's from all sub projects -->
   
-  <!-- Add other files - scripts, documentation, examples -->
-  <fileSets>
+    <!-- AlchemyAPIAnnotator -->
+
     <fileSet>
-      <outputDirectory>annotator/AlchemyAPIAnnotator/</outputDirectory>
-      <directory>AlchemyAPIAnnotator/target/pearPackaging</directory>
+      <outputDirectory>annotator/AlchemyAPIAnnotator</outputDirectory>
+      <directory>AlchemyAPIAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
+      <fileMode>644</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+    <fileSet>
+      <outputDirectory>annotator/AlchemyAPIAnnotator</outputDirectory>
+      <directory>AlchemyAPIAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- BSFAnnotator -->
+
+    <fileSet>
+      <outputDirectory>annotator/BSFAnnotator</outputDirectory>
+      <directory>BSFAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/BSFAnnotator</outputDirectory>
-      <directory>BSFAnnotator/target/pearPackaging</directory>
+      <directory>BSFAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- ConceptMapper -->
+
+    <fileSet>
+      <outputDirectory>annotator/ConceptMapper</outputDirectory>
+      <directory>ConceptMapper/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
-      <outputDirectory>annotator/ConceptMapper/</outputDirectory>
-      <directory>ConceptMapper/target/pearPackaging</directory>
+      <outputDirectory>annotator/ConceptMapper</outputDirectory>
+      <directory>ConceptMapper/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- ConfigurableFeatureExtractor -->
+
+    <fileSet>
+      <outputDirectory>annotator/ConfigurableFeatureExtractor</outputDirectory>
+      <directory>ConfigurableFeatureExtractor/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/ConfigurableFeatureExtractor</outputDirectory>
-      <directory>ConfigurableFeatureExtractor/target/pearPackaging</directory>
+      <directory>ConfigurableFeatureExtractor/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- DictionaryAnnotator -->
+
+    <fileSet>
+      <outputDirectory>annotator/DictionaryAnnotator</outputDirectory>
+      <directory>DictionaryAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/DictionaryAnnotator</outputDirectory>
-      <directory>DictionaryAnnotator/target/pearPackaging</directory>
+      <directory>DictionaryAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- FsVariables -->
+
+    <fileSet>
+      <outputDirectory>FsVariables</outputDirectory>
+      <directory>FsVariables/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>FsVariables</outputDirectory>
-      <directory>FsVariables/target/pearPackaging</directory>
+      <directory>FsVariables/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- Lucas -->
+
+    <fileSet>
+      <outputDirectory>annotator/Lucas</outputDirectory>
+      <directory>Lucas/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/Lucas</outputDirectory>
-      <directory>Lucas/target/pearPackaging</directory>
+      <directory>Lucas/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- OpenCalaisAnnotator -->
+
+    <fileSet>
+      <outputDirectory>annotator/OpenCalaisAnnotator</outputDirectory>
+      <directory>OpenCalaisAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/OpenCalaisAnnotator</outputDirectory>
-      <directory>OpenCalaisAnnotator/target/pearPackaging</directory>
+      <directory>OpenCalaisAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- PearPackagingAntTask -->
+
+    <fileSet>
+      <outputDirectory>PearPackagingAntTask</outputDirectory>
+      <directory>PearPackagingAntTask/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>PearPackagingAntTask</outputDirectory>
-      <directory>PearPackagingAntTask/target/assembly-bin</directory>
+      <directory>PearPackagingAntTask/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- RegularExpressionAnnotator -->
+
+    <fileSet>
+      <outputDirectory>annotator/RegularExpressionAnnotator</outputDirectory>
+      <directory>RegularExpressionAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/RegularExpressionAnnotator</outputDirectory>
-      <directory>RegularExpressionAnnotator/target/pearPackaging</directory>
+      <directory>RegularExpressionAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- SimpleServer -->
+
+    <fileSet>
+      <outputDirectory>SimpleServer</outputDirectory>
+      <directory>SimpleServer/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>SimpleServer</outputDirectory>
-      <directory>SimpleServer/target/assembly-bin</directory>
+      <directory>SimpleServer/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- SnowballAnnotator -->
+
+    <fileSet>
+      <outputDirectory>annotator/SnowballAnnotator</outputDirectory>
+      <directory>SnowballAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/SnowballAnnotator</outputDirectory>
-      <directory>SnowballAnnotator/target/pearPackaging</directory>
-      <fileMode>644</fileMode>
+      <directory>SnowballAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
+
+    <!-- Solrcas -->
+
     <fileSet>
-      <outputDirectory>annotator/Tagger</outputDirectory>
-      <directory>Tagger/target/pearPackaging</directory>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </fileSet>
-    <fileSet>
-      <outputDirectory>annotator/TikaAnnotator</outputDirectory>
-      <directory>TikaAnnotator/target/pearPackaging</directory>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-    </fileSet>
-    <fileSet>
-      <outputDirectory>annotator/WhitespaceTokenizer</outputDirectory>
-      <directory>WhitespaceTokenizer/target/pearPackaging</directory>
+      <outputDirectory>annotator/Solrcas</outputDirectory>
+      <directory>Solrcas/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
       <outputDirectory>annotator/Solrcas</outputDirectory>
-      <directory>Solrcas/target/pearPackaging</directory>
-      <fileMode>644</fileMode>
+      <directory>Solrcas/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
       <directoryMode>755</directoryMode>
     </fileSet>
 
+    <!-- Tagger -->
+
     <fileSet>
-      <directory>src/main/scripts</directory>
-      <outputDirectory>bin</outputDirectory>
-      <includes><include>*.sh</include></includes>
+      <outputDirectory>annotator/Tagger</outputDirectory>
+      <directory>Tagger/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
+      <fileMode>644</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+    <fileSet>
+      <outputDirectory>annotator/Tagger</outputDirectory>
+      <directory>Tagger/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
       <fileMode>755</fileMode>
-      <directoryMode>755</directoryMode>        
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- TikaAnnotator -->
+
+    <fileSet>
+      <outputDirectory>annotator/TikaAnnotator</outputDirectory>
+      <directory>TikaAnnotator/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
+      <fileMode>644</fileMode>
+      <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
-      <directory>src/main/scripts</directory>
-      <outputDirectory>bin</outputDirectory>
-      <excludes><exclude>*.sh</exclude></excludes>
+      <outputDirectory>annotator/TikaAnnotator</outputDirectory>
+      <directory>TikaAnnotator/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
+    </fileSet>
+
+    <!-- WhitespaceTokenizer -->
+
+    <fileSet>
+      <outputDirectory>annotator/WhitespaceTokenizer</outputDirectory>
+      <directory>WhitespaceTokenizer/target/base-bin</directory>
+      <excludes><exclude>**/*.sh</exclude></excludes>
       <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>        
+      <directoryMode>755</directoryMode>
     </fileSet>
     <fileSet>
-      <directory>src/main/properties</directory>
-      <outputDirectory>config</outputDirectory>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>        
+      <outputDirectory>annotator/WhitespaceTokenizer</outputDirectory>
+      <directory>WhitespaceTokenizer/target/base-bin</directory>
+      <includes><include>**/*.sh</include></includes>
+      <fileMode>755</fileMode>
+      <directoryMode>755</directoryMode>
     </fileSet>
-    
+
     <!-- copy bin distr license and notice -->
     <fileSet>
       <directory>src/main/readme</directory>
-      <outputDirectory></outputDirectory>
+      <outputDirectory/>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>      
-    </fileSet>
-    
-    <!-- copy standard top level files -->        
-    <fileSet>
-      <directory>.</directory>
-      <outputDirectory></outputDirectory>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode> 
-      <includes>
-        <include>README*</include>
-        <include>readme*</include>
-        <include>RELEASE_NOTES*</include>
-        <include>Release-Notes*</include>
-        <include>issuesFixed/**</include>      
-      </includes>
-    </fileSet>
-
-    <fileSet>
-      <directory>target/site/apidocs</directory>
-      <outputDirectory>docs/d/api</outputDirectory>
-      <excludes>
-        <exclude>options</exclude>
-        <exclude>packages</exclude>
-        <exclude>files</exclude>
-        <exclude>argfile</exclude>        
-      </excludes>
-      <fileMode>444</fileMode>
-      <directoryMode>755</directoryMode>        
-    </fileSet>
+    </fileSet>     
 
   </fileSets>
 </assembly>

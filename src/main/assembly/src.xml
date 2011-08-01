@@ -19,90 +19,25 @@
 -->
 
 <!-- create a source assembly for multi-module projects 
-     Runs only at the top level -->
-
+     Runs only at the top level 
+     
+     NOTE: THIS ONLY DIFFERS FROM STANDARD ONE 
+     IN ADDING AN EXCLUDE FOR "issuesFixed"
+     
+     -->
+     
 <assembly>
-  <id>source-release</id>
+  <id>source-release</id>  <!-- becomes the classifier -->
   <formats>
     <format>zip</format>
   </formats>
-  <moduleSets>
-    <moduleSet>
-      <includes>
-        <include>org.apache.uima:uima-addons-parent</include>
-        <include>org.apache.uima:AlchemyAPIAnnotator</include>
-        <include>org.apache.uima:BSFAnnotator</include>
-        <include>org.apache.uima:ConceptMapper</include>
-        <include>org.apache.uima:ConfigurableFeatureExtractor</include>
-        <include>org.apache.uima:DictionaryAnnotator</include>
-        <include>org.apache.uima:FsVariables</include>
-        <include>org.apache.uima:Lucas</include>
-        <include>org.apache.uima:OpenCalaisAnnotator</include>
-        <include>org.apache.uima:PearPackagingAntTask</include>
-        <include>org.apache.uima:RegularExpressionAnnotator</include>
-        <include>org.apache.uima:SimpleServer</include>
-        <include>org.apache.uima:SnowballAnnotator</include>
-        <include>org.apache.uima:Solrcas</include>
-        <include>org.apache.uima:Tagger</include>
-        <include>org.apache.uima:TikaAnnotator</include>
-        <include>org.apache.uima:WhitespaceTokenizer</include>
-        <include>org.apache.uima:addons-osgi-runtime</include>
-      </includes>
-      <sources>
-        <!--<includeModuleDirectory>false</includeModuleDirectory>-->
-        <fileSets>
-          <fileSet>
-            <!--<outputDirectory>/aggregate-addons</outputDirectory>-->
-            <useDefaultExcludes>true</useDefaultExcludes>
-            <excludes>
-              <!-- build output -->
-              <!-- (?!xxx)means 0 width negative match for xxx-->
-              <!--                any dir except target/ -->
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/).*${project.build.directory}.*]</exclude>
-
-              <!-- NOTE: Most of the following excludes should not be required
-                   if the standard release process is followed. This is because the
-                   release plugin checks out project sources into a location like
-                   target/checkout, then runs the build from there. The result is
-                   a source-release archive that comes from a pretty clean directory
-                   structure.
-
-                   HOWEVER, if the release plugin is configured to run extra goals
-                   or generate a project website, it's definitely possible that some
-                   of these files will be present. So, it's safer to exclude them.
-              -->
-
-              <!-- IDEs -->
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?maven-eclipse\.xml]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.project]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.classpath]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?[^/]*\.iws]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?[^/]*\.ipr]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?[^/]*\.iml]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.settings(/.*)?]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.externalToolBuilders(/.*)?]
-              </exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.deployables(/.*)?]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.wtpmodules(/.*)?]</exclude>
-
-              <!-- misc -->
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?cobertura\.ser]</exclude>
-
-              <!-- release-plugin temp files -->
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?pom\.xml\.releaseBackup]</exclude>
-              <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?release\.properties]</exclude>
-            </excludes>
-          </fileSet>
-        </fileSets>
-      </sources>
-    </moduleSet>
-    
-  </moduleSets>
-
+  
   <fileSets>
     <fileSet>
-      <directory>addons-osgi-runtime</directory>
-      <outputDirectory>addons-osgi-runtime</outputDirectory>
+      <directory>.</directory>
+      <outputDirectory>/</outputDirectory>
+      <fileMode>644</fileMode>
+      <directoryMode>755</directoryMode>
       <useDefaultExcludes>true</useDefaultExcludes>
       <excludes>
         <!-- build output -->
@@ -130,7 +65,8 @@
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?[^/]*\.ipr]</exclude>
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?[^/]*\.iml]</exclude>
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.settings(/.*)?]</exclude>
-        <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.externalToolBuilders(/.*)?]</exclude>
+        <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.externalToolBuilders(/.*)?]
+        </exclude>
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.deployables(/.*)?]</exclude>
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?\.wtpmodules(/.*)?]</exclude>
 
@@ -140,37 +76,11 @@
         <!-- release-plugin temp files -->
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?pom\.xml\.releaseBackup]</exclude>
         <exclude>%regex[(?!((?!${project.build.directory}/)[^/]+/)*src/)(.*/)?release\.properties]</exclude>
+      
+        <!-- custom excludes -->
+        <exclude>issuesFixed/**</exclude>
       </excludes>
     </fileSet>
-    <!-- license, readme, etc. calculated at build time 
-         overrides any copied by the above, I think (order dependent?) -->
-    <fileSet>
-      <directory>${project.build.directory}/maven-shared-archive-resources/META-INF</directory>
-      <outputDirectory>/</outputDirectory>
-    </fileSet>
-
-    <!-- files that should be copied from the top level project to the top of the archive -->
-    <fileSet>
-      <directory>.</directory>
-      <outputDirectory>/</outputDirectory>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>
-      <includes>
-        <include>README*</include>
-        <include>readme*</include>
-        <include>LICENSE*</include>
-        <include>NOTICE*</include>
-        <include>RELEASE_NOTES*</include>
-        <include>Release-Notes*</include>
-        <include>issuesFixed/**</include>
-        <include>pom.xml</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>src</directory>
-      <outputDirectory>src</outputDirectory>
-      <fileMode>644</fileMode>
-      <directoryMode>755</directoryMode>        
-    </fileSet>
   </fileSets>
+ 
 </assembly>

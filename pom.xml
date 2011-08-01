@@ -76,7 +76,6 @@
     <module>Tagger</module>
     <module>TikaAnnotator</module>
     <module>WhitespaceTokenizer</module>
-    <module>addons-osgi-runtime</module>
   </modules>
 
   <profiles>
@@ -91,156 +90,6 @@
         <assemblyFinalName>uima-addons-${project.version}</assemblyFinalName>
       </properties>
 
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>AlchemyAPIAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>BSFAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>ConceptMapper</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>ConfigurableFeatureExtractor</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>DictionaryAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>FsVariables</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>Lucas</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>OpenCalaisAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>PearPackagingAntTask</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>RegularExpressionAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>SimpleServer</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>SnowballAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>Solrcas</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>Tagger</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>TikaAnnotator</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>WhitespaceTokenizer</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-
-        <!-- addons-osgi-runtime dependencies -->
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>AlchemyAPIAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>BSFAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>ConceptMapper-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>ConfigurableFeatureExtractor-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>DictionaryAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>Lucas-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>OpenCalaisAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>RegularExpressionAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>SnowballAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>Solrcas-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>Tagger-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>TikaAnnotator-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.uima</groupId>
-          <artifactId>WhitespaceTokenizer-osgi</artifactId>
-          <version>${project.version}</version>
-        </dependency>
-      </dependencies>
-
       <build>
         <pluginManagement>
           <plugins>
@@ -254,13 +103,14 @@
             </plugin>
           </plugins>
         </pluginManagement>
+        
+        
         <plugins>
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
-            <version>2.2</version>
             <executions>
               <execution>
-                <id>source-release-assembly</id>
+                <id>source-release-assembly</id>  
                 <phase>package</phase>
                 <goals>
                   <goal>single</goal>
@@ -269,20 +119,14 @@
                   <descriptors>
                     <descriptor>src/main/assembly/src.xml</descriptor>
                   </descriptors>
-                  <ignoreMissingDescriptor>true</ignoreMissingDescriptor>
+                  <ignoreMissingDescriptor>true</ignoreMissingDescriptor> <!-- turn off inherited one -->
                   <descriptorRefs>
-                    <descriptorRef>none</descriptorRef>
+                    <descriptorRef>none</descriptorRef> <!-- turn off inherited one -->
                   </descriptorRefs>
                 </configuration>
               </execution>
-              <execution>
-                <id>build distribution</id>
-                <configuration>
-                  <descriptors>
-                    <descriptor>src/main/assembly/bin.xml</descriptor>
-                  </descriptors>
-                </configuration>
-              </execution>
+              <!-- bin assembly from parent-pom -->
+              <!--  triggered by existence of src/main/assembly/bin.xml -->
             </executions>
           </plugin>
 
@@ -336,8 +180,10 @@
               </execution>
             </executions>
           </plugin>
+                    
         </plugins>
       </build>
     </profile>
   </profiles>
+  
 </project>
