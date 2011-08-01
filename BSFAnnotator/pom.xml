@@ -146,6 +146,29 @@
           </executions>
         </plugin>         
       </plugins>
-    </pluginManagement> 
+    </pluginManagement>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>uima-bundle</id>
+            <configuration>
+              <instructions>
+                <!-- These imports are in case some included scripting thing needs them, I think 7-2011 MIS -->
+                <Import-Package>org.python.*;tcl.lang.*;org.apache.xpath.*;COM.*;com.sun.*;javax.jms.*;netrexx.lang.*;*</Import-Package>
+                <!-- the export-package instruction is not needed, but if omitted, 
+                     causes extraneous exports of org, org.apache, ... etc. of names 
+                     which are leading subsets of the two package names, and 
+                     gives a warning message; the extraneous ones are then discarded -->
+                <!-- Export-Package>org.apache.uima.annotator.bsf,org.apache.uima.annotator.bsf.types</Export-Package-->
+              </instructions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins> 
 	</build>
 </project>
