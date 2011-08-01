@@ -106,30 +106,7 @@
         
         
         <plugins>
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>source-release-assembly</id>  
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <descriptors>
-                    <descriptor>src/main/assembly/src.xml</descriptor>
-                  </descriptors>
-                  <ignoreMissingDescriptor>true</ignoreMissingDescriptor> <!-- turn off inherited one -->
-                  <descriptorRefs>
-                    <descriptorRef>none</descriptorRef> <!-- turn off inherited one -->
-                  </descriptorRefs>
-                </configuration>
-              </execution>
-              <!-- bin assembly from parent-pom -->
-              <!--  triggered by existence of src/main/assembly/bin.xml -->
-            </executions>
-          </plugin>
-
+          
           <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
           <!-- no maven deployment of this project's artifacts -->
           <!-- binary build artifact deployed from apache mirror system after 
