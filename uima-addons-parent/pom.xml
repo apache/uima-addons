@@ -193,6 +193,8 @@
     
     <!-- ********************************************* -->
     <!-- * Common Build                                -->
+    <!-- *   *** FOR addons only ***                   -->
+    <!-- ********************************************* -->
     <!-- *   Base Jar is built,                        --> 
     <!-- *     has no dependencies included            -->
     <!-- *     has basic LICENSE/NOTICE files          -->
@@ -373,7 +375,7 @@
         </plugins>
       </build>
       <properties>
-        <uimaBuildResourcesVersion>2-SNAPSHOT</uimaBuildResourcesVersion>
+        <uimaBuildResourcesVersion>1</uimaBuildResourcesVersion>
       </properties>
     </profile>
 
