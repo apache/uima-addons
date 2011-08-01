@@ -43,6 +43,14 @@
   <description>The common parent pom for uima-addons</description>
   <url>${uimaWebsiteUrl}</url>
 
+  <issueManagement>
+    <system>Jira</system>
+    <!-- the form of the url is from http://maven.apache.org/plugins/maven-changes-plugin/usage.html -->
+    <!--url>https://issues.apache.org/jira/BrowseProject.jspa?projectId=12310570</url-->
+    <url>https://issues.apache.org/jira/browse/UIMA?projectId=12310570</url>
+        
+  </issueManagement>
+
   <scm>
     <connection>
       scm:svn:http://svn.apache.org/repos/asf/uima/addons/trunk/uima-addons-parent
@@ -179,61 +187,162 @@
             <tagBase>https://svn.apache.org/repos/asf/uima/sandbox/tags/</tagBase>
           </configuration>
         </plugin>
+
       </plugins>
     </pluginManagement>
+    
+    <!-- ********************************************* -->
+    <!-- * Common Build                                -->
+    <!-- *   Base Jar is built,                        --> 
+    <!-- *     has no dependencies included            -->
+    <!-- *     has basic LICENSE/NOTICE files          -->
+    <!-- *   Base augmented dir built                  -->
+    <!-- *     has Base Jar in lib/                    -->
+    <!-- *     has dependencies in lib/                -->
+    <!-- *     has other things that go into PEAR      -->
+    <!-- *       except the pear install.xml           -->
+    <!-- *     has augmented LICENSE/NOTICE files      -->
+    <!-- *                                             -->
+    <!-- *     This base is reused to make packages:   -->
+    <!-- *       PEAR - adds the install.xml           -->
+    <!-- *            - actually, the PEAR builder     -->
+    <!-- *              will redo the copies, itself   -->
+    <!-- *       OSGi - adds the OSGi manifest         -->
+    <!-- *            - removes the doc, javadocs      -->
+    <!-- *       individual zip/tar                    -->
+    <!-- *       addons aggregate binary zip/tar       -->
+    <!-- ********************************************* -->
+    <plugins>
+      
+      <!-- Build  base -->
+        <!-- populate the lib dir with all needed dependencies
+             that will be distributed with this component
+             
+             NOTE: TRANSITIVE DEPENDENIES ARE NOT INCLUDED
+                   ANYTHING YOU WANT INCLUDED IN THE JAR 
+                   PLEASE LIST EXPLICITLY AND MODIFY THE LICENSE/NOTICE
+                   APPROPRIATELY
+              
+             Runs during process-resources -->
+                     
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-dependency-plugin</artifactId>
+	      <executions>
+	        <!-- Copy the dependencies to the target/base-bin/lib folder -->
+	        <execution>
+	          <id>copy dependencies to base-bin/lib</id>
+	          <goals><goal>copy-dependencies</goal></goals>
+	          <phase>process-resources</phase>
+	          <configuration>
+	            <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
+	            <includeScope>runtime</includeScope>
+	            <excludeTransitive>true</excludeTransitive>
+	          </configuration>
+	        </execution>
+	      </executions>
+	    </plugin>
+	    
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-resources-plugin</artifactId>
+	      <executions>
+	        
+	        <!-- add directories if they exist -->
+	        <execution>
+	          <id>copy standard dirs and files to base-bin</id>
+	          <goals><goal>copy-resources</goal></goals>
+	          <phase>process-resources</phase>  <!-- required -->
+	          <configuration>
+	            <outputDirectory>${project.build.directory}/base-bin</outputDirectory>
+	            <resources>
+	              <resource>
+	                <directory>.</directory>
+	                <includes>
+	                  <include>desc/**</include>
+	                  <include>conf/**</include>
+                    <include>data/**</include>
+                    <include>doc/**</include>
+                    <include>docs/**</include>
+                    <include>resources/**</include>
+                    <include>bin/**</include>
+                    <include>LICENSE*</include>
+                    <include>NOTICE*</include>
+                    <include>README*</include>
+                    <include>readme*</include>
+                    <include>RELEASE_NOTES*</include>
+                    <include>ReleaseNotes*</include>
+                    <include>issuesFixed/**</include> 
+	                </includes>
+	              </resource>
+	              <resource>
+	                <directory>src/main/readme</directory>
+	              </resource>
+	            </resources>
+	          </configuration>
+	        </execution>
+	        
+	        
+	        <!-- copy generated Jar to base-bin/lib spot -->
+	        <execution>
+	          <id>copy standard target jar to base-bin/lib</id>
+	          <goals><goal>copy-resources</goal></goals>
+	          <phase>pre-integration-test</phase>  <!-- a phase after jar -->
+	          <configuration>
+              <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
+	            <resources>
+	              <resource>
+	                <directory>${project.build.directory}</directory>
+	                <includes><include>*.jar</include></includes>
+	                <excludes><exclude>*-sources.jar</exclude></excludes>     
+	              </resource>
+	            </resources>
+	          </configuration>
+	        </execution>
+	        
+	        <!-- copy generated docbook artifacts -->        
+	        <execution>
+	          <id>copy generated docbook artifacts to pearPackaging/doc folder</id>
+	          <goals><goal>copy-resources</goal></goals>
+	          <phase>pre-integration-test</phase>  <!-- a phase after docbkx (package) phase -->
+	          <configuration>
+              <outputDirectory>${project.build.directory}/base-bin/doc</outputDirectory>
+	            <resources>
+	              <resource>
+	                <directory>${project.build.directory}/site/d</directory>
+	              </resource>
+	            </resources>
+	          </configuration>
+	        </execution>          
+	      </executions>
+	    </plugin>
+	    
+	    <plugin>
+	      <artifactId>maven-javadoc-plugin</artifactId>
+	      <executions>
+	        <execution>
+	          <id>attach-javadocs</id>          
+	          <!-- turn on javadoc build for each module --> 
+	          <phase>package</phase> 
+	        </execution>
+	      </executions>           
+	    </plugin>
+      
+    </plugins>
   </build>
+  
+  
   <profiles>
-    <!-- temp fix until parent-pom-3 -->
-    <profile>
+    
     <!-- ************************************ -->
-    <!-- * Build Custom Binary Distribution * -->
+    <!-- * Build single-project zip/tar     * -->
     <!-- ************************************ -->
-      <id>build distribution</id>
-      <activation>
-        <file><exists>src/main/assembly/bin.xml</exists></file>
-      </activation>
-      <build>
-        <plugins>
 
-          <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
-          <!-- no maven deployment of this project's artifacts -->
-          <!-- binary build artifact deployed from apache mirror system after release -->
-          <plugin>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>generate checksums for binary artifacts</id>
-                <goals><goal>run</goal></goals>
-                <phase>verify</phase>
-                <configuration>
-                  <target>
-                    <checksum algorithm="sha1" format="MD5SUM">
-                      <fileset dir="${project.build.directory}">
-                        <include name="*.zip" />
-                        <include name="*.gz" />
-                      </fileset>
-                    </checksum>
-                    <checksum algorithm="md5" format="MD5SUM">
-                      <fileset dir="${project.build.directory}">
-                        <include name="*.zip" />
-                        <include name="*.gz" />
-                      </fileset>
-                    </checksum>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
+    <!-- NOTE:  THIS IS CURRENTLY DISABLED 
+                BY HAVING ONLY PROJECTS BELOW THE 
+                EXECUTION ROOT HAVING THE MARKER
+                - NEED A RELEASE OF THE UIMA-BUILD-RESOURCES PROJECT
+                  BEFORE THIS CAN WORK   -->    
     <profile>
       <id>build simple project binary assembly</id>
       <activation>
@@ -243,121 +352,234 @@
       </activation>
       <build>
         <plugins>
+          <!-- override the parent-pom with same id -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <!--
-              Copy the dependencies to the target/assembly-bin folder for the PEAR to copy
-              -->
-              <execution>
-                <id>copy dependencies to lib</id>
-                <goals>
-                  <goal>copy-dependencies</goal>
-                </goals>
-                <phase>process-resources</phase>
-                <configuration>
-                  <outputDirectory>target/assembly-bin/lib</outputDirectory>
-                  <includeScope>runtime</includeScope>
-                  <excludeTransitive>true</excludeTransitive>
-                  <excludeGroupIds>org.apache.uima</excludeGroupIds>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <!--
-              copy the License/notice/readme/release/keys notes files into the component assembly-bin at the top level
-              -->
-              <execution>
-                <id>Copy Component Lic/Not/Readme/Relnotes</id>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <phase>process-resources</phase>
-                <configuration>
-                  <outputDirectory>target/assembly-bin</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>.</directory>
-                      <includes>
-                        <include>LICENSE*</include>
-                        <include>NOTICE*</include>
-                        <include>README*</include>
-                        <include>readme*</include>
-                        <include>RELEASE_NOTES*</include>
-                        <include>ReleaseNotes*</include>
-                      </includes>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-              <!-- copy generated Jar to target/assembly-bin/lib spot -->
-              <execution>
-                <id>
-                  copy standard addons target jar to target/assembly-bin/lib
-                </id>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <phase>pre-integration-test</phase>
-                <!-- a phase after jar -->
-                <configuration>
-                  <outputDirectory>target/assembly-bin/lib</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${project.build.directory}</directory>
-                      <includes>
-                        <include>*.jar</include>
-                      </includes>
-                      <excludes>
-                        <exclude>*-sources.jar</exclude>
-                      </excludes>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-              <!--
-              copy generated docbook artifacts to pearPackaging/doc folder
-              -->
-              <execution>
-                <id>
-                  copy generated docbook artifacts to target/assembly-bin/doc folder
-                </id>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <phase>pre-integration-test</phase>
-                <!-- a phase after docbkx (package) phase -->
-                <configuration>
-                  <outputDirectory>target/assembly-bin/doc</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${project.build.directory}/docbkx</directory>
-                      <excludes>
-                        <exclude>**/*.fo</exclude>
-                      </excludes>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-javadoc-plugin</artifactId>
+            <artifactId>maven-assembly-plugin</artifactId>
             <executions>
               <execution>
-                <id>attach-javadocs</id>
-                <!-- turn on javadoc build for each module -->
-                <phase>package</phase>
+                <id>binary-release</id> <!-- is "classifier" - match maven convention -->
+                <configuration>
+                  <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+                  <descriptorRefs>
+                    <descriptorRef>
+                      uima-single-project-bin2
+                    </descriptorRef>
+                  </descriptorRefs>
+                </configuration>
               </execution>
             </executions>
           </plugin>
         </plugins>
       </build>
+      <properties>
+        <uimaBuildResourcesVersion>2-SNAPSHOT</uimaBuildResourcesVersion>
+      </properties>
     </profile>
+
+    <!-- ********************************** -->
+    <!-- *   Build OSGi bundle            * -->
+    <!-- ********************************** -->     
+    <profile>
+      <id>build OSGi bundle for annotator</id>
+      <activation>
+        <file>
+          <exists>marker-file-identifying-osgi-project</exists>
+        </file>
+      </activation>
+      
+		  <!-- These dependencies should be all the jars that
+		       need to be included in every osgi plugin -->
+		  <dependencies>
+		
+		    <dependency>
+		      <groupId>org.apache.uima</groupId>
+		      <artifactId>uimaj-core</artifactId>
+		      <version>${project.parent.version}</version>
+		      <scope>compile</scope>
+		    </dependency>
+		  </dependencies>
+           
+      <build>  
+        
+        <plugins>  
+                 
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+                            
+              <!-- copy the base-bin dir to the osgi dir -->
+              <execution>
+                <id>Copy base-bin to osgi</id>
+                <goals><goal>copy-resources</goal></goals>
+                <phase>integration-test</phase>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/osgi</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/base-bin</directory>
+                      <includes><include>**</include></includes>
+                      <excludes>
+                        <exclude>doc/**</exclude>
+                        <exclude>docs/**</exclude>
+                        <exclude>**/*-javadoc.jar</exclude>
+                        <exclude>issuesFixed/**</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.apache.felix</groupId>
+	          <artifactId>maven-bundle-plugin</artifactId>
+            <version>2.3.5</version>
+	          <executions>
+	            <execution>
+	              <id>uima-bundle</id>
+	              <phase>integration-test</phase>
+	              <goals><goal>manifest</goal></goals>
+	              <configuration>
+	                <buildDirectory>${project.build.directory}/osgi</buildDirectory>
+	                <manifestLocation>${project.build.directory}/osgi/META-INF</manifestLocation>
+	                <instructions>
+	                  <Import-Package>org.apache.log.*;resolution:=optional</Import-Package>
+	                  <Embed-Dependency>*;scope=compile;</Embed-Dependency>
+	                  <Embed-Directory>lib</Embed-Directory>
+	                  <Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
+	                  <Eclipse-ExtensibleAPI>true</Eclipse-ExtensibleAPI>
+                    <Bundle-ClassPath>.,lib/${project.build.finalName}.jar,{maven-dependencies}</Bundle-ClassPath>
+	                  <Eclipse-BuddyPolicy>registered</Eclipse-BuddyPolicy>
+	                  <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
+	                  <Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true</Bundle-SymbolicName>
+	                </instructions>
+	              </configuration>
+	            </execution>
+	          </executions>
+	        </plugin>
+
+          <!-- Run JAR to create OSGi Jar -->          
+          <plugin>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <executions>
+		          <execution>
+		            <id>Create OSGi Jar</id>
+		            <goals><goal>jar</goal></goals>
+		            <phase>integration-test</phase> <!-- after above build step -->
+		            <configuration>
+		              <finalName>${project.groupId}.${project.artifactId}_${parsedVersion.osgiVersion}</finalName>
+		              <classifier>osgi</classifier>
+		              <classesDirectory>${project.build.directory}/osgi</classesDirectory>
+		              <archive>
+		                <manifestFile>${project.build.directory}/osgi/META-INF/MANIFEST.MF</manifestFile>
+		              </archive>
+		            </configuration>		            
+		          </execution>
+		        </executions>
+		      </plugin>
+                             
+        </plugins>
+      </build>             
+    </profile>
+    
+    <!-- ********************************** -->
+    <!-- *   Build Standard PEAR          * -->
+    <!-- ********************************** -->
+    <profile>
+      <id>build standard PEAR</id>
+      <activation>
+        <file>
+          <exists>marker-file-identifying-standard-pear</exists>
+        </file>
+      </activation>
+      <build>  
+        
+        <plugins>  
+        
+          <!-- turn off parent pom build parts not used -->
+          <!-- all this will go away when next parent pom released -->
+          
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy dependencies to lib</id>
+                <phase/>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+            
+              <execution>
+                <id>copy generated docbook artifacts to pearPackaging/doc folder</id>
+                <phase/>
+              </execution>
+              
+              <execution>
+                <id>copy standard sandbox target jar to pearPackaging/lib</id>
+                <phase/>
+              </execution>
+              
+              <execution>
+                <id>Copy Pear Lic/Not/Readme/Relnotes</id>
+                <phase/>
+              </execution>             
+                            
+              <!-- copy the base-bin dir to the pearPackaging dir -->
+              <execution>
+                <id>Copy base-bin to pearPackaging</id>
+                <goals><goal>copy-resources</goal></goals>
+                <phase>integration-test</phase> <!-- after first copies from jar/docbk pkg -->
+                <configuration>
+                  <outputDirectory>${project.build.directory}/pearPackaging</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/base-bin</directory>
+                      <includes><include>**</include></includes>
+                      <excludes>
+                        <exclude>doc/**</exclude>
+                        <exclude>docs/**</exclude>
+                        <exclude>**/*-javadoc.jar</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <!-- build the PEAR -->
+          <plugin>
+            <groupId>org.apache.uima</groupId>
+            <artifactId>PearPackagingMavenPlugin</artifactId>
+            <version>2.3.1</version>
+            <extensions>true</extensions>        
+            <executions>
+              <execution>
+                <id>build uima annnotator Pear</id>
+                <goals><goal>package</goal></goals>
+                   <!-- needs to run after the jar is built
+                        after docbooks are packaged and copied to pearPackaging/doc folder -->
+                <phase>integration-test</phase>  <!-- after first copies from jar/docbk pkg -->
+                <configuration> 
+                  <datapath>$main_root/resources</datapath>
+                  <componentId>${project.artifactId}</componentId>
+                  <mainComponentDesc>${pearMainDescriptor}</mainComponentDesc>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+                         
+        </plugins>
+        
+      </build>
+    </profile>
+    
   </profiles>
 </project>
