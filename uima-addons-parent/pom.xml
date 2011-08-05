@@ -129,7 +129,8 @@
 
   <properties>
     <uimaScmRoot>addons</uimaScmRoot>
-    <uimaScmProject>${project.artifactId}</uimaScmProject>   
+    <uimaScmProject>${project.artifactId}</uimaScmProject>
+    <uimaDependencyVersion>2.3.1</uimaDependencyVersion>   
   </properties>
 
   <build>
@@ -296,7 +297,10 @@
 	              <resource>
 	                <directory>${project.build.directory}</directory>
 	                <includes><include>*.jar</include></includes>
-	                <excludes><exclude>*-sources.jar</exclude></excludes>     
+	                <excludes>
+	                  <exclude>*-sources.jar</exclude>
+	                  <exclude>*-osgi.jar</exclude>
+	                </excludes>     
 	              </resource>
 	            </resources>
 	          </configuration>
@@ -375,7 +379,7 @@
         </plugins>
       </build>
       <properties>
-        <uimaBuildResourcesVersion>1</uimaBuildResourcesVersion> 
+        <uimaBuildResourcesVersion>2</uimaBuildResourcesVersion> 
       </properties>
     </profile>
 
@@ -389,23 +393,11 @@
           <exists>marker-file-identifying-osgi-project</exists>
         </file>
       </activation>
-      
-		  <!-- These dependencies should be all the jars that
-		       need to be included in every osgi plugin -->
-		  <dependencies>
-		
-		    <dependency>
-		      <groupId>org.apache.uima</groupId>
-		      <artifactId>uimaj-core</artifactId>
-		      <version>${project.parent.version}</version>
-		      <scope>compile</scope>
-		    </dependency>
-		  </dependencies>
            
       <build>  
         
-        <plugins>  
-                 
+        <plugins> 
+        
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
@@ -434,6 +426,34 @@
             </executions>
           </plugin>
           
+          <!-- copy any uima dependencies needed to osgi/lib
+               beyond what is done for the common build.
+               NOTE: can't just add dependencies, because
+                 a) local projects override scope to "provided" and
+                 b) this would result in the jars being copied for
+                    the common build -->
+         
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>Copy uima dependencies to osgi/lib</id>
+                <goals><goal>copy</goal></goals>
+		            <phase>process-resources</phase>
+		            <configuration>
+		              <outputDirectory>${project.build.directory}/osgi/lib</outputDirectory>
+		              <artifactItems>
+		                <artifactItem>
+		                  <groupId>org.apache.uima</groupId>
+                      <artifactId>uimaj-core</artifactId>
+                      <version>${uimaDependencyVersion}</version>
+		                </artifactItem>
+		              </artifactItems>
+		            </configuration>
+              </execution>
+            </executions>
+          </plugin> 
+          
           <plugin>
             <groupId>org.apache.felix</groupId>
 	          <artifactId>maven-bundle-plugin</artifactId>
@@ -453,7 +473,11 @@
 	                  <Embed-Directory>lib</Embed-Directory>
 	                  <Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
 	                  <Eclipse-ExtensibleAPI>true</Eclipse-ExtensibleAPI>
-                    <Bundle-ClassPath>.,lib/${project.build.finalName}.jar,{maven-dependencies}</Bundle-ClassPath>
+                    <Bundle-ClassPath>.,lib/${project.build.finalName}.jar,{maven-dependencies},lib/uimaj-core-${uimaDependencyVersion}.jar</Bundle-ClassPath>
+                    <Include-Resource>
+                      {maven-resources}, {maven-dependencies},
+                      lib/uimaj-core-${uimaDependencyVersion}.jar=${settings.localRepository}/org/apache/uima/uimaj-core/${uimaDependencyVersion}/uimaj-core-${uimaDependencyVersion}.jar
+                    </Include-Resource>
 	                  <Eclipse-BuddyPolicy>registered</Eclipse-BuddyPolicy>
 	                  <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
 	                  <Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true</Bundle-SymbolicName>
@@ -461,6 +485,7 @@
 	              </configuration>
 	            </execution>
 	          </executions>
+
 	        </plugin>
 
           <!-- Run JAR to create OSGi Jar -->          
@@ -497,7 +522,7 @@
           <exists>marker-file-identifying-standard-pear</exists>
         </file>
       </activation>
-      <build>  
+      <build>
         
         <plugins>  
         
@@ -577,6 +602,27 @@
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+          
+          <!-- after PEAR is built -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+		          <execution>
+		            <id>attach-pear-artifact</id>
+		            <phase>post-integration-test</phase>  
+		            <goals><goal>attach-artifact</goal></goals>
+		            <configuration>
+		              <artifacts>
+		                <artifact>
+		                  <file>${project.build.directory}/${project.artifactId}.pear</file>
+		                  <type>pear</type>
+		                </artifact>
+		              </artifacts>
+		            </configuration>
+		          </execution>
+		        </executions>
           </plugin>
                          
         </plugins>
