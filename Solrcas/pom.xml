@@ -54,7 +54,7 @@
 
   <properties>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
-    <uimaDependencyVersion>2.3.1-SNAPSHOT</uimaDependencyVersion>
+    <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
     <pearMainDescriptor>desc/SolrCASConsumerAE.xml</pearMainDescriptor>
     <bookNameRoot>SolrcasUserGuide</bookNameRoot>
   </properties>
