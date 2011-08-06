@@ -56,6 +56,8 @@
   </scm>
   <properties>
     <uimaScmRoot>addons</uimaScmRoot>
+    <!-- use the standard source-release because this project has hierarchical nesting of subprojects -->
+    <sourceReleaseAssemblyDescriptor>source-release</sourceReleaseAssemblyDescriptor>     
   </properties>
 
   <modules>
