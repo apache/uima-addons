@@ -309,7 +309,19 @@ under the License.
       <outputDirectory/>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>      
-    </fileSet>     
+    </fileSet>
+    
+    <!-- copy issuesFixed and README.txt -->
+    <fileSet>
+      <directory/>
+      <outputDirectory/>
+      <includes>
+        <include>issuesFixed/**</include>
+        <include>README.txt</include>
+      </includes>
+      <fileMode>644</fileMode>
+      <directoryMode>755</directoryMode>      
+    </fileSet>    
 
   </fileSets>
 </assembly>
