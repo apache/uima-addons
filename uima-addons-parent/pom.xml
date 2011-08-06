@@ -308,7 +308,7 @@
 	        
 	        <!-- copy generated docbook artifacts -->        
 	        <execution>
-	          <id>copy generated docbook artifacts to pearPackaging/doc folder</id>
+	          <id>copy generated docbook artifacts to base-bin/doc folder</id>
 	          <goals><goal>copy-resources</goal></goals>
 	          <phase>pre-integration-test</phase>  <!-- a phase after docbkx (package) phase -->
 	          <configuration>
