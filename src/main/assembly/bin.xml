@@ -317,7 +317,8 @@ under the License.
       <outputDirectory/>
       <includes>
         <include>issuesFixed/**</include>
-        <include>README.txt</include>
+        <include>README*</include>
+        <include>readme*</include>
       </includes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>      
