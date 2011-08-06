@@ -344,11 +344,6 @@
     <!-- * Build single-project zip/tar     * -->
     <!-- ************************************ -->
 
-    <!-- NOTE:  THIS IS CURRENTLY DISABLED 
-                BY HAVING ONLY PROJECTS BELOW THE 
-                EXECUTION ROOT HAVING THE MARKER
-                - NEED A RELEASE OF THE UIMA-BUILD-RESOURCES PROJECT
-                  BEFORE THIS CAN WORK   -->    
     <profile>
       <id>build simple project binary assembly</id>
       <activation>
@@ -571,8 +566,6 @@
                       <directory>${project.build.directory}/base-bin</directory>
                       <includes><include>**</include></includes>
                       <excludes>
-                        <exclude>doc/**</exclude>
-                        <exclude>docs/**</exclude>
                         <exclude>**/*-javadoc.jar</exclude>
                       </excludes>
                     </resource>
