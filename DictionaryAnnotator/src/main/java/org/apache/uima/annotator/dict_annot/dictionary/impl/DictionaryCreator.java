@@ -236,7 +236,7 @@ public class DictionaryCreator {
          }
          try {
             // create temp directory to install PEAR
-            tempDir = new File(".", "~tokenizer_temp_install");
+            tempDir = new File(System.getProperty("java.io.tmpdir"), "~tokenizer_temp_install");
             tempDir.deleteOnExit();
             tempDir.mkdir();
 
