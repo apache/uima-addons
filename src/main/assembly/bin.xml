@@ -319,6 +319,7 @@ under the License.
         <include>issuesFixed/**</include>
         <include>README*</include>
         <include>readme*</include>
+        <include>RELEASE_NOTES*</include>
       </includes>
       <fileMode>644</fileMode>
       <directoryMode>755</directoryMode>      
