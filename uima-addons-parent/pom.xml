@@ -473,7 +473,6 @@
                       {maven-resources}, {maven-dependencies},
                       lib/uimaj-core-${uimaDependencyVersion}.jar=${settings.localRepository}/org/apache/uima/uimaj-core/${uimaDependencyVersion}/uimaj-core-${uimaDependencyVersion}.jar
                     </Include-Resource>
-	                  <Eclipse-BuddyPolicy>registered</Eclipse-BuddyPolicy>
 	                  <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
 	                  <Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true</Bundle-SymbolicName>
 	                </instructions>
