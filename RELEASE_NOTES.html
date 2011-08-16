@@ -70,15 +70,23 @@ There is an addon to the base UIMA:
     <li>FsVariables</li>
 </ul>
 
-Finally each annotator is distributed also in OSGi packaging (bundle).
-
-
-Each component has a separate LICENSE and NOTICE files; some also
+<p>Each component has a separate LICENSE and NOTICE files; some also
 have Readme and other documentation (in docs/). Documentation
 is also available on the UIMA website, in the Sandbox area.
-
 </p>
 
+<h4>OSGi packaging of annotators</h4>
+      <p>The addon annotators are being packaged experimentally as individual OSGi bundles.  
+      OSGi is not supported directly by the UIMA framework; the framework has no knowledge or interfaces for making use of it.
+      Because of this, 
+      the current experimental packaging includes the uimaj-core jar in each bundle; the expected use of this bundle 
+      is as an embedded UIMA "application", running just the one annotator that is being bundled (because other annotators in other
+      bundles will not be "visible" in the class-loading sense).</p>  
+ 
+      <p>Users wanting to develop more advanced deployments, such as UIMA pipelines containing multiple annotators, can use
+      these bundles and the maven processes that build them, as examples.  They will need to create special bundles of their
+      own, combining the UIMA framework and all of the jars for the multiple annotators (and their dependencies) into one bundle. 
+      This would then be used as a UIMA application.</p>
 
 <h2><a name="major.changes">2. Major Changes in this Release</a></h2>
 
