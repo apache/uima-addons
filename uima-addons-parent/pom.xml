@@ -192,147 +192,9 @@
       </plugins>
     </pluginManagement>
     
-    <!-- ********************************************* -->
-    <!-- * Common Build                                -->
-    <!-- *   *** FOR addons only ***                   -->
-    <!-- ********************************************* -->
-    <!-- *   Base Jar is built,                        --> 
-    <!-- *     has no dependencies included            -->
-    <!-- *     has basic LICENSE/NOTICE files          -->
-    <!-- *   Base augmented dir built                  -->
-    <!-- *     has Base Jar in lib/                    -->
-    <!-- *     has dependencies in lib/                -->
-    <!-- *     has other things that go into PEAR      -->
-    <!-- *       except the pear install.xml           -->
-    <!-- *     has augmented LICENSE/NOTICE files      -->
-    <!-- *                                             -->
-    <!-- *     This base is reused to make packages:   -->
-    <!-- *       PEAR - adds the install.xml           -->
-    <!-- *            - actually, the PEAR builder     -->
-    <!-- *              will redo the copies, itself   -->
-    <!-- *       OSGi - adds the OSGi manifest         -->
-    <!-- *            - removes the doc, javadocs      -->
-    <!-- *       individual zip/tar                    -->
-    <!-- *       addons aggregate binary zip/tar       -->
-    <!-- ********************************************* -->
     <plugins>
       
-      <!-- Build  base -->
-        <!-- populate the lib dir with all needed dependencies
-             that will be distributed with this component
-             
-             NOTE: TRANSITIVE DEPENDENIES ARE NOT INCLUDED
-                   ANYTHING YOU WANT INCLUDED IN THE JAR 
-                   PLEASE LIST EXPLICITLY AND MODIFY THE LICENSE/NOTICE
-                   APPROPRIATELY
-              
-             Runs during process-resources -->
-                     
-	    <plugin>
-	      <groupId>org.apache.maven.plugins</groupId>
-	      <artifactId>maven-dependency-plugin</artifactId>
-	      <executions>
-	        <!-- Copy the dependencies to the target/base-bin/lib folder -->
-	        <execution>
-	          <id>copy dependencies to base-bin/lib</id>
-	          <goals><goal>copy-dependencies</goal></goals>
-	          <phase>process-resources</phase>
-	          <configuration>
-	            <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
-	            <includeScope>runtime</includeScope>
-	            <excludeTransitive>true</excludeTransitive>
-	          </configuration>
-	        </execution>
-	      </executions>
-	    </plugin>
-	    
-	    <plugin>
-	      <groupId>org.apache.maven.plugins</groupId>
-	      <artifactId>maven-resources-plugin</artifactId>
-	      <executions>
-	        
-	        <!-- add directories if they exist -->
-	        <execution>
-	          <id>copy standard dirs and files to base-bin</id>
-	          <goals><goal>copy-resources</goal></goals>
-	          <phase>process-resources</phase>  <!-- required -->
-	          <configuration>
-	            <outputDirectory>${project.build.directory}/base-bin</outputDirectory>
-	            <resources>
-	              <resource>
-	                <directory>.</directory>
-	                <includes>
-	                  <include>desc/**</include>
-	                  <include>conf/**</include>
-                    <include>data/**</include>
-                    <include>doc/**</include>
-                    <include>docs/**</include>
-                    <include>resources/**</include>
-                    <include>bin/**</include>
-                    <include>LICENSE*</include>
-                    <include>NOTICE*</include>
-                    <include>README*</include>
-                    <include>readme*</include>
-                    <include>RELEASE_NOTES*</include>
-                    <include>ReleaseNotes*</include>
-                    <include>issuesFixed/**</include> 
-	                </includes>
-	              </resource>
-	              <resource>
-	                <directory>src/main/readme</directory>
-	              </resource>
-	            </resources>
-	          </configuration>
-	        </execution>
-	        
-	        
-	        <!-- copy generated Jar to base-bin/lib spot -->
-	        <execution>
-	          <id>copy standard target jar to base-bin/lib</id>
-	          <goals><goal>copy-resources</goal></goals>
-	          <phase>pre-integration-test</phase>  <!-- a phase after jar -->
-	          <configuration>
-              <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
-	            <resources>
-	              <resource>
-	                <directory>${project.build.directory}</directory>
-	                <includes><include>*.jar</include></includes>
-	                <excludes>
-	                  <exclude>*-sources.jar</exclude>
-	                  <exclude>*-osgi.jar</exclude>
-	                </excludes>     
-	              </resource>
-	            </resources>
-	          </configuration>
-	        </execution>
-	        
-	        <!-- copy generated docbook artifacts -->        
-	        <execution>
-	          <id>copy generated docbook artifacts to base-bin/doc folder</id>
-	          <goals><goal>copy-resources</goal></goals>
-	          <phase>pre-integration-test</phase>  <!-- a phase after docbkx (package) phase -->
-	          <configuration>
-              <outputDirectory>${project.build.directory}/base-bin/doc</outputDirectory>
-	            <resources>
-	              <resource>
-	                <directory>${project.build.directory}/site/d</directory>
-	              </resource>
-	            </resources>
-	          </configuration>
-	        </execution>          
-	      </executions>
-	    </plugin>
-	    
-	    <plugin>
-	      <artifactId>maven-javadoc-plugin</artifactId>
-	      <executions>
-	        <execution>
-	          <id>attach-javadocs</id>          
-	          <!-- turn on javadoc build for each module --> 
-	          <phase>package</phase> 
-	        </execution>
-	      </executions>           
-	    </plugin>
+
       
     </plugins>
   </build>
@@ -345,7 +207,7 @@
     <!-- ************************************ -->
 
     <profile>
-      <id>build simple project binary assembly</id>
+      <id>single project common and binary build</id>
       <activation>
         <file>
           <exists>marker-file-identifying-single-project</exists>
@@ -353,6 +215,137 @@
       </activation>
       <build>
         <plugins>
+
+          <!-- ********************************************* -->
+          <!-- * Common Build                                -->
+          <!-- *   *** FOR addons only ***                   -->
+          <!-- ********************************************* -->
+          <!-- *   Base Jar is built,                        --> 
+          <!-- *     has no dependencies included            -->
+          <!-- *     has basic LICENSE/NOTICE files          -->
+          <!-- *   Base augmented dir built                  -->
+          <!-- *     has Base Jar in lib/                    -->
+          <!-- *     has dependencies in lib/                -->
+          <!-- *     has other things that go into PEAR      -->
+          <!-- *       except the pear install.xml           -->
+          <!-- *     has augmented LICENSE/NOTICE files      -->
+          <!-- *                                             -->
+          <!-- *     This base is reused to make packages:   -->
+          <!-- *       PEAR - adds the install.xml           -->
+          <!-- *            - actually, the PEAR builder     -->
+          <!-- *              will redo the copies, itself   -->
+          <!-- *       OSGi - adds the OSGi manifest         -->
+          <!-- *            - removes the doc, javadocs      -->
+          <!-- *       individual zip/tar                    -->
+          <!-- *       addons aggregate binary zip/tar       -->
+          <!-- ********************************************* -->
+              
+          <!-- Build  base -->
+            <!-- populate the lib dir with all needed dependencies
+                 that will be distributed with this component
+                 
+                 NOTE: TRANSITIVE DEPENDENIES ARE NOT INCLUDED
+                       ANYTHING YOU WANT INCLUDED IN THE JAR 
+                       PLEASE LIST EXPLICITLY AND MODIFY THE LICENSE/NOTICE
+                       APPROPRIATELY
+                  
+                 Runs during process-resources -->
+                         
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <!-- Copy the dependencies to the target/base-bin/lib folder -->
+              <execution>
+                <id>copy dependencies to base-bin/lib</id>
+                <goals><goal>copy-dependencies</goal></goals>
+                <phase>process-resources</phase>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>true</excludeTransitive>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              
+              <!-- add directories if they exist -->
+              <execution>
+                <id>copy standard dirs and files to base-bin</id>
+                <goals><goal>copy-resources</goal></goals>
+                <phase>process-resources</phase>  <!-- required -->
+                <configuration>
+                  <outputDirectory>${project.build.directory}/base-bin</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>.</directory>
+                      <includes>
+                        <include>desc/**</include>
+                        <include>conf/**</include>
+                        <include>data/**</include>
+                        <include>doc/**</include>
+                        <include>docs/**</include>
+                        <include>resources/**</include>
+                        <include>bin/**</include>
+                        <include>LICENSE*</include>
+                        <include>NOTICE*</include>
+                        <include>README*</include>
+                        <include>readme*</include>
+                        <include>RELEASE_NOTES*</include>
+                        <include>ReleaseNotes*</include>
+                        <include>issuesFixed/**</include> 
+                      </includes>
+                    </resource>
+                    <resource>
+                      <directory>src/main/readme</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              
+              
+              <!-- copy generated Jar to base-bin/lib spot -->
+              <execution>
+                <id>copy standard target jar to base-bin/lib</id>
+                <goals><goal>copy-resources</goal></goals>
+                <phase>pre-integration-test</phase>  <!-- a phase after jar -->
+                <configuration>
+                  <outputDirectory>${project.build.directory}/base-bin/lib</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}</directory>
+                      <includes><include>*.jar</include></includes>
+                      <excludes>
+                        <exclude>*-sources.jar</exclude>
+                        <exclude>*-osgi.jar</exclude>
+                      </excludes>     
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              
+              <!-- copy generated docbook artifacts -->        
+              <execution>
+                <id>copy generated docbook artifacts to base-bin/doc folder</id>
+                <goals><goal>copy-resources</goal></goals>
+                <phase>pre-integration-test</phase>  <!-- a phase after docbkx (package) phase -->
+                <configuration>
+                  <outputDirectory>${project.build.directory}/base-bin/doc</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/site/d</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>          
+            </executions>
+          </plugin>
+              
           <!-- override the parent-pom with same id -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -390,7 +383,6 @@
       </activation>
            
       <build>  
-        
         <plugins> 
         
           <plugin>
@@ -453,7 +445,8 @@
             <groupId>org.apache.felix</groupId>
 	          <artifactId>maven-bundle-plugin</artifactId>
 	          <!-- 2.3.5 accidentally required Java 6 -->
-            <version>2.3.4</version>
+            <!-- 2.3.4 doesn't put in the version string for the export-packages-->
+            <version>2.1.0</version>
 	          <executions>
 	            <execution>
 	              <id>uima-bundle</id>
