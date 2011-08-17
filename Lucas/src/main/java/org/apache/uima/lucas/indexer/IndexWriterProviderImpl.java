@@ -42,8 +42,9 @@ public class IndexWriterProviderImpl implements IndexWriterProvider, SharedResou
   public static final String USE_COMPOUND_FILE_FORMAT_PROPERTY = "useCompoundFileFormat";
   public static final String RAMBUFFER_SIZE_PROPERTY = "RAMBufferSize";
   public static final String INDEX_PATH_PROPERTY = "indexPath";
+  public static final String CREATE_INDEX_PROPERTY = "createIndex";
   public static final String MAX_FIELD_LENGTH_PROPERTY = "maxFieldLength";
-  private static final String UNIQUE_INDEX_PROPERTY = "uniqueIndex";
+  public static final String UNIQUE_INDEX_PROPERTY = "uniqueIndex";
 
   private static Set<Integer> randomNumbers = new HashSet<Integer>();
 
@@ -61,7 +62,10 @@ public class IndexWriterProviderImpl implements IndexWriterProvider, SharedResou
       indexPath = createUniqueIndexPath(indexPath);
 
     MaxFieldLength maxFieldLength = getMaxFieldLengthOrDefault(properties);
-    createIndexWriter(indexPath, maxFieldLength);
+    
+    boolean createIndex = getCreateIndexOrDefault(properties);
+    
+    createIndexWriter(indexPath, maxFieldLength, createIndex);
     
     Double ramBufferSize = getRAMBufferSizeOrDefault(properties);    
     Boolean useCompoundFileFormat = getUseCompoundFormatOrDefault(properties);
@@ -138,9 +142,20 @@ public class IndexWriterProviderImpl implements IndexWriterProvider, SharedResou
     }        
   }
 
-  private void createIndexWriter(String indexPath, MaxFieldLength maxFieldLength) throws ResourceInitializationException {
+  private boolean getCreateIndexOrDefault(Properties properties) {
+    String createIndexAsString = properties.getProperty(CREATE_INDEX_PROPERTY);
+    if (createIndexAsString != null) {
+	  return Boolean.getBoolean(createIndexAsString);
+    }
+    else {
+      // Thats the default before this property was introduced
+      return true;
+    }
+  }
+  
+  private void createIndexWriter(String indexPath, MaxFieldLength maxFieldLength, boolean create) throws ResourceInitializationException {
     try {
-      indexWriter = new IndexWriter(indexPath, new StandardAnalyzer(), true, maxFieldLength);
+      indexWriter = new IndexWriter(indexPath, new StandardAnalyzer(), create, maxFieldLength);
     } catch (CorruptIndexException e) {
       throw new ResourceInitializationException(e);
     } catch (LockObtainFailedException e) {
