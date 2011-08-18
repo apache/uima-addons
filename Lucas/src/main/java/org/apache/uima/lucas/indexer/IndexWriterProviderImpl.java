@@ -145,7 +145,7 @@ public class IndexWriterProviderImpl implements IndexWriterProvider, SharedResou
   private boolean getCreateIndexOrDefault(Properties properties) {
     String createIndexAsString = properties.getProperty(CREATE_INDEX_PROPERTY);
     if (createIndexAsString != null) {
-	  return Boolean.getBoolean(createIndexAsString);
+	  return Boolean.parseBoolean(createIndexAsString);
     }
     else {
       // Thats the default before this property was introduced
