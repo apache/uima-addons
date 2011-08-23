@@ -75,43 +75,27 @@ have Readme and other documentation (in docs/). Documentation
 is also available on the UIMA website, in the Sandbox area.
 </p>
 
-<h4>OSGi packaging of annotators</h4>
-      <p>The addon annotators are being packaged experimentally as individual OSGi bundles.  
-      OSGi is not supported directly by the UIMA framework; the framework has no knowledge or interfaces for making use of it.
-      Because of this, 
-      the current experimental packaging includes the uimaj-core jar in each bundle; the expected use of this bundle 
-      is as an embedded UIMA "application", running just the one annotator that is being bundled (because other annotators in other
-      bundles will not be "visible" in the class-loading sense).</p>  
- 
-      <p>Users wanting to develop more advanced deployments, such as UIMA pipelines containing multiple annotators, can use
-      these bundles and the maven processes that build them, as examples.  They will need to create special bundles of their
-      own, combining the UIMA framework and all of the jars for the multiple annotators (and their dependencies) into one bundle. 
-      This would then be used as a UIMA application.</p>
-
 <h2><a name="major.changes">2. Major Changes in this Release</a></h2>
 
 <p>
     The following components were added in this release:
-<li>
-    <ul>AlchemyAPI Annotator - is an annotator wrapping alchemyapi.com services providing named entity extraction,
+<ul>
+    <li>AlchemyAPI Annotator - is an annotator wrapping alchemyapi.com services providing named entity extraction,
         keyword/concept tagging, etc.
-    </ul>
-    <ul>Solrcas - is a CAS Consumer component that can store CAS objects into an Apache Solr instance</ul>
-</li>
+    </li>
+    <li>Solrcas - is a CAS Consumer component that can store CAS objects into an Apache Solr instance</li>
+</ul>
 
 The following are the main changes to existing components:
-<li>
-    <ul>TikaAnnotator - now using Apache Tika 0.7 instead of 0.4, language extracted by Tika goes inside CAS
+<ul>
+    <li>TikaAnnotator - now using Apache Tika 0.7 instead of 0.4, language extracted by Tika goes inside CAS
         documentLanguage
-    </ul>
-    <ul>Lucas - now using Apache Lucene 2.9.3</ul>
-    <ul>Tagger - added an AnalysisEngine to train HMM Tagger models</ul>
-    <ul>OpenCalaisAnnotator - fixed negative begin/end values bug</ul>
-    <ul>Each annotator has an OSGi version (a bundle) to enable deploying in OSGi containers like Apache Felix, Eclipse
-        Equinox, etc.
-    </ul>
-    <ul>Generally fixed URI/space handling</ul>
-</li>
+    </li>
+    <li>Lucas - now using Apache Lucene 2.9.3</li>
+    <li>Tagger - added an AnalysisEngine to train HMM Tagger models</li>
+    <li>OpenCalaisAnnotator - fixed negative begin/end values bug</li>
+    <li>Generally fixed URI/space handling</li>
+</ul>
 
 </p>
 

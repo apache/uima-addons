@@ -378,7 +378,7 @@
       <id>build OSGi bundle for annotator</id>
       <activation>
         <file>
-          <exists>marker-file-identifying-osgi-project</exists>
+          <exists>marker-file-identifying-osgi-project-ignored-for-2.3.1</exists>
         </file>
       </activation>
            
