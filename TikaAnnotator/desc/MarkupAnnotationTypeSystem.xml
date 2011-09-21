@@ -32,7 +32,7 @@
           <name>attributes</name>
           <description/>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>uima.cas.FSArray</elementType>
+          <elementType>org.apache.uima.tika.AttributeFS</elementType>
         </featureDescription>
         <featureDescription>
           <name>children</name>
