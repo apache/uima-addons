@@ -29,7 +29,7 @@
 
   <artifactId>AlchemyAPIAnnotator</artifactId>
   <version>2.3.2-SNAPSHOT</version>
-  <name>UIMA Annotator: ${project.artifactId}</name>
+  <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>A UIMA set of AEs that wrap Alchemy API services from Orchestr8</description>
   <url>${uimaWebsiteUrl}</url>
 

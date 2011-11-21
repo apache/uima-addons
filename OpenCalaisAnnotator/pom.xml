@@ -29,7 +29,7 @@
 
   <artifactId>OpenCalaisAnnotator</artifactId>	<packaging>jar</packaging>
   <version>2.3.2-SNAPSHOT</version>
-  <name>UIMA Annotator: ${project.artifactId}</name>
+  <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>Sends text to a remote open calais annotators and adds the annotations returned to the CAS</description>
   <url>${uimaWebsiteUrl}</url>
 

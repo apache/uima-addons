@@ -29,7 +29,7 @@
     
   <artifactId>Tagger</artifactId>
   <version>2.3.2-SNAPSHOT</version>
-  <name>UIMA Annotator: ${project.artifactId}</name>
+  <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>An implementation of a Hidden Markov Model (HMM) statistical tagger</description>
   <url>${uimaWebsiteUrl}</url>
 

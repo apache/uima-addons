@@ -30,7 +30,7 @@
   <artifactId>WhitespaceTokenizer</artifactId>
   <packaging>jar</packaging>
   <version>2.3.2-SNAPSHOT</version>
-  <name>UIMA Annotator: ${project.artifactId}</name>
+  <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>A simple white-space annotator to identify Tokens in text using whitespace as the delimiters</description>
   <url>${uimaWebsiteUrl}</url>
 

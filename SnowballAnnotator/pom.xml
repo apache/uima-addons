@@ -29,7 +29,7 @@
   
   <artifactId>SnowballAnnotator</artifactId>
   <version>2.3.2-SNAPSHOT</version>
-  <name>UIMA Annotator: ${project.artifactId}</name>
+  <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>Annotator that annotates tokens using Snowball</description>  
   
   <!-- Special inheritance note
