@@ -29,7 +29,7 @@
   <artifactId>uima-addons</artifactId>
   <packaging>pom</packaging>
   <version>2.3.2-SNAPSHOT</version>
-  <name>UIMA Aggregate: ${project.artifactId}</name>
+  <name>Apache UIMA Aggregate: ${project.artifactId}</name>
   <description>A convenience aggregate for the UIMA addons</description>
   <url>${uimaWebsiteUrl}</url>
 
