@@ -152,35 +152,19 @@ Below is list of the required files from the SimpleServer project.
   </para>
   </listitem>
   <listitem>
-  <para><code>SimpleServer/lib/uima-simple-server-xbean.jar</code>
+  <para><code>SimpleServer/lib/xmlbeans-2.4.0.jar</code>
   </para>
   </listitem>
   <listitem>
-  <para><code>SimpleServer/lib/jsr173_1.0_api.jar</code>
+  <para><code>SimpleServer/lib/geronimo-stax-api_1.0_spec-1.0.1.jar</code>
   </para>
   </listitem>
   <listitem>
-  <para><code>SimpleServer/lib/xbean.jar</code>
+  <para><code>SimpleServer/lib/uimaj-core-2.3.1.jar</code>
   </para>
   </listitem>
   </itemizedlist>
-  
-  <para>
-  In addition, you also need
-  </para>
-  
-  <itemizedlist>
-  <listitem>
-  <para><code>${UIMA_HOME}/lib/uima-core.jar</code>
-  </para>
-  </listitem>
-</itemizedlist>
-  
-  <para>
-  from your UIMA distribution.  Make sure you have the UIMA core version that has the same version
-  number as the sandbox distribution.  An older version may not work.
-  </para>
-  
+    
   <para>
   Copy all those jar files into the <code>WebContent/WEB-INF/lib</code> directory
   of your sample project.  Note how Eclipse automatically adds the jars to the Java build path under
