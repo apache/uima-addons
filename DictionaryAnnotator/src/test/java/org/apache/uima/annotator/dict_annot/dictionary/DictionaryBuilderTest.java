@@ -29,9 +29,9 @@ import java.util.StringTokenizer;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.apache.incubator.uima.DictionaryDocument;
-import org.apache.incubator.uima.EntriesDocument;
-import org.apache.incubator.uima.EntryDocument;
+import org.apache.uima.DictionaryDocument;
+import org.apache.uima.EntriesDocument;
+import org.apache.uima.EntryDocument;
 import org.apache.uima.annotator.dict_annot.dictionary.impl.DictionaryFileParserImpl;
 import org.apache.uima.annotator.dict_annot.dictionary.impl.HashMapDictionary;
 import org.apache.uima.annotator.dict_annot.dictionary.impl.HashMapDictionaryBuilder;

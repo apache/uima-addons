@@ -22,11 +22,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.apache.incubator.uima.DictionaryDocument;
-import org.apache.incubator.uima.EntriesDocument;
-import org.apache.incubator.uima.EntryDocument;
-import org.apache.incubator.uima.TypeCollectionDocument;
-import org.apache.incubator.uima.DictionaryMetaDataDocument.DictionaryMetaData;
+import org.apache.uima.DictionaryDocument;
+import org.apache.uima.EntriesDocument;
+import org.apache.uima.EntryDocument;
+import org.apache.uima.TypeCollectionDocument;
+import org.apache.uima.DictionaryMetaDataDocument.DictionaryMetaData;
 import org.apache.uima.annotator.dict_annot.dictionary.Dictionary;
 import org.apache.uima.annotator.dict_annot.dictionary.DictionaryBuilder;
 import org.apache.uima.annotator.dict_annot.dictionary.DictionaryFileParser;
