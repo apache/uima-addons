@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://uima.apache.org"
-            xmlns="http://uima.apache.org" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://incubator.apache.org/uima"
+            xmlns="http://incubator.apache.org/uima" elementFormDefault="qualified">
 	<!--
 		* Licensed to the Apache Software Foundation (ASF) under one
 		* or more contributor license agreements.  See the NOTICE file
