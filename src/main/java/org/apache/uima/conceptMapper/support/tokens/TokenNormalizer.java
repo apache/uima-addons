@@ -21,7 +21,7 @@ package org.apache.uima.conceptMapper.support.tokens;
 
 import java.util.regex.Pattern;
 
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.annotator.AnnotatorContextException;
 import org.apache.uima.conceptMapper.Logger;
 import org.apache.uima.conceptMapper.support.stemmer.Stemmer;
@@ -70,18 +70,18 @@ public class TokenNormalizer {
    * @param logger
    * @throws AnnotatorContextException
    */
-  public TokenNormalizer(AnnotatorContext annotatorContext, Logger logger)
+  public TokenNormalizer(UimaContext uimaContext, Logger logger)
           throws AnnotatorContextException {
     super();
-    Boolean replaceCommaWithANDObj = (Boolean) annotatorContext
+    Boolean replaceCommaWithANDObj = (Boolean) uimaContext
             .getConfigParameterValue(PARAM_REPLACE_COMMA_WITH_AND);
     boolean replaceCommaWithAND = false;
     if (replaceCommaWithANDObj != null) {
       replaceCommaWithAND = replaceCommaWithANDObj.booleanValue();
     }
-    String caseMatchParam = (String) annotatorContext.getConfigParameterValue(PARAM_CASE_MATCH);
-    String stemmerParam = (String) annotatorContext.getConfigParameterValue(PARAM_STEMMER_CLASS);
-    String stemmerDict = (String) annotatorContext.getConfigParameterValue(PARAM_STEMMER_DICT);
+    String caseMatchParam = (String) uimaContext.getConfigParameterValue(PARAM_CASE_MATCH);
+    String stemmerParam = (String) uimaContext.getConfigParameterValue(PARAM_STEMMER_CLASS);
+    String stemmerDict = (String) uimaContext.getConfigParameterValue(PARAM_STEMMER_DICT);
 
     this.replaceCommaWithAND = replaceCommaWithAND;
     this.setCaseFoldInitCap(false);

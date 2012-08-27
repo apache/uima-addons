@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
+import org.apache.uima.UimaContext;
 import org.apache.uima.conceptMapper.Logger;
 import org.apache.uima.conceptMapper.support.dictionaryResource.annotatorAdaptor.AnnotatorAdaptor;
 import org.apache.uima.conceptMapper.support.tokens.TokenFilter;
@@ -226,7 +226,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
      */
   }
 
-  public void loadDictionaryContents(AnnotatorContext aContext, Logger logger,
+  public void loadDictionaryContents(UimaContext aContext, Logger logger,
           String tokenAnnotationName, String tokenTypeFeatureName, String tokenClassFeatureName,
           String tokenizerDescriptor) throws ResourceInitializationException {
 

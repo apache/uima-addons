@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.uima.analysis_engine.annotator.AnnotatorConfigurationException;
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.annotator.AnnotatorContextException;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
@@ -125,7 +125,7 @@ public class TokenFilter {
     this.tokenAnnotationName = tokenAnnotationName;
   }
 
-  public void initConfig(AnnotatorContext annotatorContext) throws AnnotatorConfigurationException {
+  public void initConfig(UimaContext uimaContext) throws AnnotatorConfigurationException {
 
     String[] stopWordList = null;
     String[] includedTokenClassStrings = null;
@@ -134,14 +134,14 @@ public class TokenFilter {
     Integer[] excludedTokenTypeInts = null;
 
     try {
-      stopWordList = (String[]) annotatorContext.getConfigParameterValue(PARAM_STOPWORDS);
-      includedTokenClassStrings = (String[]) annotatorContext
+      stopWordList = (String[]) uimaContext.getConfigParameterValue(PARAM_STOPWORDS);
+      includedTokenClassStrings = (String[]) uimaContext
               .getConfigParameterValue(PARAM_INCLUDEDTOKENCLASSES);
-      excludedTokenClassStrings = (String[]) annotatorContext
+      excludedTokenClassStrings = (String[]) uimaContext
               .getConfigParameterValue(PARAM_EXCLUDEDTOKENCLASSES);
-      includedTokenTypeInts = (Integer[]) annotatorContext
+      includedTokenTypeInts = (Integer[]) uimaContext
               .getConfigParameterValue(PARAM_INCLUDEDTOKENTYPES);
-      excludedTokenTypeInts = (Integer[]) annotatorContext
+      excludedTokenTypeInts = (Integer[]) uimaContext
               .getConfigParameterValue(PARAM_EXCLUDEDTOKENTYPES);
 
       if ((includedTokenClassStrings == null) || (includedTokenClassStrings.length == 0)) {

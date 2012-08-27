@@ -22,14 +22,14 @@ package org.apache.uima.conceptMapper.support.tokenizer;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.ResultSpecification;
 import org.apache.uima.analysis_engine.annotator.AnnotatorConfigurationException;
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
-import org.apache.uima.analysis_engine.annotator.AnnotatorInitializationException;
-import org.apache.uima.analysis_engine.annotator.AnnotatorProcessException;
-import org.apache.uima.analysis_engine.annotator.JTextAnnotator_ImplBase;
+import org.apache.uima.UimaContext;
 import org.apache.uima.conceptMapper.support.stemmer.Stemmer;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 
 /**
  * Simple class to tokenize a string (similar to <code>java.util.StringTokenizer</code>), except
@@ -45,7 +45,7 @@ import org.apache.uima.jcas.JCas;
  * {@link org.apache.uima.conceptMapper.support.stemmer.Stemmer Stemmer}interface.
  * 
  */
-public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
+public class OffsetTokenizer  extends JCasAnnotator_ImplBase {
 
   /** The input text string being tokenized */
   private String text;
@@ -337,22 +337,21 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
    * Initialize the annotator, which includes compilation of regular expressions, fetching
    * configuration parameters from XML descriptor file, and loading of the dictionary file.
    */
-  public void initialize(AnnotatorContext annotatorContext)
-          throws AnnotatorInitializationException, AnnotatorConfigurationException {
-    super.initialize(annotatorContext);
+  public void initialize(UimaContext uimaContext) throws ResourceInitializationException {
+    super.initialize(uimaContext);
     try {
       //logger = new Logger("TextTokenizer", annotatorContext.getLogger());
 
-      String[] configParameterNames = annotatorContext.getConfigParameterNames();
+      String[] configParameterNames = uimaContext.getConfigParameterNames();
       Object[] configParameters = new Object[configParameterNames.length];
       for (int i = 0; i < configParameters.length; i++) {
-        configParameters[i] = annotatorContext.getConfigParameterValue(configParameterNames[i]);
+        configParameters[i] = uimaContext.getConfigParameterValue(configParameterNames[i]);
       }
 
       processAllConfigurationParameters(configParameterNames, configParameters);
       initTokenizer(configParameterNames, configParameters);
     } catch (Exception e) {
-      throw new AnnotatorConfigurationException(e);
+      throw new ResourceInitializationException(e);
     }
 
   }
@@ -380,12 +379,12 @@ public class OffsetTokenizer  extends JTextAnnotator_ImplBase {
    * 
    * @see org.apache.uima.analysis_engine.annotator.JTextAnnotator#process(JCas, ResultSpecification)
    */
-  public void process(JCas jcas, ResultSpecification aResultSpec) throws AnnotatorProcessException {
+  public void process(JCas jcas) throws AnalysisEngineProcessException  {
 
     try {
       doTokenization(jcas, jcas.getDocumentText(), getDelim());
     } catch (Exception e) {
-      throw new AnnotatorProcessException(e);
+      throw new AnalysisEngineProcessException(e);
     }
   }
 

@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
+import org.apache.uima.UimaContext;
 import org.apache.uima.conceptMapper.Logger;
 import org.apache.uima.resource.DataResource;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -121,7 +121,7 @@ public interface DictionaryResource {
    * @param tokenizerDescriptor
    * @throws ResourceInitializationException
    */
-  public void loadDictionaryContents(AnnotatorContext context, Logger logger,
+  public void loadDictionaryContents(UimaContext context, Logger logger,
           String tokenAnnotationName, String tokenTypeFeatureName, String tokenClassFeatureName,
           String tokenizerDescriptor) throws ResourceInitializationException;
 
