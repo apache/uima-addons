@@ -28,13 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.ResultSpecification;
 import org.apache.uima.analysis_engine.annotator.AnnotatorConfigurationException;
 import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.annotator.AnnotatorInitializationException;
-import org.apache.uima.analysis_engine.annotator.AnnotatorProcessException;
-import org.apache.uima.analysis_engine.annotator.Annotator_ImplBase;
-import org.apache.uima.analysis_engine.annotator.TextAnnotator;
+import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Feature;
@@ -53,8 +53,9 @@ import org.apache.uima.conceptMapper.support.tokens.UnknownTypeException;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
+import org.apache.uima.resource.ResourceInitializationException;
 
-public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
+public class ConceptMapper extends JCasAnnotator_ImplBase {
 
   /** Configuration parameter key/label for the dictionary file to load */
   public static final String PARAM_DICT_FILE = "DictionaryFile";
@@ -224,6 +225,8 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
 
   private JCas jcas;
 
+  private TypeSystem mLastTypeSystem;
+
   private static final String PARAM_TOKENIZERDESCRIPTOR = "TokenizerDescriptorPath";
 
   private static final String UNKNOWN_VALUE = "unknown";
@@ -247,14 +250,13 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
    * Initialize the annotator, which includes compilation of regular expressions, fetching
    * configuration parameters from XML descriptor file, and loading of the dictionary file.
    */
-  public void initialize(AnnotatorContext annotatorContext) throws AnnotatorConfigurationException,
-          AnnotatorInitializationException {
-    super.initialize(annotatorContext);
+  public void initialize(UimaContext uimaContext) throws ResourceInitializationException {
+    super.initialize(uimaContext);
 
     // Process configration parameters
     try {
       // logger = new Logger (annotatorContext.getLogger ());
-      logger = new Logger("ConceptMapper", annotatorContext.getLogger());
+      logger = new Logger("ConceptMapper", uimaContext.getLogger());
       // tokenDebugFile = new FileWriter("/tmp/cm/tokens."+
       // Calendar.getInstance ().getTimeInMillis () + ".txt");
       // potentialMatchDebugFile = new FileWriter("/tmp/cm/pm."+
@@ -264,51 +266,51 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       // FileWriter dictDebugFile = new FileWriter("/tmp/cm/dict."+
       // Calendar.getInstance ().getTimeInMillis () + ".txt");
 
-      tokenAnnotationName = (String) annotatorContext
+      tokenAnnotationName = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENANNOTATION);
-      String tokenizerDescriptor = (String) annotatorContext
+      String tokenizerDescriptor = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENIZERDESCRIPTOR);
 
-      tokenClassFeatureName = (String) annotatorContext
+      tokenClassFeatureName = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENCLASSFEATURENAME);
 
-      tokenTypeFeatureName = (String) annotatorContext
+      tokenTypeFeatureName = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENTYPEFEATURENAME);
 
-      resultAnnotationName = (String) annotatorContext
+      resultAnnotationName = (String) uimaContext
               .getConfigParameterValue(PARAM_ANNOTATION_NAME);
-      resultEnclosingSpanName = (String) annotatorContext
+      resultEnclosingSpanName = (String) uimaContext
               .getConfigParameterValue(PARAM_ENCLOSINGSPAN);
 
-      resultMatchedTextFeatureName = (String) annotatorContext
+      resultMatchedTextFeatureName = (String) uimaContext
               .getConfigParameterValue(PARAM_MATCHEDFEATURE);
 
-      featureNames = (String[]) annotatorContext.getConfigParameterValue(PARAM_FEATURE_LIST);
-      attributeNames = (String[]) annotatorContext.getConfigParameterValue(PARAM_ATTRIBUTE_LIST);
+      featureNames = (String[]) uimaContext.getConfigParameterValue(PARAM_FEATURE_LIST);
+      attributeNames = (String[]) uimaContext.getConfigParameterValue(PARAM_ATTRIBUTE_LIST);
 
-      spanFeatureStructureName = (String) annotatorContext
+      spanFeatureStructureName = (String) uimaContext
               .getConfigParameterValue(PARAM_DATA_BLOCK_FS);
 
-      tokenTextFeatureName = (String) annotatorContext
+      tokenTextFeatureName = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENTEXTFEATURENAME);
-      tokenClassWriteBackFeatureNames = (String[]) annotatorContext
+      tokenClassWriteBackFeatureNames = (String[]) uimaContext
               .getConfigParameterValue(PARAM_TOKENCLASSWRITEBACKFEATURENAMES);
 
-      tokenAnnotationName = (String) annotatorContext
+      tokenAnnotationName = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENANNOTATION);
 
-      matchedTokensFeatureName = (String) annotatorContext
+      matchedTokensFeatureName = (String) uimaContext
               .getConfigParameterValue(PARAM_MATCHEDTOKENSFEATURENAME);
 
-      Boolean sortElementsParam = (Boolean) annotatorContext
+      Boolean sortElementsParam = (Boolean) uimaContext
               .getConfigParameterValue(PARAM_ORDERINDEPENDENTLOOKUP);
       sortElements = (sortElementsParam == null) ? false : sortElementsParam.booleanValue();
 
-      searchStrategy = detectSearchStrategy((String) annotatorContext
+      searchStrategy = detectSearchStrategy((String) uimaContext
               .getConfigParameterValue(PARAM_SEARCHSTRATEGY));
       // System.err.println("SEARCH STRATEGY = " + searchStrategy);
 
-      Boolean findAllMatchesParam = (Boolean) annotatorContext
+      Boolean findAllMatchesParam = (Boolean) uimaContext
               .getConfigParameterValue(PARAM_FINDALLMATCHES);
       findAllMatches = (findAllMatchesParam == null) ? false : findAllMatchesParam.booleanValue();
 
@@ -327,15 +329,15 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       // to feature \"" + featureNames [i] + "\"");
       // }
 
-      tokenNormalizer = new TokenNormalizer(annotatorContext, logger);
+      tokenNormalizer = new TokenNormalizer(uimaContext, logger);
       tokenFilter = new TokenFilter(tokenAnnotationName, tokenTypeFeatureName,
               tokenClassFeatureName, logger);
-      tokenFilter.initConfig(annotatorContext);
+      tokenFilter.initConfig(uimaContext);
 
-      dict = (DictionaryResource) annotatorContext.getResourceObject(PARAM_DICT_FILE);
+      dict = (DictionaryResource) uimaContext.getResourceObject(PARAM_DICT_FILE);
       if (!dict.isLoaded()) {
         // logger.logInfo("dictionary not yet loaded");
-        dict.loadDictionaryContents(annotatorContext, logger, tokenAnnotationName,
+        dict.loadDictionaryContents(uimaContext, logger, tokenAnnotationName,
                 tokenTypeFeatureName, tokenClassFeatureName, tokenizerDescriptor);
         // logger.logInfo( "now is loaded: "+dict.toString() );
         // System.err.println ("NEW DICTIONARY:\n" + dict.toString());
@@ -343,7 +345,7 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       }
 
     } catch (Exception e) {
-      throw new AnnotatorConfigurationException(e);
+      throw new ResourceInitializationException(e);
     }
   }
 
@@ -487,13 +489,23 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
    * 
    * @see org.apache.uima.analysis_engine.annotator.TextAnnotator#process(CAS,ResultSpecification)
    */
-  public void process(CAS tcas, ResultSpecification aResultSpec) throws AnnotatorProcessException {
+  public void process(JCas jCas) throws AnalysisEngineProcessException {
     // System.err.println ("ConceptMapper.process() begin");
+
+    CAS tcas = jCas.getCas();
 
     AnnotationFS token;
 
     try {
-      setJCas(tcas.getJCas()); // this is needed to get around an issue
+      //explicitly initialize the type system
+      if(mLastTypeSystem == null){
+        mLastTypeSystem = jCas.getTypeSystem();
+        typeSystemInit(mLastTypeSystem);
+      } else {
+        checkTypeSystemChange(tcas);
+      }
+
+      setJCas(jCas); // this is needed to get around an issue
       // where UIMA crashes if no JCas is
       // referenced
       // logger.setupDocument (getJCas ());
@@ -559,11 +571,30 @@ public class ConceptMapper extends Annotator_ImplBase implements TextAnnotator {
       // System.out.println("Number of annotations in CAS: " +
       // (tcas.getAnnotationIndex().size() - 1));
     } catch (Exception e) {
-      throw new AnnotatorProcessException(e);
+      throw new AnalysisEngineProcessException(e);
     }
     // System.err.println ("ConceptMapper.process() end");
   }
 
+  
+  /**
+	* Checks if the type system of the given CAS is different from the
+	* last type system this component was operating on. If it is different, 
+	* calls the typeSystemInit method on the component.
+	* @param
+	*		  CAS
+    * @throws AnnotatorInitializationException 
+    * @throws AnnotatorConfigurationException 
+	*/
+  private void checkTypeSystemChange(CAS aCAS) throws
+	AnalysisEngineProcessException, AnnotatorConfigurationException, AnnotatorInitializationException {
+	TypeSystem typeSystem = aCAS.getTypeSystem();
+	if (typeSystem != mLastTypeSystem) {
+	  typeSystemInit(typeSystem);
+	  mLastTypeSystem = typeSystem;
+	}
+  }
+  
   private void setJCas(JCas jcas) {
     this.jcas = jcas;
   }

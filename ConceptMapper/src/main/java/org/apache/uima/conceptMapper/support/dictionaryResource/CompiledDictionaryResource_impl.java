@@ -23,7 +23,7 @@ import java.io.ObjectInputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
+import org.apache.uima.UimaContext;
 import org.apache.uima.conceptMapper.Logger;
 import org.apache.uima.resource.DataResource;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -70,7 +70,7 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
     }
   }
 
-  public void loadDictionaryContents(AnnotatorContext context, Logger logger,
+  public void loadDictionaryContents(UimaContext context, Logger logger,
           String tokenAnnotationName, String tokenTypeFeatureName, String tokenClassFeatureName,
           String tokenizerDescriptor) throws ResourceInitializationException {
     // nothing to do
