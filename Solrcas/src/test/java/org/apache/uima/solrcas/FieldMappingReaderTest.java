@@ -31,24 +31,20 @@ import static org.junit.Assert.*;
 public class FieldMappingReaderTest {
 
   @Test
-  public void testConfReader() {
-    try {
-      FieldMappingReader fieldMappingReader = new FieldMappingReader();
-      SolrMappingConfiguration mapping = fieldMappingReader.getConf(this.getClass().
-              getResourceAsStream("/solrmapping.xml"));
-      assertNotNull(mapping);
-      
-      Map<String, Map<String, String>> featureStructuresMapping = mapping.getFeatureStructuresMapping();
-      assertTrue(featureStructuresMapping != null);
-      assertTrue(featureStructuresMapping.size()>0);
-      for (String type : featureStructuresMapping.keySet()) {
-        assertTrue(featureStructuresMapping.get(type)!=null && featureStructuresMapping.get(type).size()>0);
-      }
-      
-      assertEquals("language", mapping.getDocumentLanguageMapping());
-      assertEquals("text", mapping.getDocumentTextMapping());
-    } catch (Exception e) {
-      fail(e.getLocalizedMessage());
+  public void testConfReader() throws Exception {
+    FieldMappingReader fieldMappingReader = new FieldMappingReader();
+    SolrMappingConfiguration mapping = fieldMappingReader.getConf(this.getClass().
+          getResourceAsStream("/solrmapping.xml"));
+    assertNotNull(mapping);
+
+    Map<String, Map<String, String>> featureStructuresMapping = mapping.getFeatureStructuresMapping();
+    assertNotNull(featureStructuresMapping);
+    assertTrue(featureStructuresMapping.size() > 0);
+    for (String type : featureStructuresMapping.keySet()) {
+      assertTrue(featureStructuresMapping.get(type) != null && featureStructuresMapping.get(type).size() > 0);
     }
+
+    assertEquals("language", mapping.getDocumentLanguageMapping());
+    assertEquals("text", mapping.getDocumentTextMapping());
   }
 }

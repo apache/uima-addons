@@ -43,6 +43,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.Collection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -52,48 +54,41 @@ import static org.junit.Assert.fail;
 public class SolrCasConsumerIntegrationTest {
 
   @Test
-  public void testCASConsumer() {
-    try {
-      /* create Solrcas tester */
-      AnnotatorTester annotatorTester = new AnnotatorTester("src/test/resources/TestSolrcasAE.xml");
+  public void testCASConsumer() throws Exception {
+    /* create Solrcas tester */
+    AnnotatorTester annotatorTester = new AnnotatorTester("src/test/resources/TestSolrcasAE.xml");
 
-      /* create a mock CAS */
-      CAS cas = getCAS();
+    /* create a mock CAS */
+    CAS cas = getCAS();
 
-      cas.setDocumentText("Francesco Totti is the best football player");
-      cas.setDocumentLanguage("en");
+    cas.setDocumentText("Francesco Totti is the best football player");
+    cas.setDocumentLanguage("en");
+    AnnotationFS annotation = cas.createAnnotation(cas.getAnnotationType(), 0, 9);
+    cas.addFsToIndexes(annotation);
 
-      AnnotationFS annotation = cas.createAnnotation(cas.getAnnotationType(), 0, 9);
-      cas.addFsToIndexes(annotation);
+    /* execute Solrcas on the created CAS*/
+    annotatorTester.performTest(cas);
 
-      /* execute Solrcas on the created CAS*/
-      annotatorTester.performTest(cas);
+    /* create a Solr instance to check document has been indexed as expected */
+    URL solrURL = this.getClass().getResource("/org/apache/uima/solrcas/");
+    System.setProperty("solr.solr.home", new File(solrURL.toURI()).getAbsolutePath());
+    CoreContainer.Initializer initializer = new CoreContainer.Initializer();
+    CoreContainer coreContainer = initializer.initialize();
+    SolrServer solrServer = new EmbeddedSolrServer(coreContainer, "");
 
-      /* create a Solr instance to check document has been indexed as expected */
-      URL solrURL = this.getClass().getResource("/org/apache/uima/solrcas/");
-      System.setProperty("solr.solr.home", new File(solrURL.toURI()).getAbsolutePath());
-      CoreContainer.Initializer initializer = new CoreContainer.Initializer();
-      CoreContainer coreContainer = initializer.initialize();
-      SolrServer solrServer = new EmbeddedSolrServer(coreContainer, "");
+    ModifiableSolrParams solrParams = new ModifiableSolrParams();
+    solrParams.add("q", "annotation:Francesco");
+    QueryResponse queryResponse = solrServer.query(solrParams);
 
-      ModifiableSolrParams solrParams = new ModifiableSolrParams();
-      solrParams.add("q", "annotation:Francesco");
-      QueryResponse queryResponse = solrServer.query(solrParams);
-
-      /* check the result contains only one doc with 2 annotations of the mock CAS */
-      assertTrue(queryResponse != null);
-      SolrDocumentList results = queryResponse.getResults();
-      assertTrue(results.getNumFound() == 1);
-      SolrDocument doc = results.get(0);
-      Collection<Object> annotationValues = doc.getFieldValues("annotation");
-      assertTrue(annotationValues.size() == 2);
-      assertTrue(annotationValues.contains("Francesco"));
-      assertTrue(annotationValues.contains("Francesco Totti is the best football player"));
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.getLocalizedMessage());
-    }
+    /* check the result contains only one doc with 2 annotations of the mock CAS */
+    assertNotNull(queryResponse);
+    SolrDocumentList results = queryResponse.getResults();
+    assertEquals(1, results.getNumFound());
+    SolrDocument doc = results.get(0);
+    Collection<Object> annotationValues = doc.getFieldValues("annotation");
+    assertEquals(2, annotationValues.size());
+    assertTrue(annotationValues.contains("Francesco"));
+    assertTrue(annotationValues.contains("Francesco Totti is the best football player"));
   }
 
   private CAS getCAS() throws ResourceInitializationException, CASException {

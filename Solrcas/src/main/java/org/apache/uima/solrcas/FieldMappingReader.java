@@ -93,11 +93,20 @@ public class FieldMappingReader {
         fieldMapping = new HashMap<String, Map<String, String>>();
       } else if (TYPE.equals(name)) {
         type = attributes.getValue("name");
-        mapping = new HashMap<String, String>();
+        if (fieldMapping.containsKey(type)) {
+          mapping = fieldMapping.get(type);
+        } else {
+          mapping = new HashMap<String, String>();
+        }
       } else if (MAP.equals(name)) {
         String feature = attributes.getValue("feature");
         String field = attributes.getValue("field");
-        mapping.put(feature, field);
+        if (mapping.containsKey(feature)) {
+          throw new SAXException(new StringBuilder("Ambiguous feature definition for Feature '").
+                  append(feature).append("' in Type '").append(type).append("'").toString());
+        } else {
+          mapping.put(feature, field);
+        }
       } else if (LANGUAGE.equals(name)) {
         inLang = true;
       } else if (TEXT.equals(name)) {
