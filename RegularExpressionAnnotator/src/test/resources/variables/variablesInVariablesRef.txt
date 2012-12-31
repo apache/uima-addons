@@ -1,0 +1,1 @@
+TestAnnot(0,49): Monday regex with variables in variables Thursday
