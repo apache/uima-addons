@@ -21,6 +21,7 @@ package org.apache.uima.annotator.regex.impl;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Matcher;
 
 import org.apache.incubator.uima.regex.AnnotationDocument;
 import org.apache.incubator.uima.regex.ConceptDocument;
@@ -39,8 +40,8 @@ import org.apache.uima.annotator.regex.ConceptFileParser;
 import org.apache.uima.annotator.regex.Feature;
 import org.apache.uima.annotator.regex.FilterFeature;
 import org.apache.uima.annotator.regex.Position;
-import org.apache.uima.annotator.regex.Rule;
 import org.apache.uima.annotator.regex.RegexVariables;
+import org.apache.uima.annotator.regex.Rule;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.xmlbeans.XmlError;
 import org.apache.xmlbeans.XmlOptions;
@@ -100,7 +101,30 @@ public class ConceptFileParser_impl implements ConceptFileParser {
          if (varArray.length > 0) {
             variables = new RegexVariables_impl();
             for (int i = 0; i < varArray.length; i++) {
-               String value = varArray[i].getValue().replaceAll("\\\\", "\\\\\\\\");
+               String value = varArray[i].getValue();
+
+               // replace (existing) variables in variables
+               Matcher matcher = RegexVariables.VARIABLE_REGEX_PATTERN.matcher(value);
+               int pos = 0;
+               while (matcher.find(pos)) {
+                  // replace variable value
+                  String varName = matcher.group().substring(3,
+                        matcher.group().length() - 1);
+                  String substitutionValue = variables.getVariableValue(varName);
+                  if (substitutionValue == null) {
+                     throw new ResourceInitializationException(
+                           ResourceInitializationException.ERROR_INITIALIZING_FROM_DESCRIPTOR,
+                           new String[] {
+                                 varName,
+                                 conceptFilePathName
+                                       + ", referencing a variable that has not been defined " });
+                  }
+                  value = value.replaceAll(RegexVariables.VARIABLE_REGEX_BEGIN + varName
+                        + "}", substitutionValue);
+
+                  pos = matcher.end();// current end match position
+               }
+
                variables.addVariable(varArray[i].getName(), value);
             }
          }

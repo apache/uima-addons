@@ -24,6 +24,8 @@
 		<variable name="month1" value="January"/>
 		<variable name="Last_Day" value="Sunday"/>
 		<variable name="escaping" value="Jan\."/>
+		<variable name="endSeparator" value="end($|\.)"/>
+		
 	</variables>
 	
     <concept name="Variables1">
@@ -53,6 +55,18 @@
     <concept name="Variables3">
     	<rules>
 			<rule regEx="\v{escaping}" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
+	    </rules>
+	    <createAnnotations>	
+			<annotation id="testannot1" type="org.apache.uima.TestAnnot">
+				<begin group="0"/>
+				<end group="0"/>
+		 	</annotation>
+	 	</createAnnotations>
+    </concept>
+
+    <concept name="Variables4">
+    	<rules>
+			<rule regEx="this is the \v{endSeparator} my only friend, the \v{endSeparator}" matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation"/>
 	    </rules>
 	    <createAnnotations>	
 			<annotation id="testannot1" type="org.apache.uima.TestAnnot">

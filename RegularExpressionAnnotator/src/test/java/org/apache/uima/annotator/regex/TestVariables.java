@@ -39,7 +39,7 @@ public class TestVariables extends TestCase {
     * 
     * @throws Exception
     */
-   public void testVariablesConept1() throws Exception {
+   public void testVariablesConcept1() throws Exception {
 
       // create annotation tester with the regex annotator specifier
       AnnotatorTester annotTester = new AnnotatorTester(JUnitExtension
@@ -63,7 +63,7 @@ public class TestVariables extends TestCase {
     * 
     * @throws Exception
     */
-   public void testVariablesConept2() throws Exception {
+   public void testVariablesConcept2() throws Exception {
 
       // create annotation tester with the regex annotator specifier
       AnnotatorTester annotTester = new AnnotatorTester(JUnitExtension
@@ -83,11 +83,11 @@ public class TestVariables extends TestCase {
    }
 
    /**
-    * Test regex variable replacement for variable concept 3
+    * Test regex variable replacement for variable concept 3. Tests escaping
     * 
     * @throws Exception
     */
-   public void testVariablesConept3() throws Exception {
+   public void testVariablesConcept3() throws Exception {
 
       // create annotation tester with the regex annotator specifier
       AnnotatorTester annotTester = new AnnotatorTester(JUnitExtension
@@ -105,6 +105,53 @@ public class TestVariables extends TestCase {
             .getFile("variables/variablesConcept3Ref.txt"), outputFile);
    }
 
+   /**
+    * Test regex variable replacement for variable concept 3. Tests dollar signs
+    * 
+    * @throws Exception
+    */
+   public void testVariablesConcept4() throws Exception {
+      
+      // create annotation tester with the regex annotator specifier
+      AnnotatorTester annotTester = new AnnotatorTester(JUnitExtension
+            .getFile("variables/RegExAnnotVariables.xml"));
+      
+      CAS cas = annotTester.performTest("this is the end. my only friend, the end", "en");
+      
+      // define result interested in
+      String[] tofs = { "org.apache.uima.TestAnnot" };
+      
+      // compare results
+      File outputFile = new File(JUnitExtension.getFile("variables"),
+            "variablesConcept4_testoutput.txt");
+      AnnotatorTester.checkResult(cas, tofs, JUnitExtension
+            .getFile("variables/variablesConcept4Ref.txt"), outputFile);
+   }
+
+   /**
+    * Test regex variable in variable replacement
+    * 
+    * @throws Exception
+    */
+   public void testVariablesInVariables() throws Exception {
+
+      // create annotation tester with the regex annotator specifier
+      AnnotatorTester annotTester = new AnnotatorTester(
+            JUnitExtension.getFile("variables/RegExAnnotVariablesInVariables.xml"));
+
+      CAS cas = annotTester.performTest("Monday regex with variables in variables Thursday",
+            "en");
+
+      // define result interested in
+      String[] tofs = { "org.apache.uima.TestAnnot" };
+
+      // compare results
+      File outputFile = new File(JUnitExtension.getFile("variables"),
+            "variablesInVariables_testoutput.txt");
+      AnnotatorTester.checkResult(cas, tofs,
+            JUnitExtension.getFile("variables/variablesInVariablesRef.txt"), outputFile);
+   }  
+   
    /**
     * Test regex variable replacement for variable concept 2
     * 

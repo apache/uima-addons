@@ -367,8 +367,8 @@ public class Rule_impl implements Rule {
                // create variable expression that must be replaced
                String variablePattern = RegexVariables.VARIABLE_REGEX_BEGIN
                      + variableName + RegexVariables.VARIABLE_REGEX_END;
-               // replace variable with the variable value
-               this.regex = this.regex.replaceAll(variablePattern, varValue);
+               // replace variable with the variable value. quote for . and $
+               this.regex = this.regex.replaceAll(variablePattern, Matcher.quoteReplacement(varValue));
             } else {
                throw new RegexAnnotatorConfigException(
                      "regex_annotator_error_variable_not_found", new Object[] {
