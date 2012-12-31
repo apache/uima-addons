@@ -69,11 +69,8 @@ public class TIKAWrapper {
 		}
 		
 		// use custom parser or rely on autodetect
-		Parser parser = null;
+		Parser parser = config.getParser();
 		  
-		if (mime!=null  && mime.equals("")==false)
-			parser = config.getParser(mime);
-          
 		// it that does not work
         if (parser == null) {parser = new AutoDetectParser(config);}
 

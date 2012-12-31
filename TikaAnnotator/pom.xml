@@ -76,12 +76,12 @@ element, and just changing the following two properties -->
     <dependency>
       <groupId>org.apache.tika</groupId>
       <artifactId>tika-core</artifactId>
-      <version>0.7</version>
+      <version>0.8</version>
     </dependency>
     <dependency>
       <groupId>org.apache.tika</groupId>
       <artifactId>tika-parsers</artifactId>
-      <version>0.7</version>
+      <version>0.8</version>
       <exclusions>
         <exclusion>
           <groupId>pdfbox</groupId>
