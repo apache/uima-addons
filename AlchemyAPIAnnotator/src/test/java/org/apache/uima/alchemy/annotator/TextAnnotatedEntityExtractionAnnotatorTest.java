@@ -40,19 +40,16 @@ import static org.junit.Assert.fail;
 @Ignore
 public class TextAnnotatedEntityExtractionAnnotatorTest {
 
-  public void annotatorIntegrationTest() {
+  private static final String YOUR_KEY_HERE = "api-key";
+
+  public void annotatorIntegrationTest() throws Exception{
     String doc = "Eight US soldiers die in attacks in south Afghanistan [this quad parentesis], making October the deadliest month for the US in the war there";
     String xmlPath = "desc/TextAnnotatedEntityExtractionAEDescriptor.xml";
-    try {
-      Map<String,Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey","04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(xmlPath,parameterSettings), doc);
-      AnnotationIndex<Annotation> annotations = resultingCAS.getAnnotationIndex(AlchemyAnnotation.type);
-      assertTrue(annotations.size()>0);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+    Map<String,Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(xmlPath,parameterSettings), doc);
+    AnnotationIndex<Annotation> annotations = resultingCAS.getAnnotationIndex(AlchemyAnnotation.type);
+    assertTrue(annotations.size()>0);
   }
 
 }

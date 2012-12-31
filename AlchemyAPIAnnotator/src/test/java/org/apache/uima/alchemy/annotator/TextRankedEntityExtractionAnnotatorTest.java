@@ -25,6 +25,7 @@ import org.apache.uima.alchemy.ts.entity.TelevisionStation;
 import org.apache.uima.alchemy.utils.TestUtils;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.util.FileUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -42,51 +43,38 @@ public class TextRankedEntityExtractionAnnotatorTest {
 
   private static final String XML_PATH = "desc/TextRankedEntityExtractionAEDescriptor.xml";
 
+  private static final String YOUR_KEY_HERE = "api-key";
+
   @SuppressWarnings("unchecked")
-  @Test
-  public void annotatorIntegrationTest() {
-    try {
-      Map<String, Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey", "04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      String documentText = FileUtils.file2String(new File(DOCPATH));
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH, parameterSettings),
-              documentText);
-      List<TelevisionStation> entities = (List<TelevisionStation>) TestUtils.getAllFSofType(
-              TelevisionStation.type, resultingCAS);
-      assertTrue(entities != null);
-      assertTrue(entities.size() == 1);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  @Ignore
+  public void annotatorIntegrationTest() throws Exception {
+    Map<String, Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    String documentText = FileUtils.file2String(new File(DOCPATH));
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH, parameterSettings),
+            documentText);
+    List<TelevisionStation> entities = (List<TelevisionStation>) TestUtils.getAllFSofType(
+            TelevisionStation.type, resultingCAS);
+    assertTrue(entities != null);
+    assertTrue(entities.size() == 1);
   }
 
   @SuppressWarnings("unchecked")
   @Test
-  public void mockedAnnotatorTest() {
-    try {
-      String mockedAnnotatorName = MockedTextRankedEntityAnnotator.class.getName();
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,
-              mockedAnnotatorName), DOC);
-      List<Country> entities = (List<Country>) TestUtils.getAllFSofType(Country.type, resultingCAS);
-      assertTrue(entities != null);
-      assertTrue(entities.size() == 1);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  public void mockedAnnotatorTest() throws Exception {
+    String mockedAnnotatorName = MockedTextRankedEntityAnnotator.class.getName();
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,
+            mockedAnnotatorName), DOC);
+    List<Country> entities = (List<Country>) TestUtils.getAllFSofType(Country.type, resultingCAS);
+    assertTrue(entities != null);
+    assertTrue(entities.size() == 1);
   }
 
   @Test
-  public void mockedNotSyncAnnotatorTest() {
-    try {
-      String mockedAnnotatorName = MockedNotSyncTextRankedEntityAnnotator.class.getName();
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,
-              mockedAnnotatorName), DOC);
-      assertTrue(resultingCAS != null);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  public void mockedNotSyncAnnotatorTest() throws Exception {
+    String mockedAnnotatorName = MockedNotSyncTextRankedEntityAnnotator.class.getName();
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,
+            mockedAnnotatorName), DOC);
+    assertTrue(resultingCAS != null);
   }
 }

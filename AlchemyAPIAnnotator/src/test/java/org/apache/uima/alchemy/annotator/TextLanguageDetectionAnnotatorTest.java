@@ -22,6 +22,7 @@ import org.apache.uima.alchemy.annotator.mocked.MockedTextLanguageDetectionAnnot
 import org.apache.uima.alchemy.ts.language.LanguageFS;
 import org.apache.uima.alchemy.utils.TestUtils;
 import org.apache.uima.jcas.JCas;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -34,37 +35,27 @@ import static org.junit.Assert.fail;
 public class TextLanguageDetectionAnnotatorTest {
   private static final String DOC = "Eight US soldiers die in attacks in south Afghanistan, making October the deadliest month for the US in the war there";
   private static final String XML_PATH = "desc/TextLanguageDetectionAEDescriptor.xml";
+  private static final String YOUR_KEY_HERE = "api-key";
 
   @SuppressWarnings("unchecked")
-  @Test
-  public void annotatorIntegrationTest() {
-    try {
-      Map<String,Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey","04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH,parameterSettings), DOC);
-      List<LanguageFS> language = (List<LanguageFS>) TestUtils.getAllFSofType(LanguageFS.type, resultingCAS);
-      assertTrue(language!=null);
-      assertTrue(language.size()==1);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  @Ignore
+  public void annotatorIntegrationTest() throws Exception {
+    Map<String,Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH,parameterSettings), DOC);
+    List<LanguageFS> language = (List<LanguageFS>) TestUtils.getAllFSofType(LanguageFS.type, resultingCAS);
+    assertTrue(language != null);
+    assertTrue(language.size() == 1);
   }
 
   @SuppressWarnings("unchecked")
   @Test
-  public void mockedAnnotatorTest() {
-    try {
-      String mockedAnnotatorName = MockedTextLanguageDetectionAnnotator.class.getName();
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,mockedAnnotatorName), DOC);
-      List<LanguageFS> language = (List<LanguageFS>) TestUtils.getAllFSofType(LanguageFS.type, resultingCAS);
-      assertTrue(language!=null);
-      assertTrue(language.size()==1);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  public void mockedAnnotatorTest() throws Exception {
+    String mockedAnnotatorName = MockedTextLanguageDetectionAnnotator.class.getName();
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,mockedAnnotatorName), DOC);
+    List<LanguageFS> language = (List<LanguageFS>) TestUtils.getAllFSofType(LanguageFS.type, resultingCAS);
+    assertTrue(language != null);
+    assertTrue(language.size() == 1);
   }
 
 }

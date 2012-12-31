@@ -31,6 +31,7 @@ import org.apache.uima.alchemy.ts.concept.ConceptFS;
 import org.apache.uima.alchemy.utils.TestUtils;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.util.FileUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TextConceptTaggingAnnotatorTest {
@@ -40,39 +41,31 @@ public class TextConceptTaggingAnnotatorTest {
 
   private static final String XML_PATH = "desc/TextConceptTaggingAEDescriptor.xml";
 
+  private static final String YOUR_KEY_HERE = "api-key";
+
   @SuppressWarnings("unchecked")
-  @Test
-  public void annotatorIntegrationTest() {
-    try {
-      Map<String, Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey", "04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      String documentText = FileUtils.file2String(new File(DOCPATH));
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH, parameterSettings),
-              documentText);
-      List<ConceptFS> concepts = (List<ConceptFS>) TestUtils.getAllFSofType(ConceptFS.type,
-              resultingCAS);
-      assertTrue(concepts != null);
-      assertTrue(concepts.size() == 8);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  @Ignore
+  public void annotatorIntegrationTest() throws Exception {
+    Map<String, Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    String documentText = FileUtils.file2String(new File(DOCPATH));
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH, parameterSettings),
+            documentText);
+    List<ConceptFS> concepts = (List<ConceptFS>) TestUtils.getAllFSofType(ConceptFS.type,
+            resultingCAS);
+    assertTrue(concepts != null);
+    assertTrue(concepts.size() == 8);
   }
 
   @SuppressWarnings("unchecked")
   @Test
-  public void mockedAnnotatorTest() {
-    try {
-      String mockedAnnotatorName = MockedTextConceptTaggingAnnotator.class.getName();
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,
-              mockedAnnotatorName), DOC);
-      List<ConceptFS> concepts = (List<ConceptFS>) TestUtils.getAllFSofType(ConceptFS.type,
-              resultingCAS);
-      assertTrue(concepts != null);
-      assertTrue(concepts.size() == 1);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  public void mockedAnnotatorTest() throws Exception {
+    String mockedAnnotatorName = MockedTextConceptTaggingAnnotator.class.getName();
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,
+            mockedAnnotatorName), DOC);
+    List<ConceptFS> concepts = (List<ConceptFS>) TestUtils.getAllFSofType(ConceptFS.type,
+            resultingCAS);
+    assertTrue(concepts != null);
+    assertTrue(concepts.size() == 1);
   }
 }

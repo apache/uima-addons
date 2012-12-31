@@ -40,14 +40,9 @@ public class SimpleTest {
    * test reconfiguration of an existing AE
    */
   @Test
-  public void reconfigureTest() {
-    try {
-      AnalysisEngine ae = TestUtils.getAE("desc/TextCategorizationAEDescriptor.xml");
-      ae.reconfigure();
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.getLocalizedMessage());
-    }
+  public void reconfigureTest() throws Exception {
+    AnalysisEngine ae = TestUtils.getAE("desc/TextCategorizationAEDescriptor.xml");
+    ae.reconfigure();
   }
 
   @Test

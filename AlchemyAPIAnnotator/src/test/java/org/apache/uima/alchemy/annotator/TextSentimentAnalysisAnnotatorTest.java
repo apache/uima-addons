@@ -19,7 +19,6 @@
 package org.apache.uima.alchemy.annotator;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,35 +27,33 @@ import java.util.Map;
 import org.apache.uima.alchemy.ts.sentiment.SentimentFS;
 import org.apache.uima.alchemy.utils.TestUtils;
 import org.apache.uima.jcas.JCas;
-import org.junit.Test;
+import org.junit.Ignore;
 
 /**
  * SentimentAnalysis service test
  */
 
 public class TextSentimentAnalysisAnnotatorTest {
+
+  private static final String YOUR_KEY_HERE = "api-key";
+
   @SuppressWarnings("unchecked")
-  @Test
-  public void annotatorIntegrationTest() {
+  @Ignore
+  public void annotatorIntegrationTest() throws Exception {
     String doc = "The BBC's Jim Muir says the Tunisians have been struggling to cope with the deluge of refugees";
     String xmlPath = "desc/TextSentimentAnalysisAEDescriptor.xml";
-    try {
-      Map<String, Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey", "04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      JCas sentimentJCas = TestUtils.executeAE(TestUtils.getAE(xmlPath, parameterSettings), doc);
-      List<SentimentFS> sentimentList = (List<SentimentFS>) TestUtils.getAllFSofType(
-              SentimentFS.type, sentimentJCas);
-      assertTrue(sentimentList != null);
-      assertTrue(sentimentList.size() == 1);
-      SentimentFS sentimentFS = sentimentList.get(0);
-      assertTrue(sentimentFS != null);
-      assertTrue(sentimentFS.getSentimentType() != null
-              && "negative".equals(sentimentFS.getSentimentType()));
-      assertTrue(sentimentFS.getScore() != null && Double.valueOf(sentimentFS.getScore()) < 0);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+    Map<String, Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    JCas sentimentJCas = TestUtils.executeAE(TestUtils.getAE(xmlPath, parameterSettings), doc);
+    List<SentimentFS> sentimentList = (List<SentimentFS>) TestUtils.getAllFSofType(
+            SentimentFS.type, sentimentJCas);
+    assertTrue(sentimentList != null);
+    assertTrue(sentimentList.size() == 1);
+    SentimentFS sentimentFS = sentimentList.get(0);
+    assertTrue(sentimentFS != null);
+    assertTrue(sentimentFS.getSentimentType() != null
+            && "negative".equals(sentimentFS.getSentimentType()));
+    assertTrue(sentimentFS.getScore() != null && Double.valueOf(sentimentFS.getScore()) < 0);
   }
 
 }

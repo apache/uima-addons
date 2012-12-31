@@ -22,6 +22,7 @@ import org.apache.uima.alchemy.annotator.mocked.MockedMicroformatsAnnotator;
 import org.apache.uima.alchemy.ts.microformats.MicroformatFS;
 import org.apache.uima.alchemy.utils.TestUtils;
 import org.apache.uima.jcas.JCas;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -38,35 +39,25 @@ public class HtmlMicroformatsAnnotatorTest {
           + "7400 Metro Boulevard, Suite 350 </div> <span class=\"locality\"> Minneapolis </span>, <span class=\"region\">MN</span>"
           + "<span class=\"postal-code\">55439</span> </div> <div class=\"tel\">(952) 921-9368</div>/div> </body></html>";
   private static final String XML_PATH = "desc/HtmlMicroformatsAEDescriptor.xml";
+  private static final String YOUR_KEY_HERE = "api-key";
 
   @SuppressWarnings("unchecked")
-  @Test
-  public void annotatorIntegrationTest() {
-    try {
-      Map<String,Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey","04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH,parameterSettings), DOC);
-      List<MicroformatFS> microformatsList = (List<MicroformatFS>) TestUtils.getAllFSofType(MicroformatFS.type, resultingCAS);
-      assertTrue(microformatsList.size()>0);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  @Ignore
+  public void annotatorIntegrationTest() throws Exception {
+    Map<String,Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH,parameterSettings), DOC);
+    List<MicroformatFS> microformatsList = (List<MicroformatFS>) TestUtils.getAllFSofType(MicroformatFS.type, resultingCAS);
+    assertTrue(microformatsList.size() > 0);
   }
 
   @SuppressWarnings("unchecked")
   @Test
-  public void mockedAnnotatorTest() {
-    try {
-      String mockedAnnotatorName = MockedMicroformatsAnnotator.class.getName();
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,mockedAnnotatorName), DOC);
-      List<MicroformatFS> microformatsList = (List<MicroformatFS>) TestUtils.getAllFSofType(MicroformatFS.type, resultingCAS);
-      assertTrue(microformatsList.size()>0);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  public void mockedAnnotatorTest() throws Exception {
+    String mockedAnnotatorName = MockedMicroformatsAnnotator.class.getName();
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAEWithMockedImplementation(XML_PATH,mockedAnnotatorName), DOC);
+    List<MicroformatFS> microformatsList = (List<MicroformatFS>) TestUtils.getAllFSofType(MicroformatFS.type, resultingCAS);
+    assertTrue(microformatsList.size() > 0);
   }
 
 }

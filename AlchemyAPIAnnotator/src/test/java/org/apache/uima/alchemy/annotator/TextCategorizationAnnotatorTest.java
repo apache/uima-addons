@@ -22,6 +22,7 @@ import org.apache.uima.alchemy.annotator.mocked.MockedTextCategorizationAnnotato
 import org.apache.uima.alchemy.ts.categorization.Category;
 import org.apache.uima.alchemy.utils.TestUtils;
 import org.apache.uima.jcas.JCas;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -34,21 +35,17 @@ import static org.junit.Assert.fail;
 public class TextCategorizationAnnotatorTest {
   private static final String XML_PATH = "desc/TextCategorizationAEDescriptor.xml";
   private static final String DOC = "Eight US soldiers die in attacks in south Afghanistan, making October the deadliest month for the US in the war there";
+  private static final String YOUR_KEY_HERE = "api-key";
 
   @SuppressWarnings("unchecked")
-  @Test
-  public void annotatorIntegrationTest() {
-    try {
-      Map<String,Object> parameterSettings = new HashMap<String, Object>();
-      parameterSettings.put("apikey","04490000a72fe7ec5cb3497f14e77f338c86f2fe");
-      JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH,parameterSettings), DOC);
-      List<Category> categories = (List<Category>) TestUtils.getAllFSofType(Category.type, resultingCAS);
-      assertTrue(categories!=null);
-      assertTrue(categories.size()==1);
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail(e.toString());
-    }
+  @Ignore
+  public void annotatorIntegrationTest() throws Exception {
+    Map<String,Object> parameterSettings = new HashMap<String, Object>();
+    parameterSettings.put("apikey", YOUR_KEY_HERE);
+    JCas resultingCAS = TestUtils.executeAE(TestUtils.getAE(XML_PATH,parameterSettings), DOC);
+    List<Category> categories = (List<Category>) TestUtils.getAllFSofType(Category.type, resultingCAS);
+    assertTrue(categories != null);
+    assertTrue(categories.size() == 1);
   }
 
   @SuppressWarnings("unchecked")
