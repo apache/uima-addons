@@ -42,7 +42,7 @@ public class UriUtils {
    * @return URI with proper quoting
    * @throws URISyntaxException 
    */
-  public static URI quote (String s) throws URISyntaxException {
+  public static URI quote(String s) throws URISyntaxException {
     if (-1 == s.indexOf('%')) {
       // 3 argument constructor does any needed quoting of otherwise illegal chars
       // https://issues.apache.org/jira/browse/UIMA-2097
@@ -69,7 +69,7 @@ public class UriUtils {
    * Create a URI from a String, with proper quoting.
    * Already quoted things in the input string are not re-quoted.
    * Mimic exception treatment of URI.create
-   * @param u
+   * @param s
    * @return URI with proper quoting
    */
 

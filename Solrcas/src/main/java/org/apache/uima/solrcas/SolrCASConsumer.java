@@ -23,14 +23,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.CasAnnotator_ImplBase;
@@ -177,8 +176,7 @@ public class SolrCASConsumer extends CasAnnotator_ImplBase {
 
     InputStream input = getURI(mappingFileParam).toURL().openStream();
 
-    SolrMappingConfiguration solrMappingConfiguration = fieldMappingReader.getConf(input);
-    return solrMappingConfiguration;
+    return fieldMappingReader.getConf(input);
   }
 
   protected SolrServer createServer() throws SolrServerException {
@@ -193,8 +191,7 @@ public class SolrCASConsumer extends CasAnnotator_ImplBase {
               getConfigParameterValue("solrPath"));
   
       if (solrInstanceTypeParam.equalsIgnoreCase("http")) {
-        URL solrURL = UriUtils.create(solrPathParam).toURL();
-        solrServer = new CommonsHttpSolrServer(solrURL);
+        solrServer = new HttpSolrServer(solrPathParam);
       }
     } catch (Exception e) {
       throw new SolrServerException("Error creating SolrServer", e);

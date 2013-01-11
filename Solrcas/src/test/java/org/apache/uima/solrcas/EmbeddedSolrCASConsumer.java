@@ -27,6 +27,10 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
 
+/**
+ * Test {@link SolrCASConsumer} extension which uses and {@link EmbeddedSolrServer}
+ * underneath to communicate with Solr.
+ */
 public class EmbeddedSolrCASConsumer extends SolrCASConsumer {
 
   @Override

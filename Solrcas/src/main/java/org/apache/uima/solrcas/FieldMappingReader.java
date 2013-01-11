@@ -52,9 +52,7 @@ public class FieldMappingReader {
 
     input.close();
 
-    SolrMappingConfiguration solrMappingConfiguration = new SolrMappingConfiguration(documentText, documentLanguage, fieldMapping);
-
-    return solrMappingConfiguration;
+    return new SolrMappingConfiguration(documentText, documentLanguage, fieldMapping);
   }
 
   private static class FieldMappingHandler extends DefaultHandler {

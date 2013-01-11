@@ -94,7 +94,7 @@ public class SolrCasConsumerIntegrationTest {
   private CAS getCAS() throws ResourceInitializationException, CASException {
     // Create an initial CASMgr from the factory.
     CASMgr casMgr0 = CASFactory.createCAS();
-    CASMgr casMgr = null;
+
     // this call does nothing: because 2nd arg is null
     CasCreationUtils.setupTypeSystem(casMgr0, null);
     // Create a writable type system.
@@ -103,7 +103,7 @@ public class SolrCasConsumerIntegrationTest {
     // Commit the type system.
     ((CASImpl) casMgr0).commitTypeSystem();
 
-    casMgr = CASFactory.createCAS(tsa);
+    CASMgr casMgr = CASFactory.createCAS(tsa);
 
     // Create the Base indexes.
     casMgr.initCASIndexes();
