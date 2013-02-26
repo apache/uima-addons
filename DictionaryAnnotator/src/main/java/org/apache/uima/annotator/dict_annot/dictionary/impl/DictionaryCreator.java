@@ -148,7 +148,7 @@ public class DictionaryCreator {
       if (clp.isInArgsList(TOKENIZER_PARAM)) {
          if (!clp.isInArgsList(TOKEN_TYPE_PARAM)) {
             System.err
-                  .println("If a tokenizer is used, the -tokenType paramter must be specified");
+                  .println("If a tokenizer is used, the -tokenType parameter must be specified");
             error = true;
          }
       }
