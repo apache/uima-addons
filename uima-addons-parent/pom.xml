@@ -663,7 +663,7 @@
     <profile>
       <id>apache-release</id>
       <properties>
-        <jiraVersion>12310570</jiraVersion>
+        <jiraVersion>12324634</jiraVersion>
         <assemblyFinalName>uima-${project.artifactId}-${project.version}</assemblyFinalName>
       </properties>
 
