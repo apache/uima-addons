@@ -19,6 +19,14 @@
 
 package org.apache.uima.solrcas;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.net.URL;
+import java.util.Collection;
+
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -38,15 +46,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.test.junit_extension.AnnotatorTester;
 import org.apache.uima.util.CasCreationUtils;
 import org.junit.Test;
-
-import java.io.File;
-import java.net.URL;
-import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Integration test with a running Solr

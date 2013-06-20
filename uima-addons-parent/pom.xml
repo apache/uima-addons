@@ -47,8 +47,7 @@
     <system>Jira</system>
     <!-- the form of the url is from http://maven.apache.org/plugins/maven-changes-plugin/usage.html -->
     <!--url>https://issues.apache.org/jira/BrowseProject.jspa?projectId=12310570</url-->
-    <url>https://issues.apache.org/jira/browse/UIMA?projectId=12310570</url>
-        
+    <url>https://issues.apache.org/jira/browse/UIMA</url>
   </issueManagement>
 
   <scm>
@@ -188,7 +187,53 @@
             <tagBase>https://svn.apache.org/repos/asf/uima/sandbox/tags/</tagBase>
           </configuration>
         </plugin>
-
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>default-cli</id>
+              <configuration>
+                <excludes>
+                  <exclude>release.properties</exclude> <!-- release generated artifact -->
+                  <exclude>README*</exclude>
+                  <exclude>RELEASE_NOTES*</exclude>
+                  <exclude>issuesFixed/**</exclude> <!-- generated file -->
+                  <exclude>marker-file-identifying-*</exclude> <!-- empty file -->
+                  <exclude>DEPENDENCIES</exclude>  <!-- generated file -->
+                  <exclude>.idea/**</exclude>
+                </excludes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+        	<groupId>org.eclipse.m2e</groupId>
+        	<artifactId>lifecycle-mapping</artifactId>
+        	<version>1.0.0</version>
+        	<configuration>
+        		<lifecycleMappingMetadata>
+        			<pluginExecutions>
+        				<pluginExecution>
+        					<pluginExecutionFilter>
+        						<groupId>org.apache.uima</groupId>
+        						<artifactId>
+        							uima-build-helper-maven-plugin
+        						</artifactId>
+        						<versionRange>[4,)</versionRange>
+        						<goals>
+        							<goal>parse-date-time</goal>
+        						</goals>
+        					</pluginExecutionFilter>
+        					<action>
+        						<ignore></ignore>
+        					</action>
+        				</pluginExecution>
+        			</pluginExecutions>
+        		</lifecycleMappingMetadata>
+        	</configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     
@@ -612,6 +657,94 @@
                          
         </plugins>
         
+      </build>
+    </profile>
+
+    <profile>
+      <id>apache-release</id>
+      <properties>
+        <jiraVersion>12310570</jiraVersion>
+        <assemblyFinalName>uima-${project.artifactId}-${project.version}</assemblyFinalName>
+      </properties>
+
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <version>2.1</version>
+              <configuration>
+                <mavenExecutorId>forked-path</mavenExecutorId>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+          <!-- https://issues.apache.org/jira/browse/UIMA-2008 -->
+          <!-- no maven deployment of this project's artifacts -->
+          <!-- binary build artifact deployed from apache mirror system after
+            release -->
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate checksums for binary artifacts</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <target>
+                    <checksum algorithm="sha1" format="MD5SUM">
+                      <fileset dir="${project.build.directory}">
+                        <include name="*.zip" />
+                        <include name="*.gz" />
+                      </fileset>
+                    </checksum>
+                    <checksum algorithm="md5" format="MD5SUM">
+                      <fileset dir="${project.build.directory}">
+                        <include name="*.zip" />
+                        <include name="*.gz" />
+                      </fileset>
+                    </checksum>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <version>2.8</version>
+            <executions>
+              <execution>
+                <id>default-cli</id>
+                <goals><goal>jira-report</goal></goals>
+                <phase>generate-resources</phase>        
+                <configuration>
+                  <useJql>true</useJql>
+                  <fixVersionIds>${jiraVersion}</fixVersionIds>
+                  <columnNames>Type,Key,Status,Summary</columnNames>
+                  <resolutionIds>Fixed</resolutionIds>
+                  <statusIds>Closed,Resolved</statusIds>
+                  <sortColumnNames>Type, Status, Key</sortColumnNames>
+                  <outputDirectory>${basedir}/issuesFixed/</outputDirectory>
+                  <maxEntries>1000</maxEntries>
+                </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        </plugins>
       </build>
     </profile>
     
