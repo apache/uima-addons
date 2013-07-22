@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-   Licensed to the Apache Software Foundation (ASF) under one
-   or more contributor license agreements.  See the NOTICE file
-   distributed with this work for additional information
-   regarding copyright ownership.  The ASF licenses this file
-   to you under the Apache License, Version 2.0 (the
-   "License"); you may not use this file except in compliance
-   with the License.  You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License.    
--->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
 
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
 "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
@@ -58,7 +50,7 @@
 			filtering is configurable
 			by an XML file, whereas the index writer is
 			configured by a properties
-			file.   
+			file.
 		</para>
 		<para>
 			To use Lucas, at first a mapping file must be created. You have
@@ -77,7 +69,7 @@
 			further
 			processing. Its also possible to deploy your own
 			token
-			filters. 
+			filters.
 		</para>
 		<para>
 			Lucas can run in multiple deployment scenarios where different
@@ -117,25 +109,25 @@
 				knows
 				three different
 				sources of Lucene token values:
-				</para>
+			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						The covered text of a annotation object. 
-					 </para>
+						The covered text of a annotation object.
+					</para>
 				</listitem>
 				<listitem>
 					<para>
-						One or more feature values of a annotation object. 
-					 </para>
+						One or more feature values of a annotation object.
+					</para>
 				</listitem>
 				<listitem>
 					<para>
 						One or more feature values of a feature structure directly
 						or
 						indirectly referenced
-						by an annotation object. 
-					 </para>
+						by an annotation object.
+					</para>
 				</listitem>
 			</itemizedlist>
 			<para>
@@ -400,7 +392,7 @@
 				to the merged or concatenated field token stream as whole.
 				The following
 				example demonstrates how token filters are defined in
-				the mapping file. 
+				the mapping file.
 			</para>
 			<programlisting><![CDATA[<fields>
   <field name=“text” index=“yes” merge=“true”>
@@ -444,8 +436,8 @@
 			</para>
 			<section id="sandbox.luceneCasConsumer.mapping.tokenfilters.selfdefined">
 				<title>
-					Deploying your own Token Filters 
-			</title>
+					Deploying your own Token Filters
+				</title>
 				<para>
 					For scenarios where the built in token filters where not
 					sufficient,
@@ -460,8 +452,8 @@
 					parameter. The next example shows how a such a
 					token
 					filter is
-					referenced in the mapping file.  				
-			</para>
+					referenced in the mapping file.
+				</para>
 				<programlisting><![CDATA[<fields>
   <field name=“text” index=“yes”>
 	<annotations>
@@ -531,8 +523,8 @@
 					name and a reuse attribute.
 					The example below demonstrate how we can
 					reuse a factory
-					instance. 
-		</para>
+					instance.
+				</para>
 				<programlisting><![CDATA[<fields>
   <field name=“text” index=“yes”>
 	<annotations>
@@ -551,6 +543,156 @@
 </fields>]]></programlisting>
 			</section>
 		</section>
+		<section id="sandbox.luceneCasConsumer.mapping.termcover">
+			<title>Defining term covers</title>
+			<para>
+				When
+				defining a normal field in the ways described in the above
+				sections, the
+				term set <emphasis>T</emphasis> resulting from the processing defined by the
+				<emphasis>annotation</emphasis>
+				and
+				<emphasis>filter</emphasis>
+				elements will all be added to the respective field. It is possible
+				to automatically distribute these terms onto multiple fields which
+				are dynamically created. Each term may be included in zero or
+				multiple fields.
+				Which term is to be added to which field(s) is defined
+				by a
+				<emphasis>termCoverDefinition</emphasis>
+				file. The idea is that the whole term set <emphasis>T</emphasis> is
+				<emphasis>covered</emphasis>
+				by several subsets <emphasis>S1,S2,...,SN</emphasis> where each subset corresponds to a field for all
+				terms in this subset. The result is not necessarily a partition,
+				that is,
+				one term may be accepted to multiple fields. Furthermore, to
+				keep true to the notion
+				of a
+				<emphasis>cover</emphasis>
+				,
+				terms which don't belong to any subset are not considered to
+				belong
+				to the field definition at all and would be filtered out
+				anyway (as
+				an assumption; this is theoretically motivated and has no practical
+				consequences here).
+			</para>
+			<para>
+				This mechanism is useful whenever the
+				<emphasis>token source</emphasis>
+				of a field emmits tokens (thus, eventually terms) the user would
+				wish assign to different categories and express this categorization
+				by modelling the terms into one field per category. As an example, a
+				shop system could be considered. An annotation type
+				<emphasis>de.julielab.types.ArticleName</emphasis>
+				would be annotated in
+				<emphasis>CAS</emphasis>
+				objects. Among the text snippets annotated this way one would find
+				<emphasis>light bulb</emphasis>
+				,
+				<emphasis>electric shaver</emphasis>
+				and
+				<emphasis>smartphone</emphasis>
+				for example (the three terms are considered to be article names for
+				this example, even if they are chosen generally enough to be
+				categories themselves). The shop system would have - among others
+				- three article categories
+				<emphasis>electronics</emphasis>
+				,
+				<emphasis>sanitaryArticles</emphasis>
+				and
+				<emphasis>computers</emphasis>
+				. The goal will be to assign the article names to the fields
+				corresponding to their category. Since this information is not given
+				implicitely by different annotation objects (the assumption is that there are far
+				too many categories which could even change over time; this would
+				make maintaining the type system rather tedious), an explicit
+				definition must be delivered. This is achieved using a
+				<emphasis>termCoverDefinitionFile</emphasis>
+				. It is required to expose the following format:
+				<informalequation>
+					<mediaobject>
+						<textobject>
+							<phrase>
+								&lt;term&gt;=&lt;S1&gt;|&lt;S2&gt;|...|&lt;SN&gt;
+							</phrase>
+						</textobject>
+					</mediaobject>
+				</informalequation>
+				That is, one term per line, the categories of a term assigned by a
+				=
+				sign and multiple categories separated by the
+				|
+				character. An example
+				file would read as follows:
+				<programlisting><![CDATA[light bulb=electronics
+electric shaver=electronics|sanitaryArticles
+smartphone=electronics|computers]]>
+				</programlisting>
+			</para>
+			<para>
+				To create fields according to a cover set definition as described
+				above, the element
+				<emphasis>termSetCoverDefinition</emphasis>
+				is introduced into the
+				<emphasis>field</emphasis>
+				element. An example would look like this:
+				<programlisting><![CDATA[<fields>
+  <field name="articlecategory_" ...>
+    <termSetCoverDefinition coverDefinitionFile="pathToCoverDefinitionFile"
+                 generateFieldNameMethod="append|prepend|replace"
+                 ignoreCaseOfSelectedTerms="true|false" />
+    <annotations>
+      <annotation type="de.julielab.types.ArticleName" />
+    </annotations>
+  </field>
+</fields>]]></programlisting>
+				Here,
+				<emphasis>pathToCoverDefinitionFile</emphasis>
+				points to a file as described above. The
+				<emphasis>generateFieldNameMethod</emphasis>
+				attributes takes one of
+				<emphasis>append</emphasis>
+				,
+				<emphasis>prepend</emphasis>
+				or
+				<emphasis>replace</emphasis>
+				. It is used to define the method of how to name the dynamically
+				created category fields. The name will be derived from the value of
+				the
+				<emphasis>name</emphasis>
+				attribute of the
+				<emphasis>field</emphasis>
+				element by appending, prepending or replacing it by the respective
+				category name. If, in the above example,
+				<emphasis>append</emphasis>
+				would be used, the eventual field names would be
+				<emphasis>articlecategory_electronics</emphasis>
+				,
+				<emphasis>articlecategory_sanitaryArticles</emphasis>
+				and
+				<emphasis>articleCategory_computers</emphasis>
+				. Each field would only contain terms defined for it in the
+				<emphasis>termCoverDefinitionFile</emphasis>
+				. The attribute
+				<emphasis>ignoreCaseOfSelectedTerms</emphasis>
+				is used to switch on or off case normalization when checking whether
+				a particular term is allowed for a particular field. When switched
+				off, the term
+				<emphasis>smartphone</emphasis>
+				would be allowed for the fields
+				<emphasis>articlecategory_electronics</emphasis>
+				and
+				<emphasis>articlecategory_computers</emphasis>
+				while
+				<emphasis>SMARTPHONE</emphasis>
+				would not. Setting the attribute to
+				<emphasis>true</emphasis>
+				would lead to the acceptance of both variants into both fields. It
+				is not possible to set this parameter to different values for
+				different cover subset fields of the same cover.
+			</para>
+		</section>
 	</chapter>
 	<chapter id="sandbox.luceneCasConsumer.mapping.reference">
 		<title>Mapping File Reference</title>
@@ -567,6 +709,7 @@
 			</para>
 			<programlisting><![CDATA[<fields>
   <field ..>
+    <termSetCoverDefinition ../>
 	<filters>
 		<filter ../>
 		...
@@ -630,7 +773,7 @@
 								<listitem>
 									<para>
 										contains:
-										<code>filters?, annotations</code>
+										<code>termSetCoverDefinition?, filters?, annotations</code>
 									</para>
 								</listitem>
 							</itemizedlist>
@@ -706,7 +849,8 @@
 												The tokens position increment are adopted in the
 												case
 												of
-												overlapping.</entry>
+												overlapping.
+											</entry>
 										</row>
 										<row>
 											<entry>unique</entry>
@@ -718,7 +862,81 @@
 												resulting Lucene documents. This is required e.g. by Apache
 												Solr for primary key fields. You must not define multiple
 												fields with the same name to be unique, this would break the
-												unique property.</entry>
+												unique property.
+											</entry>
+										</row>
+									</tbody>
+								</tgroup>
+							</table>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>termSetCoverDefinition element</emphasis>
+							<itemizedlist>
+								<listitem>
+									<para>element to define the automatical distribution of terms
+										to multiple fields
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										contains:
+										<code>nothing</code>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+						<para>
+							<table>
+								<title>termSetCoverDefinition element attributes</title>
+								<tgroup cols="5">
+									<thead>
+										<row>
+											<entry>name</entry>
+											<entry>allowed values</entry>
+											<entry>default value</entry>
+											<entry>mandatory</entry>
+											<entry>description</entry>
+										</row>
+									</thead>
+									<tbody>
+										<row>
+											<entry>coverDefinition
+											File</entry>
+											<entry>string</entry>
+											<entry>-</entry>
+											<entry>yes</entry>
+											<entry>Path to a file defining the term to category
+												assignment (which term belongs to which cover subset).
+											</entry>
+										</row>
+										<row>
+											<entry>generateField
+											NameMethod</entry>
+											<entry>append|prepend|replace</entry>
+											<entry>append</entry>
+											<entry>no</entry>
+											<entry>Determines the name of the cover subset fields. To the
+												original field name, the subset (or category) name is
+												appended or prepended to the field name or replaces it
+												completely.
+											</entry>
+										</row>
+										<row>
+											<entry>ignoreCaseOf
+											SelectedTerms</entry>
+											<entry>boolean</entry>
+											<entry>true</entry>
+											<entry>no</entry>
+											<entry>
+												For each subset field, there is a list of allowed term
+												values defined in the
+												<emphasis>coverDefinitionFile</emphasis>
+												. This parameter determines whether the case of term strings
+												is
+												ignored for the membership-check or not.
+											</entry>
 										</row>
 									</tbody>
 								</tgroup>
@@ -731,7 +949,7 @@
 							<itemizedlist>
 								<listitem>
 									<para>
-										container element for filters										
+										container element for filters
 									</para>
 								</listitem>
 								<listitem>
@@ -781,8 +999,8 @@
 											<entry>
 												the name to reference either a predefined filter (see
 												predefined filter reference)
-												or a reused filter 
-							</entry>
+												or a reused filter
+											</entry>
 										</row>
 										<row>
 											<entry>className</entry>
@@ -793,8 +1011,8 @@
 												The canonical class name of a token filter. the token
 												filter class must provide a
 												single argument constructor which
-												takes the token stream as parameter. 
-							</entry>
+												takes the token stream as parameter.
+											</entry>
 										</row>
 										<row>
 											<entry>factoryClassName</entry>
@@ -828,8 +1046,8 @@
 												are referenced by their names, you
 												also
 												need to provide
-												a name.  
-							</entry>
+												a name.
+											</entry>
 										</row>
 										<row>
 											<entry>*</entry>
@@ -856,7 +1074,7 @@
 							<itemizedlist>
 								<listitem>
 									<para>
-										container element for annotations										
+										container element for annotations
 									</para>
 								</listitem>
 								<listitem>
@@ -875,7 +1093,7 @@
 								<listitem>
 									<para>
 										Describes a token stream which is generated from a CAS
-										annotation index.									
+										annotation index.
 									</para>
 								</listitem>
 								<listitem>
@@ -917,7 +1135,7 @@
 											<entry>
 												Determines from which sofa the annotation index is
 												taken
-							</entry>
+											</entry>
 										</row>
 										<row>
 											<entry>featurePath</entry>
@@ -930,7 +1148,7 @@
 												with the annotation object. Features are separated
 												by
 												a ".".
-							</entry>
+											</entry>
 										</row>
 										<row>
 											<entry>tokenizer</entry>
@@ -960,7 +1178,7 @@
 												feature structure are concatenated and delimited
 												by this
 												string.
-							</entry>
+											</entry>
 										</row>
 									</tbody>
 								</tgroup>
@@ -973,7 +1191,7 @@
 							<itemizedlist>
 								<listitem>
 									<para>
-										Container element for features.									
+										Container element for features.
 									</para>
 								</listitem>
 								<listitem>
@@ -1019,7 +1237,7 @@
 											<entry>yes</entry>
 											<entry>
 												The feature name.
-							</entry>
+											</entry>
 										</row>
 										<row>
 											<entry>numberFormat</entry>
@@ -1048,7 +1266,8 @@
 			<para>Lucas comes with a couple of predefined token filters.
 				This
 				section provides a complete
-				reference for these filters.</para>
+				reference for these filters.
+			</para>
 			<section
 				id="sandbox.luceneCasConsumer.mapping.reference.filters.addition">
 				<title>
@@ -1086,7 +1305,7 @@
 									<entry>no</entry>
 									<entry>
 										A post which is added to the end of each token.
-											</entry>
+									</entry>
 								</row>
 							</tbody>
 						</tgroup>
@@ -1100,7 +1319,8 @@
 				</title>
 				<para>Adds hypernyms of a token with the same offset and
 					position
-					increment 0.</para>
+					increment 0.
+				</para>
 				<programlisting><![CDATA[<filter name="hypernyms" filePath="/path/to/myFile.txt"/>]]></programlisting>
 				<para>
 					<table>
@@ -1144,7 +1364,8 @@
 				</title>
 				<para>Allows to select only the first or the last token of a
 					token
-					stream, all other tokens are discarded.</para>
+					stream, all other tokens are discarded.
+				</para>
 				<programlisting><![CDATA[<filter name="position" position="last"/>]]></programlisting>
 				<para>
 					<table>
@@ -1173,7 +1394,7 @@
 										discarded. Otherwise, if position is set to last, only the
 										last
 										token is returned.
-							</entry>
+									</entry>
 								</row>
 							</tbody>
 						</tgroup>
@@ -1214,7 +1435,7 @@
 										following format:
 										<code>
 											TOKEN_TEXT=REPLACEMENT_TEXT
-								</code>
+										</code>
 										.
 									</entry>
 								</row>
@@ -1293,7 +1514,7 @@
 									<entry>yes</entry>
 									<entry>
 										The string on which tokens are split.
-							</entry>
+									</entry>
 								</row>
 							</tbody>
 						</tgroup>
@@ -1369,7 +1590,7 @@
 									<entry>
 										The stopword file path. Each line of the file contains a
 										single stopword.
-							</entry>
+									</entry>
 								</row>
 								<row>
 									<entry>ignoreCase</entry>
@@ -1379,7 +1600,7 @@
 									<entry>
 										Defines if the stop filter ignores the case of stop
 										words.
-							</entry>
+									</entry>
 								</row>
 							</tbody>
 						</tgroup>
@@ -1392,7 +1613,8 @@
 				</title>
 				<para>Filters tokens with the same token text. The resulting
 					token
-					stream contains only tokens with unique texts.</para>
+					stream contains only tokens with unique texts.
+				</para>
 				<programlisting><![CDATA[<filter name="unique"/>]]></programlisting>
 			</section>
 			<section
@@ -1499,27 +1721,36 @@
 	<chapter id="sandbox.luceneCasConsumer.prospectiveSearch">
 		<title>Prospective Search</title>
 		<para>
-			Prospective search is a search method where a set of search queries are given
+			Prospective search is a search method where a set of search
+			queries are given
 			first
-			and then searched against a stream of documents. A search query divides
+			and then searched against a stream of
+			documents. A search query divides
 			the document
-			stream into a sub-stream which only contains these document which match the
+			stream into a sub-stream
+			which only contains these document which match the
 			query.
-			Users usually define a number of search queries and then subscribe to the
+			Users usually
+			define a number of search queries and then subscribe to the
 			resulting
-			sub-streams. An example for prospective search is a news feed which is monitored
+			sub-streams. An example for prospective search is a news feed which
+			is monitored
 			for certain terms,
-			each time a term occurs a mail notification is send.
+			each time a term occurs a mail
+			notification is send.
 		</para>
 		<para>
 			The user must provide a set of search queries via a
 			<code>SearchQueryProvider</code>
 			,
-			these search queries are then search against the processed CAS as defined
+			these search queries are then search against the processed CAS as
+			defined
 			in the mapping file,
-			if a match occurs a feature structure is inserted into the CAS.
+			if a match occurs a feature structure is
+			inserted into the CAS.
 			Optionally highlighting is
-			supported, annotations for the matchtng text areas are created and linked to
+			supported,
+			annotations for the matchtng text areas are created and linked to
 			the
 			feature structure.
 		</para>
@@ -1539,35 +1770,46 @@
 			<para>
 				The Search Query Provider provides the Perspective Search Analysis
 				Engine
-				with a set of search queries which should be monitored. A search
-				query is a combination of a Lucene query and an id. The id is later
+				with a set of search queries which should be monitored. A
+				search
+				query is a combination of a Lucene query and an id. The id is
+				later
 				needed
-				to map a match to a specific search query. A user usually has a set of
-				search queries which should be monitored, since there is no
+				to map a match to a specific search query. A user usually
+				has a set of
+				search queries which should be monitored, since there is
+				no
 				standardized
-				way to access the search queries the user must implement the
+				way to access the search queries the user must
+				implement the
 				<code>SearchQueryProvider</code>
 				interface and configure the thread-safe implementation as shared
 				resource object.
-				An example for such an implementation could be a search query provider
+				An example for such an implementation could be a
+				search query provider
 				which reads
-				search queries form a database or a web service.
+				search queries form a database or a
+				web service.
 			</para>
 		</section>
 		<section id="sandbox.luceneCasConsumer.prospectiveSearch.searchResults">
 			<title>Search Results</title>
 			<para>
-				The search results are written to the CAS, for each match one Search
+				The search results are written to the CAS, for each match one
+				Search
 				Result
-				feature structure is inserted into the CAS. The Search Result feature
+				feature structure is inserted into the CAS. The Search
+				Result feature
 				structure contains
-				the id and optionally links to an array of annotations which mark the
+				the id and optionally links to an
+				array of annotations which mark the
 				matching
 				text in the CAS.
 			</para>
 			<para>
 				The Search Result type must be mapped to a defined type
-				in the analysis engine descriptor with the following configuration
+				in the
+				analysis engine descriptor with the following configuration
 				parameters:
 				<itemizedlist>
 					<listitem>

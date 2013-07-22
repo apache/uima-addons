@@ -19,12 +19,12 @@
 
 package org.apache.uima.lucas.indexer.analysis;
 
-import static org.junit.Assert.*;
-
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class DefaultFilterFactoryRegistryTest {
 
@@ -38,7 +38,7 @@ public class DefaultFilterFactoryRegistryTest {
   @Test
   public void testGetDefaultFilterFactories() {
     Map<String, TokenFilterFactory> registry = defaultFilterFactoryRegistry.getDefaultRegistry();
-    assertEquals(11, registry.size());
+    assertEquals(13, registry.size());
     
     TokenFilterFactory filterFactory = registry.get(DefaultFilterFactoryRegistry.ADDITION_FILTER_FACTORY_NAME);
     assertEquals(AdditionFilterFactory.class, filterFactory.getClass());
@@ -72,6 +72,12 @@ public class DefaultFilterFactoryRegistryTest {
 
     filterFactory = registry.get(DefaultFilterFactoryRegistry.LOWERCASE_FILTER_FACTORY_NAME);
     assertEquals(LowerCaseFilterFactory.class, filterFactory.getClass());
+    
+    filterFactory = registry.get(DefaultFilterFactoryRegistry.SELECT_FILTER_FACTORY_NAME);
+    assertEquals(SelectFilterFactory.class, filterFactory.getClass());
+    
+    filterFactory = registry.get(DefaultFilterFactoryRegistry.REGEXP_FILTER_FACTORY_NAME);
+    assertEquals(RegExpFilterFactory.class, filterFactory.getClass());
   }
 
 }

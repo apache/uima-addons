@@ -37,16 +37,18 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class MappingFileReader extends DefaultHandler {
 
+	public final static String FIELD = "field"; // the tag name for field
+												// definitions
 
-	public final static String FIELD = "field"; // the tag name for field definitions
+	public final static String TERM_SET_COVER_DEFINITION = "termSetCoverDefinition";
 
 	public final static String FILTER = "filter"; // filter element name
 
 	public final static String ANNOTATION = "annotation"; // the tag name for
-													// annotation definitions
+	// annotation definitions
 
 	public final static String FEATURE = "feature"; // the tag name for feature
-												// definitions
+	// definitions
 
 	private Collection<FieldDescription> fieldDescriptions;
 	private SAXParser parser;
@@ -55,8 +57,9 @@ public class MappingFileReader extends DefaultHandler {
 	private AnnotationDescription currentAnnotationDescription;
 	private Locator currentLocator;
 	private Map<String, ElementMapper<?>> elementMappers;
-	
-	public MappingFileReader(SAXParser parser, Map<String, ElementMapper<?>> elementMappers) throws IOException {
+
+	public MappingFileReader(SAXParser parser,
+			Map<String, ElementMapper<?>> elementMappers) throws IOException {
 		super();
 		fieldDescriptions = new ArrayList<FieldDescription>();
 		this.parser = parser;
@@ -71,11 +74,11 @@ public class MappingFileReader extends DefaultHandler {
 	}
 
 	private void parseFile(File mappingFile) throws IOException, SAXException {
-//		try {
-			parser.parse(mappingFile, this);
-//		} catch (SAXException e) {
-//			throw new IOException(e);
-//		}
+		// try {
+		parser.parse(mappingFile, this);
+		// } catch (SAXException e) {
+		// throw new IOException(e);
+		// }
 	}
 
 	@Override
@@ -88,6 +91,8 @@ public class MappingFileReader extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		if (qName.equals(FIELD))
 			addFieldDescription(attributes);
+		else if (qName.equals(TERM_SET_COVER_DEFINITION))
+			addTermSetCoverDefinition(attributes);
 		else if (qName.equals(FILTER))
 			addFilterDescription(attributes);
 		else if (qName.equals(ANNOTATION))
@@ -97,45 +102,69 @@ public class MappingFileReader extends DefaultHandler {
 	}
 
 	private void addFieldDescription(Attributes attributes) {
-		ElementMapper<FieldDescription> elementMapper = (ElementMapper<FieldDescription>) elementMappers.get(FIELD);
+		ElementMapper<FieldDescription> elementMapper = (ElementMapper<FieldDescription>) elementMappers
+				.get(FIELD);
 		currentFieldDescription = elementMapper.mapElement(attributes);
 		currentAnnotationDescription = null;
 		mapLocator(currentFieldDescription);
 		fieldDescriptions.add(currentFieldDescription);
 	}
 
+	private void addTermSetCoverDefinition(Attributes attributes) {
+		ElementMapper<TermCoverDescription> termSetCoverDefinitionMapper = (ElementMapper<TermCoverDescription>) elementMappers
+				.get(TERM_SET_COVER_DEFINITION);
+		TermCoverDescription termCoverDescription = termSetCoverDefinitionMapper
+				.mapElement(attributes);
+		if (null != currentFieldDescription.getTermCoverDescription())
+			throw new IllegalStateException(
+					"Only one term cover definition per field is allowed; field \""
+							+ currentFieldDescription.getName()
+							+ "\" has at least two.");
+		mapLocator(termCoverDescription);
+		termCoverDescription.setFieldName(currentFieldDescription.getName());
+		currentFieldDescription.setTermCoverDescription(termCoverDescription);
+	}
+
 	private void addFilterDescription(Attributes attributes) {
-		ElementMapper<FilterDescription> filterMapper = (ElementMapper<FilterDescription>) elementMappers.get(FILTER);
-		FilterDescription filterDescription = filterMapper.mapElement(attributes);
+		ElementMapper<FilterDescription> filterMapper = (ElementMapper<FilterDescription>) elementMappers
+				.get(FILTER);
+		FilterDescription filterDescription = filterMapper
+				.mapElement(attributes);
 		mapLocator(filterDescription);
-		if (currentAnnotationDescription != null ){
-			Collection<FilterDescription> filterDescriptions = currentAnnotationDescription.getFilterDescriptions();
+		if (currentAnnotationDescription != null) {
+			Collection<FilterDescription> filterDescriptions = currentAnnotationDescription
+					.getFilterDescriptions();
 			filterDescriptions.add(filterDescription);
-		}
-		else{
-			Collection<FilterDescription> filterDescriptions = currentFieldDescription.getFilterDescriptions();
+		} else {
+			Collection<FilterDescription> filterDescriptions = currentFieldDescription
+					.getFilterDescriptions();
 			filterDescriptions.add(filterDescription);
 		}
 	}
 
 	private void addAnnotationDescription(Attributes attributes) {
-		ElementMapper<AnnotationDescription> annotationMapper = (ElementMapper<AnnotationDescription>) elementMappers.get(ANNOTATION);
+		ElementMapper<AnnotationDescription> annotationMapper = (ElementMapper<AnnotationDescription>) elementMappers
+				.get(ANNOTATION);
 		currentAnnotationDescription = annotationMapper.mapElement(attributes);
 		mapLocator(currentAnnotationDescription);
-		Collection<AnnotationDescription> annotationDescriptions = currentFieldDescription.getAnnotationDescriptions();
+		Collection<AnnotationDescription> annotationDescriptions = currentFieldDescription
+				.getAnnotationDescriptions();
 		annotationDescriptions.add(currentAnnotationDescription);
 	}
 
 	private void addFeatureDescription(Attributes attributes) {
-		ElementMapper<FeatureDescription> featureMapper = (ElementMapper<FeatureDescription>) elementMappers.get(FEATURE);
-		FeatureDescription featureDescription = featureMapper.mapElement(attributes);
+		ElementMapper<FeatureDescription> featureMapper = (ElementMapper<FeatureDescription>) elementMappers
+				.get(FEATURE);
+		FeatureDescription featureDescription = featureMapper
+				.mapElement(attributes);
 		mapLocator(featureDescription);
-		Collection<FeatureDescription> featureDescriptions = currentAnnotationDescription.getFeatureDescriptions();
+		Collection<FeatureDescription> featureDescriptions = currentAnnotationDescription
+				.getFeatureDescriptions();
 		featureDescriptions.add(featureDescription);
 	}
 
 	private void mapLocator(Locateable locateable) {
-		if (currentLocator!=null){
+		if (currentLocator != null) {
 			int lineNumber = currentLocator.getLineNumber();
 			locateable.setLineNumber(lineNumber);
 			int columnNumber = currentLocator.getColumnNumber();

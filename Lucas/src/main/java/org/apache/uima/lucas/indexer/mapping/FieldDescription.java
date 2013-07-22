@@ -43,6 +43,8 @@ public class FieldDescription implements Locateable{
 	
 	private Boolean unique = false;
 
+	private TermCoverDescription termCoverDescription;
+	
 	private Collection<AnnotationDescription> annotationDescriptions;
 
 	private Collection<FilterDescription> filterDescriptions;
@@ -149,5 +151,19 @@ public class FieldDescription implements Locateable{
 	
 	public void setUnique(Boolean unique) {
 		this.unique = unique;
+	}
+
+	/**
+	 * @return the termCoverDescription
+	 */
+	public TermCoverDescription getTermCoverDescription() {
+		return termCoverDescription;
+	}
+
+	/**
+	 * @param termCoverDescription the termCoverDescription to set
+	 */
+	public void setTermCoverDescription(TermCoverDescription termCoverDescription) {
+		this.termCoverDescription = termCoverDescription;
 	}
 }

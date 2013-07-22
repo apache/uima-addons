@@ -48,9 +48,10 @@ import com.google.common.collect.Lists;
 
 /**
  * 
- * AnnotationTokenStream represents a TokenStream which extracts tokens from feature values of
- * annotations of a given type from a JCas object. Each token has the start and end offset from the
- * annotation object. This class supports only the following UIMA JCas types of features:
+ * AnnotationTokenStream represents a TokenStream which extracts tokens from
+ * feature values of annotations of a given type from a JCas object. Each token
+ * has the start and end offset from the annotation object. This class supports
+ * only the following UIMA JCas types of features:
  * <ol>
  * <li>String</li>
  * <li>StringArray</li>
@@ -60,445 +61,511 @@ import com.google.common.collect.Lists;
  */
 public class AnnotationTokenStream extends TokenStream {
 
-  private JCas jCas;
+	private JCas jCas;
 
-  private String featurePath;
+	private String featurePath;
 
-  private List<String> featureNames;
+	private List<String> featureNames;
 
-  private String delimiter;
+	private String delimiter;
 
-  private Iterator<Annotation> annotationIterator; // iterates over annotations
+	private Iterator<Annotation> annotationIterator; // iterates over
+														// annotations
 
-  private Iterator<FeatureStructure> featureStructureIterator; // iterates over feature structures
-                                                               // stored in feature arrays of an
-                                                               // annotation
+	private Iterator<FeatureStructure> featureStructureIterator; // iterates
+																	// over
+																	// feature
+																	// structures
+																	// stored in
+																	// feature
+																	// arrays of
+																	// an
+																	// annotation
 
-  private Iterator<String> featureValueIterator; // iterates over the features of a feature
-                                                 // structure
+	private Iterator<String> featureValueIterator; // iterates over the features
+													// of a feature
+													// structure
 
-  private Annotation currentAnnotation;
+	private Annotation currentAnnotation;
 
-  private Type annotationType;
+	private Type annotationType;
 
-  private Map<String, Format> featureFormats; // a optional map of format object for each feature
+	private Map<String, Format> featureFormats; // a optional map of format
+												// object for each feature
 
-  private static Logger logger = Logger.getLogger(AnnotationTokenStream.class);
+	private static Logger logger = Logger
+			.getLogger(AnnotationTokenStream.class);
 
-  private class NotNullPredicate<T> implements Predicate<T> {
+	private class NotNullPredicate<T> implements Predicate<T> {
 
-    public boolean apply(T object) {
-      return object != null;
-    }
-  }
+		public boolean apply(T object) {
+			return object != null;
+		}
+	}
 
-  /**
-   * Creates a TokenStream which extracts all coveredText feature values of annotations of a given
-   * type from a JCas object. Each token has the start and end offset of the annotation and takes
-   * the covered text value as termText.
-   * 
-   * @param jCas
-   *          the jCas
-   * @param sofaName the name of the subject of analysis (sofa)
-   * @param typeName
-   *          the type of the annotation
-   * @throws CASException
-   */
-  public AnnotationTokenStream(JCas jCas, String sofaName, String typeName) throws InvalidTokenSourceException {
-    this(jCas, sofaName, typeName, null, Collections.<String>emptyList(), null, 
-         Collections.<String, Format>emptyMap());
-  }
+	/**
+	 * Creates a TokenStream which extracts all coveredText feature values of
+	 * annotations of a given type from a JCas object. Each token has the start
+	 * and end offset of the annotation and takes the covered text value as
+	 * termText.
+	 * 
+	 * @param jCas
+	 *            the jCas
+	 * @param sofaName
+	 *            the name of the subject of analysis (sofa)
+	 * @param typeName
+	 *            the type of the annotation
+	 * @throws CASException
+	 */
+	public AnnotationTokenStream(JCas jCas, String sofaName, String typeName)
+			throws InvalidTokenSourceException {
+		this(jCas, sofaName, typeName, null, Collections.<String> emptyList(),
+				null, Collections.<String, Format> emptyMap());
+	}
 
-  /**
-   * Creates a TokenStream which extracts all feature values of a given feature name from
-   * annotations with a given type from a given JCas object. Each token has the start and end offset
-   * of the annotation and uses the feature value as term text.
-   * 
-   * @param jCas
-   *          the JCas object
-   * @param sofaName the name of the subject of analysis (sofa)
-   * @param typeName
-   *          the type of the annotation
-   * @param featureName
-   *          the name of the feature from which the token text is build
-   * @param featureFormat
-   *          optional format object to convert feature values to strings
-   * @throws InvalidTokenSourceException
-   */
+	/**
+	 * Creates a TokenStream which extracts all feature values of a given
+	 * feature name from annotations with a given type from a given JCas object.
+	 * Each token has the start and end offset of the annotation and uses the
+	 * feature value as term text.
+	 * 
+	 * @param jCas
+	 *            the JCas object
+	 * @param sofaName
+	 *            the name of the subject of analysis (sofa)
+	 * @param typeName
+	 *            the type of the annotation
+	 * @param featureName
+	 *            the name of the feature from which the token text is build
+	 * @param featureFormat
+	 *            optional format object to convert feature values to strings
+	 * @throws InvalidTokenSourceException
+	 */
 
-  public AnnotationTokenStream(JCas jCas, String sofaName, String typeName, String featureName,
-          Format featureFormat) throws InvalidTokenSourceException {
-    this(jCas, sofaName, typeName, null, Lists.newArrayList(featureName), null, 
-         featureFormat != null ? ImmutableBiMap.of(featureName, featureFormat): Collections.<String, Format>emptyMap());
-  }
+	public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
+			String featureName, Format featureFormat)
+			throws InvalidTokenSourceException {
+		this(jCas, sofaName, typeName, null, Lists.newArrayList(featureName),
+				null, featureFormat != null ? ImmutableBiMap.of(featureName,
+						featureFormat) : Collections
+						.<String, Format> emptyMap());
+	}
 
-  /**
-   * Creates a TokenStream which extracts all feature values of a given feature name list from
-   * annotations with a given type from a given JCas object. Each token has the start and end offset
-   * of the annotation and uses the concatenation of all the feature values as term text. Optionally
-   * the different feature values of an annotation can be concatenated with a delimiter.
-   * 
-   * @param jCas
-   *          the JCas object
-   * @param sofaName the name of the Subject Of Analysis (sofa)
-   * @param typeName
-   *          the type of the annotation
-   * @param featureNames
-   *          the name of the feature from which the token text is build
-   * @param delimiter
-   *          a delimiter for concatenating the different feature values of an annotation object. If
-   *          null a white space will be used.
-   * @param featureFormats
-   *          optional map of format objects to convert feature values to strings - the key must be
-   *          the feature name
-   * @throws InvalidTokenSourceException
-   */
-  public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
-          List<String> featureNames, String delimiter, Map<String, Format> featureFormats)
-          throws InvalidTokenSourceException {
-    this(jCas, sofaName, typeName, null, featureNames, delimiter, featureFormats);
-  }
+	/**
+	 * Creates a TokenStream which extracts all feature values of a given
+	 * feature name list from annotations with a given type from a given JCas
+	 * object. Each token has the start and end offset of the annotation and
+	 * uses the concatenation of all the feature values as term text. Optionally
+	 * the different feature values of an annotation can be concatenated with a
+	 * delimiter.
+	 * 
+	 * @param jCas
+	 *            the JCas object
+	 * @param sofaName
+	 *            the name of the Subject Of Analysis (sofa)
+	 * @param typeName
+	 *            the type of the annotation
+	 * @param featureNames
+	 *            the name of the feature from which the token text is build
+	 * @param delimiter
+	 *            a delimiter for concatenating the different feature values of
+	 *            an annotation object. If null a white space will be used.
+	 * @param featureFormats
+	 *            optional map of format objects to convert feature values to
+	 *            strings - the key must be the feature name
+	 * @throws InvalidTokenSourceException
+	 */
+	public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
+			List<String> featureNames, String delimiter,
+			Map<String, Format> featureFormats)
+			throws InvalidTokenSourceException {
+		this(jCas, sofaName, typeName, null, featureNames, delimiter,
+				featureFormats);
+	}
 
-  /**
-   * Creates a TokenStream which extracts all feature values of a given feature name list from
-   * annotations with a given type from a given JCas object. Each token has the start and end offset
-   * of the annotation and uses the concatenation of all the feature values as term text.
-   * 
-   * @param jCas
-   *          the JCas object
-   * @param sofaName the name of the Subject Of Analysis (sofa)
-   * @param typeName
-   *          the type of the annotation
-   * @param featureNames
-   *          the name of the feature from which the token text is build
-   * @param featureFormats
-   *          optional map of format objects to convert feature values to strings - the key must be
-   *          the feature name
-   * @throws InvalidTokenSourceException
-   */
-  public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
-          List<String> featureNames, Map<String, Format> featureFormats) throws InvalidTokenSourceException {
-    this(jCas, sofaName, typeName, null, featureNames, null, featureFormats);
-  }
+	/**
+	 * Creates a TokenStream which extracts all feature values of a given
+	 * feature name list from annotations with a given type from a given JCas
+	 * object. Each token has the start and end offset of the annotation and
+	 * uses the concatenation of all the feature values as term text.
+	 * 
+	 * @param jCas
+	 *            the JCas object
+	 * @param sofaName
+	 *            the name of the Subject Of Analysis (sofa)
+	 * @param typeName
+	 *            the type of the annotation
+	 * @param featureNames
+	 *            the name of the feature from which the token text is build
+	 * @param featureFormats
+	 *            optional map of format objects to convert feature values to
+	 *            strings - the key must be the feature name
+	 * @throws InvalidTokenSourceException
+	 */
+	public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
+			List<String> featureNames, Map<String, Format> featureFormats)
+			throws InvalidTokenSourceException {
+		this(jCas, sofaName, typeName, null, featureNames, null, featureFormats);
+	}
 
-  /**
-   * Creates a TokenStream which extracts all feature values of a given feature name list from
-   * annotations with a given type from a given JCas object. The addressed features are part of
-   * direct or indirect feature structure value of a annotation. For example a annotation of type
-   * person has a feature address which values are address feature structures with features for the
-   * street, postal code and city . To create tokens with postal code and city of a persons address,
-   * the featurePath must be &quot;address&quot; and the featureNames &quot;postalCode&quot; and
-   * &quot;city&quot;. Each token has the start and end offset of the annotation and uses the
-   * concatenation of all the feature values as term text.
-   * 
-   * @param jCas
-   *          the JCas object
-   * @param sofaName the name of the Subject of Analysis (sofa)
-   * @param typeName
-   *          the type of the annotation
-   * @param featurePath
-   *          the path to the feature structures which features should be used for tokens Path
-   *          entries should be separated by &quot;.&quot;. Example:
-   *          &quot;affiliation.address.country&quot;
-   * @param featureNames
-   *          the name of the feature from which the token text is build
-   * @param featureFormats
-   *          optional map of format objects to convert feature values to strings - the key must be
-   *          the feature name
-   * @throws InvalidTokenSourceException
-   */
-  public AnnotationTokenStream(JCas jCas, String sofaName, String typeName, String featurePath,
-          List<String> featureNames, Map<String, Format> featureFormats) throws InvalidTokenSourceException {
-    this(jCas, sofaName, typeName, featurePath, featureNames, null, featureFormats);
-  }
+	/**
+	 * Creates a TokenStream which extracts all feature values of a given
+	 * feature name list from annotations with a given type from a given JCas
+	 * object. The addressed features are part of direct or indirect feature
+	 * structure value of a annotation. For example a annotation of type person
+	 * has a feature address which values are address feature structures with
+	 * features for the street, postal code and city . To create tokens with
+	 * postal code and city of a persons address, the featurePath must be
+	 * &quot;address&quot; and the featureNames &quot;postalCode&quot; and
+	 * &quot;city&quot;. Each token has the start and end offset of the
+	 * annotation and uses the concatenation of all the feature values as term
+	 * text.
+	 * 
+	 * @param jCas
+	 *            the JCas object
+	 * @param sofaName
+	 *            the name of the Subject of Analysis (sofa)
+	 * @param typeName
+	 *            the type of the annotation
+	 * @param featurePath
+	 *            the path to the feature structures which features should be
+	 *            used for tokens Path entries should be separated by
+	 *            &quot;.&quot;. Example:
+	 *            &quot;affiliation.address.country&quot;
+	 * @param featureNames
+	 *            the name of the feature from which the token text is build
+	 * @param featureFormats
+	 *            optional map of format objects to convert feature values to
+	 *            strings - the key must be the feature name
+	 * @throws InvalidTokenSourceException
+	 */
+	public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
+			String featurePath, List<String> featureNames,
+			Map<String, Format> featureFormats)
+			throws InvalidTokenSourceException {
+		this(jCas, sofaName, typeName, featurePath, featureNames, null,
+				featureFormats);
+	}
 
-  /**
-   * Creates a TokenStream which extracts all feature values of a given feature name list from
-   * annotations with a given type from a given JCas object. The addressed features are part of
-   * direct or indirect feature structure value of a annotation. For example a annotation of type
-   * person has a feature address which values are address feature structures with features for the
-   * street, postal code and city . To create tokens with postal code and city of a persons address,
-   * the featurePath must be &quot;address&quot; and the featureNames &quot;postalCode&quot; and
-   * &quot;city&quot;. Each token has the start and end offset of the annotation and uses the
-   * concatenation of all the feature values as term text. Optionally the different feature values
-   * of an annotation can be concatenated with a delimiter.
-   * 
-   * @param jCas
-   *          the JCas object
-   * @param sofaName the name of the Subject of Analysis (sofa)
-   * @param typeName
-   *          the type of the annotation
-   * @param featurePath
-   *          the path to the feature structures which features should be used for tokens Path
-   *          entries should be separated by &quot;.&quot;. Example:
-   *          &quot;affiliation.address.country&quot;
-   * @param featureNames
-   *          the name of the feature from which the token text is build
-   * @param delimiter
-   *          a delimiter for concatenating the different feature values of an annotation object. If
-   *          null a white space will be used.
-   * @param featureFormats
-   *          optional map of format objects to convert feature values to strings - the key must be
-   *          the feature name
-   * @throws InvalidTokenSourceException
-   */
-  public AnnotationTokenStream(JCas jCas, String sofaName, String typeName, String featurePath,
-          List<String> featureNames, String delimiter, Map<String, Format> featureFormats)
-          throws InvalidTokenSourceException {
-    super();
+	/**
+	 * Creates a TokenStream which extracts all feature values of a given
+	 * feature name list from annotations with a given type from a given JCas
+	 * object. The addressed features are part of direct or indirect feature
+	 * structure value of a annotation. For example a annotation of type person
+	 * has a feature address which values are address feature structures with
+	 * features for the street, postal code and city . To create tokens with
+	 * postal code and city of a persons address, the featurePath must be
+	 * &quot;address&quot; and the featureNames &quot;postalCode&quot; and
+	 * &quot;city&quot;. Each token has the start and end offset of the
+	 * annotation and uses the concatenation of all the feature values as term
+	 * text. Optionally the different feature values of an annotation can be
+	 * concatenated with a delimiter.
+	 * 
+	 * @param jCas
+	 *            the JCas object
+	 * @param sofaName
+	 *            the name of the Subject of Analysis (sofa)
+	 * @param typeName
+	 *            the type of the annotation
+	 * @param featurePath
+	 *            the path to the feature structures which features should be
+	 *            used for tokens Path entries should be separated by
+	 *            &quot;.&quot;. Example:
+	 *            &quot;affiliation.address.country&quot;
+	 * @param featureNames
+	 *            the name of the feature from which the token text is build
+	 * @param delimiter
+	 *            a delimiter for concatenating the different feature values of
+	 *            an annotation object. If null a white space will be used.
+	 * @param featureFormats
+	 *            optional map of format objects to convert feature values to
+	 *            strings - the key must be the feature name
+	 * @throws InvalidTokenSourceException
+	 */
+	public AnnotationTokenStream(JCas jCas, String sofaName, String typeName,
+			String featurePath, List<String> featureNames, String delimiter,
+			Map<String, Format> featureFormats)
+			throws InvalidTokenSourceException {
+		super();
 
-    this.featurePath = featurePath;
-    this.featureNames = featureNames;
-    this.delimiter = delimiter;
-    if (featureFormats == null)
-      this.featureFormats = Collections.emptyMap();
-    else
-      this.featureFormats = featureFormats;
-    
-    getSofaCas(jCas, sofaName);
-    getTypeForName(typeName);
-    validate(annotationType, featureNames, featurePath);
-    
-    initializeIterators();
+		this.featurePath = featurePath;
+		this.featureNames = featureNames;
+		this.delimiter = delimiter;
+		if (featureFormats == null)
+			this.featureFormats = Collections.emptyMap();
+		else
+			this.featureFormats = featureFormats;
 
-  }
+		getSofaCas(jCas, sofaName);
+		getTypeForName(typeName);
+		validate(annotationType, featureNames, featurePath);
 
-  private void getTypeForName(String typeName) throws InvalidTokenSourceException{
-    annotationType = jCas.getTypeSystem().getType(typeName);
-    if( annotationType == null )
-      throw new InvalidTokenSourceException("Type " + typeName + " not found!");
-  }
+		initializeIterators();
 
-  private void getSofaCas(JCas cas, String sofaName) throws InvalidTokenSourceException {
-    try {
-      jCas = cas.getView(sofaName);
-    } catch (CASException e) {
-      throw new InvalidTokenSourceException(e);
-    }
-  }
+	}
 
-  void validate(Type type, Collection<String> featureNames, String featurePath) throws InvalidTokenSourceException{
-    Type typeToValidate = findTypeWithPath(type, featurePath);
-    
-    for( String featureName: featureNames ){
-      Feature feature = typeToValidate.getFeatureByBaseName(featureName);
-      if( feature == null )
-        throw new InvalidTokenSourceException("Type " + typeToValidate.getName() + " has no feature " + featureName + ". featurePath: " + featurePath);
-    }
-  }
-  
-  private Type findTypeWithPath(Type type, String featurePath) throws InvalidTokenSourceException{
-    if( featurePath == null )
-      return type;
-    
-    String[] featurePathElements = featurePath.split("\\.");
-    Type currentType = type;
-    
-    for( String featurePathElement: featurePathElements ){
-      Feature feature = currentType.getFeatureByBaseName(featurePathElement);
-      if (feature == null)
-        throw new InvalidTokenSourceException("Type " + currentType.getName() + " has no feature " + featurePathElement);
-      
-      currentType = feature.getRange();
-      if (currentType.isArray())
-        currentType = currentType.getComponentType();
-    }
-    
-    return currentType;
-  }
+	private void getTypeForName(String typeName)
+			throws InvalidTokenSourceException {
+		annotationType = jCas.getTypeSystem().getType(typeName);
+		if (annotationType == null)
+			throw new InvalidTokenSourceException("Type " + typeName
+					+ " not found!");
+	}
 
-  @Override
-  public Token next(Token token) throws IOException {
-    while (!featureValueIterator.hasNext()) {
-      while (!featureStructureIterator.hasNext()) {
-        if (!annotationIterator.hasNext())
-          return null;
-        currentAnnotation = (Annotation) annotationIterator.next();
-        featureStructureIterator = createFeatureStructureIterator(currentAnnotation, featurePath);
-      }
+	private void getSofaCas(JCas cas, String sofaName)
+			throws InvalidTokenSourceException {
+		try {
+			jCas = cas.getView(sofaName);
+		} catch (CASException e) {
+			throw new InvalidTokenSourceException(e);
+		}
+	}
 
-      featureValueIterator = createFeatureValueIterator(featureStructureIterator.next(),
-              featureNames);
-    }
+	void validate(Type type, Collection<String> featureNames, String featurePath)
+			throws InvalidTokenSourceException {
+		Type typeToValidate = findTypeWithPath(type, featurePath);
 
-    token.setStartOffset(currentAnnotation.getBegin());
-    token.setEndOffset(currentAnnotation.getEnd());
+		for (String featureName : featureNames) {
+			Feature feature = typeToValidate.getFeatureByBaseName(featureName);
+			if (feature == null)
+				throw new InvalidTokenSourceException("Type "
+						+ typeToValidate.getName() + " has no feature "
+						+ featureName + ". featurePath: " + featurePath);
+		}
+	}
 
-    char[] value = featureValueIterator.next().toCharArray();
-    token.setTermBuffer(value, 0, value.length);
-    return token;
-  }
+	private Type findTypeWithPath(Type type, String featurePath)
+			throws InvalidTokenSourceException {
+		if (featurePath == null)
+			return type;
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.apache.lucene.analysis.TokenStream#next()
-   */
-  @Override
-  public Token next() throws IOException {
-    return next(new Token());
-  }
+		String[] featurePathElements = featurePath.split("\\.");
+		Type currentType = type;
 
-  protected void initializeIterators() {
-    annotationIterator = Iterators.filter(jCas.getAnnotationIndex(annotationType).iterator(),
-            new NotNullPredicate<Annotation>());
+		for (String featurePathElement : featurePathElements) {
+			Feature feature = currentType
+					.getFeatureByBaseName(featurePathElement);
+			if (feature == null)
+				throw new InvalidTokenSourceException("Type "
+						+ currentType.getName() + " has no feature "
+						+ featurePathElement);
 
-    if (!annotationIterator.hasNext()) {
-      featureStructureIterator = Iterators.emptyIterator();
-      featureValueIterator = Iterators.emptyIterator();
-      return;
-    }
+			currentType = feature.getRange();
+			if (currentType.isArray())
+				currentType = currentType.getComponentType();
+		}
 
-    currentAnnotation = (Annotation) annotationIterator.next();
-    featureStructureIterator = createFeatureStructureIterator(currentAnnotation, featurePath);
-    if (!featureStructureIterator.hasNext()) {
-      featureValueIterator = Iterators.emptyIterator();
-      return;
-    }
+		return currentType;
+	}
 
-    FeatureStructure featureStructure = featureStructureIterator.next();
-    featureValueIterator = createFeatureValueIterator(featureStructure, featureNames);
-  }
+	@Override
+	public Token next(Token token) throws IOException {
+		while (!featureValueIterator.hasNext()) {
+			while (!featureStructureIterator.hasNext()) {
+				if (!annotationIterator.hasNext())
+					return null;
+				currentAnnotation = (Annotation) annotationIterator.next();
+				featureStructureIterator = createFeatureStructureIterator(
+						currentAnnotation, featurePath);
+			}
 
-  protected Iterator<FeatureStructure> createFeatureStructureIterator(Annotation annotation,
-          String featurePath) {
-    Collection<FeatureStructure> featureStructures = new LinkedList<FeatureStructure>();
-    Collection<FeatureStructure> childs = new LinkedList<FeatureStructure>();
+			featureValueIterator = createFeatureValueIterator(
+					featureStructureIterator.next(), featureNames);
+		}
 
-    if (featurePath == null) {
-      featureStructures.add(annotation);
-      return featureStructures.iterator();
-    }
+		// If we don't do that we will get problems e.g. with the
+		// HypernymFilter: The tokens are re-used by Lucene 2.9.3 and when the
+		// positionIncrement has once been set to 0, it will stay this way until
+		// it is explicitly set to another value.
+		token.reinit(new Token());
 
-    Type currentType = annotation.getType();
-    if (currentType.isArray())
-      currentType = currentType.getComponentType();
+		token.setStartOffset(currentAnnotation.getBegin());
+		token.setEndOffset(currentAnnotation.getEnd());
 
-    String[] pathEntries = featurePath.split("\\.");
-    featureStructures.add(annotation);
+		char[] value = featureValueIterator.next().toCharArray();
+		token.setTermBuffer(value, 0, value.length);
+		return token;
+	}
 
-    for (String pathEntry : pathEntries) {
-      Feature feature = currentType.getFeatureByBaseName(pathEntry);
-      childs.clear();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.apache.lucene.analysis.TokenStream#next()
+	 */
+	@Override
+	public Token next() throws IOException {
+		return next(new Token());
+	}
 
-      if (feature.getRange().isArray()) {
-        for (FeatureStructure featureStructureItem : featureStructures) {
-          FSArray fsArray = (FSArray) featureStructureItem.getFeatureValue(feature);
-          if (fsArray == null)
-            continue;
+	protected void initializeIterators() {
+		annotationIterator = Iterators.filter(
+				jCas.getAnnotationIndex(annotationType).iterator(),
+				new NotNullPredicate<Annotation>());
 
-          for (int i = 0; i < fsArray.size(); i++)
-            childs.add(fsArray.get(i));
-        }
-      } else
-        for (FeatureStructure featureStructureItem : featureStructures)
-          childs.add(featureStructureItem.getFeatureValue(feature));
+		if (!annotationIterator.hasNext()) {
+			featureStructureIterator = Iterators.emptyIterator();
+			featureValueIterator = Iterators.emptyIterator();
+			return;
+		}
 
-      currentType = feature.getRange();
-      if (currentType.isArray())
-        currentType = currentType.getComponentType();
+		currentAnnotation = (Annotation) annotationIterator.next();
+		featureStructureIterator = createFeatureStructureIterator(
+				currentAnnotation, featurePath);
+		if (!featureStructureIterator.hasNext()) {
+			featureValueIterator = Iterators.emptyIterator();
+			return;
+		}
 
-      featureStructures.clear();
-      featureStructures.addAll(childs);
-    }
+		FeatureStructure featureStructure = featureStructureIterator.next();
+		featureValueIterator = createFeatureValueIterator(featureStructure,
+				featureNames);
+	}
 
-    return Iterators.filter(featureStructures.iterator(), new NotNullPredicate<FeatureStructure>());
-  }
+	protected Iterator<FeatureStructure> createFeatureStructureIterator(
+			Annotation annotation, String featurePath) {
+		Collection<FeatureStructure> featureStructures = new LinkedList<FeatureStructure>();
+		Collection<FeatureStructure> childs = new LinkedList<FeatureStructure>();
 
-  protected Iterator<String> createFeatureValueIterator(FeatureStructure srcFeatureStructure,
-          Collection<String> featureNames) {
-    List<String> values = new LinkedList<String>();
-    Type featureType = srcFeatureStructure.getType();
+		if (featurePath == null) {
+			featureStructures.add(annotation);
+			return featureStructures.iterator();
+		}
 
-    if (featureNames.size() == 0)
-      values.add(currentAnnotation.getCoveredText());
+		Type currentType = annotation.getType();
+		if (currentType.isArray())
+			currentType = currentType.getComponentType();
 
-    for (String featureName : featureNames) {
-      Feature feature = featureType.getFeatureByBaseName(featureName);
-      if (feature.getRange().isArray()) {
-        StringArray fsArray = (StringArray) srcFeatureStructure.getFeatureValue(feature);
-        if (featureNames.size() == 1) {
-          for (int i = 0; i < fsArray.size(); i++)
-            values.add(fsArray.get(i).toString());
-        } else {
-          String value = "";
-          for (int i = 0; i < fsArray.size(); i++) {
-            value = value.concat(fsArray.get(i).toString());
-            if (i < fsArray.size() - 1)
-              value = value.concat(delimiter);
-          }
-          values.add(value);
-        }
-      } else
-        values.add(getValueForFeature(srcFeatureStructure, feature, featureFormats.get(feature
-                .getShortName())));
-    }
-    String value = "";
-    if (delimiter != null) {
-      for (int i = 0; i < values.size(); i++) {
-        if (values.get(i) == null)
-          continue;
+		String[] pathEntries = featurePath.split("\\.");
+		featureStructures.add(annotation);
 
-        value = value.concat(values.get(i));
-        if (i < values.size() - 1)
-          value = value.concat(delimiter);
-      }
-      values.clear();
-      values.add(value);
-    }
+		for (String pathEntry : pathEntries) {
+			Feature feature = currentType.getFeatureByBaseName(pathEntry);
+			childs.clear();
 
-    return Iterators.filter(values.iterator(), new NotNullPredicate<String>());
-  }
+			if (feature.getRange().isArray()) {
+				for (FeatureStructure featureStructureItem : featureStructures) {
+					FSArray fsArray = (FSArray) featureStructureItem
+							.getFeatureValue(feature);
+					if (fsArray == null)
+						continue;
 
-  public String getValueForFeature(FeatureStructure featureStructure, Feature feature, Format format) {
-    if (format == null)
-      return featureStructure.getFeatureValueAsString(feature);
-    else {
-      Object value = null;
-      if (feature.getRange().getName().equals(CAS.TYPE_NAME_DOUBLE))
-        value = featureStructure.getDoubleValue(feature);
-      else if (feature.getRange().getName().equals(CAS.TYPE_NAME_FLOAT))
-        value = featureStructure.getFloatValue(feature);
-      else if (feature.getRange().getName().equals(CAS.TYPE_NAME_LONG))
-        value = featureStructure.getLongValue(feature);
-      else if (feature.getRange().getName().equals(CAS.TYPE_NAME_INTEGER))
-        value = featureStructure.getIntValue(feature);
-      else if (feature.getRange().getName().equals(CAS.TYPE_NAME_SHORT))
-        value = featureStructure.getShortValue(feature);
+					for (int i = 0; i < fsArray.size(); i++)
+						childs.add(fsArray.get(i));
+				}
+			} else
+				for (FeatureStructure featureStructureItem : featureStructures)
+					childs.add(featureStructureItem.getFeatureValue(feature));
 
-      return format.format(value);
-    }
-  }
+			currentType = feature.getRange();
+			if (currentType.isArray())
+				currentType = currentType.getComponentType();
 
-  public void reset() {
-    featureStructureIterator = null;
-    currentAnnotation = null;
-    featureFormats = Collections.emptyMap();
-    initializeIterators();
-  }
+			featureStructures.clear();
+			featureStructures.addAll(childs);
+		}
 
-  public Map<String, Format> getFeatureFormats() {
-    return featureFormats;
-  }
+		return Iterators.filter(featureStructures.iterator(),
+				new NotNullPredicate<FeatureStructure>());
+	}
 
-  public JCas getJCas() {
-    return jCas;
-  }
+	protected Iterator<String> createFeatureValueIterator(
+			FeatureStructure srcFeatureStructure,
+			Collection<String> featureNames) {
+		List<String> values = new LinkedList<String>();
+		Type featureType = srcFeatureStructure.getType();
 
-  public String getFeaturePath() {
-    return featurePath;
-  }
+		if (featureNames.size() == 0)
+			values.add(currentAnnotation.getCoveredText());
 
-  public List<String> getFeatureNames() {
-    return featureNames;
-  }
+		for (String featureName : featureNames) {
+			Feature feature = featureType.getFeatureByBaseName(featureName);
+			if (feature.getRange().isArray()) {
+				StringArray fsArray = (StringArray) srcFeatureStructure
+						.getFeatureValue(feature);
+				if (featureNames.size() == 1) {
+					for (int i = 0; i < fsArray.size(); i++)
+						values.add(fsArray.get(i).toString());
+				} else {
+					String value = "";
+					for (int i = 0; i < fsArray.size(); i++) {
+						value = value.concat(fsArray.get(i).toString());
+						if (i < fsArray.size() - 1)
+							value = value.concat(delimiter);
+					}
+					values.add(value);
+				}
+			} else
+				values.add(getValueForFeature(srcFeatureStructure, feature,
+						featureFormats.get(feature.getShortName())));
+		}
+		String value = "";
+		if (delimiter != null) {
+			for (int i = 0; i < values.size(); i++) {
+				if (values.get(i) == null)
+					continue;
 
-  public String getDelimiter() {
-    return delimiter;
-  }
+				value = value.concat(values.get(i));
+				if (i < values.size() - 1)
+					value = value.concat(delimiter);
+			}
+			values.clear();
+			values.add(value);
+		}
 
-  public Type getAnnotationType() {
-    return annotationType;
-  }
+		return Iterators.filter(values.iterator(),
+				new NotNullPredicate<String>());
+	}
+
+	public String getValueForFeature(FeatureStructure featureStructure,
+			Feature feature, Format format) {
+		if (format == null)
+			return featureStructure.getFeatureValueAsString(feature);
+		else {
+			Object value = null;
+			if (feature.getRange().getName().equals(CAS.TYPE_NAME_DOUBLE))
+				value = featureStructure.getDoubleValue(feature);
+			else if (feature.getRange().getName().equals(CAS.TYPE_NAME_FLOAT))
+				value = featureStructure.getFloatValue(feature);
+			else if (feature.getRange().getName().equals(CAS.TYPE_NAME_LONG))
+				value = featureStructure.getLongValue(feature);
+			else if (feature.getRange().getName().equals(CAS.TYPE_NAME_INTEGER))
+				value = featureStructure.getIntValue(feature);
+			else if (feature.getRange().getName().equals(CAS.TYPE_NAME_SHORT))
+				value = featureStructure.getShortValue(feature);
+
+			return format.format(value);
+		}
+	}
+
+	public void reset() {
+		featureStructureIterator = null;
+		currentAnnotation = null;
+		featureFormats = Collections.emptyMap();
+		initializeIterators();
+	}
+
+	public Map<String, Format> getFeatureFormats() {
+		return featureFormats;
+	}
+
+	public JCas getJCas() {
+		return jCas;
+	}
+
+	public String getFeaturePath() {
+		return featurePath;
+	}
+
+	public List<String> getFeatureNames() {
+		return featureNames;
+	}
+
+	public String getDelimiter() {
+		return delimiter;
+	}
+
+	public Type getAnnotationType() {
+		return annotationType;
+	}
 
 }

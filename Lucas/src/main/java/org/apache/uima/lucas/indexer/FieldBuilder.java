@@ -19,6 +19,10 @@
 
 package org.apache.uima.lucas.indexer;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Field;
@@ -28,12 +32,10 @@ import org.apache.lucene.document.Field.TermVector;
 import org.apache.uima.lucas.indexer.analysis.TokenStreamConcatenator;
 import org.apache.uima.lucas.indexer.analysis.TokenStreamMerger;
 import org.apache.uima.lucas.indexer.mapping.FieldDescription;
+import org.apache.uima.lucas.indexer.mapping.TermCoverBuilder;
+import org.apache.uima.lucas.indexer.mapping.TermCoverBuilderFactory;
 import org.apache.uima.lucas.indexer.mapping.FilterDescription;
 import org.apache.uima.lucas.indexer.util.TokenStreamStringConcatenator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class FieldBuilder {
 
@@ -67,8 +69,11 @@ public class FieldBuilder {
 	private FilterBuilder filterBuilder;
 	protected FieldDescription fieldDescription;
 
+	private TermCoverBuilderFactory termCoverBuilderFactory;
+
 	public FieldBuilder(FilterBuilder filterBuilder) {
 		tokenStreamStringConcatenator = new TokenStreamStringConcatenator();
+		termCoverBuilderFactory = new TermCoverBuilderFactory();
 		this.filterBuilder = filterBuilder;
 	}
 
@@ -91,30 +96,53 @@ public class FieldBuilder {
 		// The unique flag means we only want ONE field instance with the
 		// name fieldName.
 		Boolean unique = fieldDescription.getUnique();
+		Boolean coverField = fieldDescription.getTermCoverDescription() != null;
 		Field.Store fieldStore = getFieldStore(fieldDescription.getStored());
 		Field.Index fieldIndex = getFieldIndex(fieldDescription.getIndex());
 		Field.TermVector fieldTermVector = getFieldTermVector(fieldDescription
 				.getTermVector());
 		boolean omitTF = fieldDescription.getIndex().equals(FIELD_INDEX_NO_TF)
 				|| fieldDescription.getIndex().equals(FIELD_INDEX_NO_NORMS_TF);
-		boolean store = fieldStore == Field.Store.YES || fieldStore == Field.Store.COMPRESS;
+		boolean store = fieldStore == Field.Store.YES
+				|| fieldStore == Field.Store.COMPRESS;
 
-		// Created stored fields. The parameters unique, fieldIndex and omitTF
-		// are only necessary in case of a stored and indexed unique field. Then,
-		// the field is instanced stored and indexed, thus only one instance
-		// of the field is necessary. This only works with TokenStreams which
-		// contain exactly one token (if a TokenStream emits more tokens,
-		// several fields will be instanced).
-		if (store)
-			fields.addAll(createStoredFields(fieldName, tokenStream,
-					fieldStore, delimiter, unique, fieldIndex, omitTF));
+		if (!coverField) {
+			// Create stored fields. The parameters unique, fieldIndex and
+			// omitTF are only necessary in case of a stored and indexed
+			// unique field. Then, the field is instanced stored and indexed,
+			// thus only one instance of the field is necessary. This only works
+			// with TokenStreams which contain exactly one token (if a
+			// TokenStream emits more tokens, several fields will be instanced).
+			if (store)
+				fields.addAll(createStoredFields(fieldName, tokenStream,
+						fieldStore, delimiter, unique, fieldIndex, omitTF));
 
-		// Create indexed fields. If the field is unique and has been stored,
-		// there already is an instance of the field and we don't create another.
-		if (fieldIndex != Field.Index.NO && (!unique || !store))
-			fields.add(createIndexedField(fieldName, tokenStream, fieldIndex,
-					fieldTermVector, omitTF));
+			// Create indexed fields. If the field is unique and has been
+			// stored, there already is an instance of the field and we don't
+			// create another.
+			if (fieldIndex != Field.Index.NO && (!unique || !store))
+				fields.add(createIndexedField(fieldName, tokenStream,
+						fieldIndex, fieldTermVector, omitTF));
 
+		} else {
+
+			TermCoverBuilder termCoverBuilder = termCoverBuilderFactory
+					.createTermCoverBuilder(tokenStream, fieldDescription.getTermCoverDescription());
+			while (termCoverBuilder.increaseCoverSubset()) {
+				String coverSubsetName = termCoverBuilder.getCoverSubsetName();
+				TokenStream coverSubsetTokenStream = termCoverBuilder
+						.getPartitionTokenStream();
+				if (store)
+					fields.addAll(createStoredFields(coverSubsetName,
+							coverSubsetTokenStream, fieldStore, delimiter,
+							unique, fieldIndex, omitTF));
+
+				if (fieldIndex != Field.Index.NO && (!unique || !store))
+					fields.add(createIndexedField(coverSubsetName,
+							coverSubsetTokenStream, fieldIndex, fieldTermVector,
+							omitTF));
+			}
+		}
 		return fields;
 	}
 
@@ -158,8 +186,9 @@ public class FieldBuilder {
 
 	}
 
-	protected Field createIndexedField(String fieldName, TokenStream tokenStream,
-			Index fieldIndex, TermVector fieldTermVector, boolean omitTF) {
+	protected Field createIndexedField(String fieldName,
+			TokenStream tokenStream, Index fieldIndex,
+			TermVector fieldTermVector, boolean omitTF) {
 
 		Field field = new Field(fieldName, tokenStream, fieldTermVector);
 		if (fieldIndex == Field.Index.NOT_ANALYZED_NO_NORMS)

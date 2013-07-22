@@ -24,6 +24,8 @@
 
 	<field name="annotation1" index="yes" termVector="no" stored="yes"
 		merge="true">
+		<termSetCoverDefinition coverDefinitionFile="pathToACoverDefinitionFile"
+			generateFieldNameMethod="append" ignoreCaseOfSelectedTerms="true" />
 		<filters>
 			<filter className="testfilter" factoryClassName="testfactory"
 				key="value" reuseFactory="true" name="myFactory" />

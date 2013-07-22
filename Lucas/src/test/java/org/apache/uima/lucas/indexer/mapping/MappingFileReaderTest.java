@@ -19,8 +19,6 @@
 
 package org.apache.uima.lucas.indexer.mapping;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -28,12 +26,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.xml.parsers.SAXParserFactory;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class MappingFileReaderTest {
 
@@ -53,12 +54,15 @@ public class MappingFileReaderTest {
   private static final String YES = "yes";
   private static final String FIELD_NAME = "annotation1";
   private static final String MAPPING_FILE = "src/test/resources/MappingFileReaderTest.xml";
+  private static final String COVER_FILE_PATH = "pathToACoverDefinitionFile";
+  private static final String GENERATE_FIELD_NAME_METHOD = "append";
   private MappingFileReader mappingFileReader;
   
   @Before
   public void setUp() throws Exception{
 	Map<String, ElementMapper<?>> elementMappers = new HashMap<String, ElementMapper<?>>();
 	elementMappers.put(MappingFileReader.ANNOTATION, new AnnotationMapper());
+	elementMappers.put(MappingFileReader.TERM_SET_COVER_DEFINITION, new TermCoverMapper());
 	elementMappers.put(MappingFileReader.FILTER, new FilterMapper());
 	elementMappers.put(MappingFileReader.FIELD, new FieldMapper());
 	elementMappers.put(MappingFileReader.FEATURE, new FeatureMapper());
@@ -87,7 +91,7 @@ public class MappingFileReaderTest {
 	  assertEquals(TESTFACTORY, filterDescription.getFactoryClassName());
 	  assertEquals(FACTORY_NAME, filterDescription.getName());
 	  assertTrue(filterDescription.isReuseFactory());
-	  assertEquals(29, filterDescription.getLineNumber());
+	  assertEquals(31, filterDescription.getLineNumber());
 	  assertEquals(56, filterDescription.getColumnNumber());
 	  
 	  Properties properties = filterDescription.getProperties(); 
@@ -103,7 +107,7 @@ public class MappingFileReaderTest {
 	  assertEquals(FEATURE_PATH, annotationDescription.getFeaturePath());
 	  assertEquals(VALUE_DELIMITER_STRING, annotationDescription.getFeatureValueDelimiterString());
 	  assertEquals(TOKENIZER, annotationDescription.getTokenizer());
-	  assertEquals(33, annotationDescription.getLineNumber());
+	  assertEquals(35, annotationDescription.getLineNumber());
 	  assertEquals(113, annotationDescription.getColumnNumber());
 
 	  filterDescriptions = annotationDescription.getFilterDescriptions();
@@ -113,7 +117,7 @@ public class MappingFileReaderTest {
 	  assertEquals(TESTFACTORY, filterDescription.getFactoryClassName());
 	  assertEquals(FACTORY_NAME, filterDescription.getName());
 	  assertTrue(filterDescription.isReuseFactory());
-	  assertEquals(36, filterDescription.getLineNumber());
+	  assertEquals(38, filterDescription.getLineNumber());
 	  assertEquals(58, filterDescription.getColumnNumber());
 
 	  properties = filterDescription.getProperties(); 
@@ -124,7 +128,15 @@ public class MappingFileReaderTest {
 	  FeatureDescription featureDescription = featureDescriptions.iterator().next();
 	  assertEquals(FEATURE_NAME, featureDescription.getFeatureName());
 	  assertEquals(NUMBER_FORMAT, featureDescription.getNumberFormat());
-	  assertEquals(39, featureDescription.getLineNumber());
+	  assertEquals(41, featureDescription.getLineNumber());
 	  assertEquals(57, featureDescription.getColumnNumber());
+	  
+	  TermCoverDescription termCoverDescription = fieldDescription.getTermCoverDescription();
+	  assertNotNull(termCoverDescription);
+	  assertEquals(COVER_FILE_PATH, termCoverDescription.getCoverDefinitionFile());
+	  assertEquals(GENERATE_FIELD_NAME_METHOD, termCoverDescription.getGenerateFieldNameMethod());
+	  assertTrue(termCoverDescription.getIgnoreCaseOfSelectedTerms());
+	  assertEquals(28, termCoverDescription.getLineNumber());
+	  assertEquals(72, termCoverDescription.getColumnNumber());
 	}
 }

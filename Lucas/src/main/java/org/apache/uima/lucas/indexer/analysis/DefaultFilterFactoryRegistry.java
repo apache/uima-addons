@@ -40,6 +40,8 @@ public class DefaultFilterFactoryRegistry {
   public static final String LOWERCASE_FILTER_FACTORY_NAME = "lowercase";
   public static final String UEA_FILTER_FACTORY_NAME = "uea-stemmer";
   public static final String CONCAT_FILTER_FACTORY_NAME = "concatenate";
+  public static final String SELECT_FILTER_FACTORY_NAME = "select";
+  public static final String REGEXP_FILTER_FACTORY_NAME = "regexp";
 
   public Map<String, TokenFilterFactory> getDefaultRegistry(){
     Map<String, TokenFilterFactory> registry = new HashMap<String, TokenFilterFactory>();
@@ -54,6 +56,8 @@ public class DefaultFilterFactoryRegistry {
     registry.put(UNIQUE_FILTER_FACTORY_NAME, new UniqueFilterFactory());
     registry.put(UPPERCASE_FILTER_FACTORY_NAME, new UpperCaseFilterFactory());
     registry.put(LOWERCASE_FILTER_FACTORY_NAME, new LowerCaseFilterFactory());
+    registry.put(SELECT_FILTER_FACTORY_NAME, new SelectFilterFactory());
+    registry.put(REGEXP_FILTER_FACTORY_NAME, new RegExpFilterFactory());
     return registry;
   }
   
