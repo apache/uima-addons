@@ -722,53 +722,181 @@
     </profile>
 
     <profile>
-     <id>m2e</id>
-     <activation>
-       <property>
-         <name>m2e.version</name>
-       </property>
-     </activation>
-     <build>
-       <pluginManagement>
-         <plugins>
-
-           <!--This plugin's configuration is used to store Eclipse m2e settings
-               only. It has no influence on the Maven build itself. -->
-           <plugin>
-             <groupId>org.eclipse.m2e</groupId>
-             <artifactId>lifecycle-mapping</artifactId>
-             <version>1.0.0</version>
-             <configuration>
-               <lifecycleMappingMetadata>
-                 <pluginExecutions>
-
-                   <!-- ******************************* -->
-                   <!-- IGNORE dependency copy / unpack -->
-                   <!-- ******************************* -->
-                   <pluginExecution>
-                     <pluginExecutionFilter>
-                       <groupId>org.apache.maven.plugins</groupId>
-                       <artifactId>maven-dependency-plugin</artifactId>
-                       <versionRange>[2,)</versionRange>
-                       <goals>
-                         <goal>unpack</goal>
-                         <goal>copy-dependencies</goal>
-                         <goal>unpack-dependencies</goal>
-                         <goal>copy</goal>
-                       </goals>
-                     </pluginExecutionFilter>
-                     <action>
-                       <ignore />
-                     </action>
-                   </pluginExecution>
-
-                 </pluginExecutions>
-               </lifecycleMappingMetadata>
-             </configuration>
-           </plugin>
-         </plugins>
-       </pluginManagement>
-     </build>
-   </profile>         
+      <id>m2e</id>
+      <activation>
+        <property>
+          <name>m2e.version</name>
+        </property>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+  
+            <!--This plugin's configuration is used to store Eclipse m2e settings
+                only. It has no influence on the Maven build itself. -->
+            <plugin>
+              <groupId>org.eclipse.m2e</groupId>
+              <artifactId>lifecycle-mapping</artifactId>
+              <version>1.0.0</version>
+              <configuration>
+                <lifecycleMappingMetadata>
+                  <pluginExecutions>
+  
+                    <!-- ***************************** -->
+                    <!-- IGNORE remote resources       -->
+                    <!-- ***************************** -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>
+                          maven-remote-resources-plugin
+                        </artifactId>
+                        <versionRange>[1,)</versionRange>
+                        <goals>
+                          <goal>process</goal>
+                          <goal>bundle</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>
+  
+                    <!-- ***************************** -->
+                    <!-- EXECUTE parse-date-time       -->
+                    <!-- ***************************** -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.apache.uima</groupId>
+                        <artifactId>
+                          uima-build-helper-maven-plugin
+                        </artifactId>
+                        <versionRange>[2,)</versionRange>
+                        <goals>
+                          <goal>parse-date-time</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <execute />
+                      </action>
+                    </pluginExecution>
+  
+                    <!-- ******************************* -->
+                    <!-- IGNORE dependency copy / unpack -->
+                    <!-- ******************************* -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <versionRange>[2,)</versionRange>
+                        <goals>
+                          <goal>unpack</goal>
+                          <goal>copy-dependencies</goal>
+                          <goal>unpack-dependencies</goal>
+                          <goal>copy</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>
+  
+                    <!-- *********************************************** -->
+                    <!-- IGNORE enforcer - to avoid warning message      -->
+                    <!-- https://issues.apache.org/jira/browse/UIMA-3053 -->
+                    <!-- *********************************************** -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <versionRange>[1,)</versionRange>
+                        <goals>
+                          <goal>enforce</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>                   
+  
+                    <!-- ******************************* -->
+                    <!-- IGNORE clearing old Manifest.MF -->
+                    <!-- at top level, needed by         -->   
+                    <!-- maven bundle plugin             -->
+                    <!-- ******************************* -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <versionRange>[1.6,)</versionRange>
+                        <goals>
+                          <goal>run</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>
+  
+                    <!-- *********************************************** -->
+                    <!-- EXECUTE most javacc goals                       -->
+                    <!-- *********************************************** -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>javacc-maven-plugin</artifactId>
+                        <versionRange>[2,)</versionRange>
+                        <goals>
+                          <goal>javacc</goal>
+                          <goal>jjtree-javacc</goal>
+                          <goal>jjtree</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <execute />
+                      </action>
+                    </pluginExecution>                   
+  
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>javacc-maven-plugin</artifactId>
+                        <versionRange>[2,)</versionRange>
+                        <goals>
+                          <goal>jjdoc</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>  
+  
+                    <!-- ***************************** -->
+                    <!-- IGNORE bundle manifest        -->
+                    <!-- ***************************** -->
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>
+                          maven-bundle-plugin
+                        </artifactId>
+                        <versionRange>[1,)</versionRange>
+                        <goals>
+                          <goal>manifest</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore />
+                      </action>
+                    </pluginExecution>
+  
+                  </pluginExecutions>
+                </lifecycleMappingMetadata>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>   
   </profiles>
 </project>
