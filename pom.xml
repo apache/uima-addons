@@ -22,13 +22,13 @@
   
   <parent>
     <groupId>org.apache.uima</groupId>
-    <artifactId>uima-addons-parent</artifactId>
-    <version>2.3.2-SNAPSHOT</version>
-    <relativePath>../uima-addons-parent</relativePath>
+    <artifactId>parent-pom</artifactId>
+    <version>11</version>
+    <relativePath></relativePath>
   </parent>
   
   <artifactId>ConceptMapper</artifactId>
-  <version>2.3.2-SNAPSHOT</version>
+  <version>2.10.2-SNAPSHOT</version>
   <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>Extracts concepts from a CAS</description>
   <url>${uimaWebsiteUrl}</url>
@@ -53,11 +53,101 @@
     </url>
   </scm>
   
+    <!-- The repositories and pluginRepositories section is duplicated from
+       the parent pom one, and adds the Apache Snapshot Nexus repository
+       where UIMA snapshots are deployed.  This is needed if for instance,
+       a project depends on some new SNAPSHOT level of a build tool, 
+       where the users hasn't checked out the build tooling.
+       
+       This allows maven to find the snapshots when looking for the parent of
+       this pom -->
+  <repositories>
+    <repository>
+      <id>eclipsePlugins</id>
+      <name>Eclipse components</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/eclipse</url>
+      
+      <releases>
+        <updatePolicy>never</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
+      
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- modify central repository access:
+         Turn on checksum checking-->
+    <repository>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/maven2</url>
+
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+
+    </repository>
+    
+    <repository>
+      <id>apache.snapshots</id>
+      <name>Apache Snapshot Repository</name>
+      <url>http://repository.apache.org/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>    
+    
+  </repositories>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots.plugins</id>
+      <name>Apache Snapshot Repository - Maven plugins</name>
+      <url>http://repository.apache.org/snapshots</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <checksumPolicy>fail</checksumPolicy>
+        <updatePolicy>never</updatePolicy>        
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+  
   <properties>
+    <jiraVersion>ConceptMapper-2.10.2</jiraVersion>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
-    <uimaDependencyVersion>2.4.0</uimaDependencyVersion>
+    <uimaDependencyVersion>2.10.2</uimaDependencyVersion>
     <pearMainDescriptor>desc/analysis_engine/primitive/ConceptMapperOffsetTokenizer.xml</pearMainDescriptor>
     <bookNameRoot>ConceptMapperAnnotatorUserGuide</bookNameRoot>
+ 
+    <!-- 
+     Configuring settings is best done through default properties that multiple plugins.
+     Local configurations within plugins should be avoided. Where plugins do not pick up default
+     properties already, they should be injected manually into the plugins. 
+    -->    
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.surefire.heap>512m</maven.surefire.heap>
+    <maven.surefire.argLine />
+    <maven.surefire.java9 />
+    
+    <jacoco.argLine />
+    <api_check_oldVersion>2.3.1</api_check_oldVersion>
+    
   </properties>
       
   <dependencies>
@@ -70,7 +160,7 @@
   </dependencies>
   
   <build>
-    <finalName>uima-an-conceptMapper</finalName>
+    
     <pluginManagement>
       <plugins>
         <plugin>
@@ -95,9 +185,18 @@
               </configuration>
             </execution>
           </executions>
-        </plugin>         
-      </plugins>
+        </plugin> 
+     
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+          <configuration>
+            <argLine>@{jacoco.argLine} -Xmx@{maven.surefire.heap} -Xms@{maven.surefire.heap} @{maven.surefire.argLine} @{maven.surefire.java9}</argLine>
+          </configuration>
+        </plugin>
+       </plugins>
     </pluginManagement> 
-    
+       
   </build>
 </project>

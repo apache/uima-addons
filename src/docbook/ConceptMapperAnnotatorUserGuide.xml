@@ -98,7 +98,23 @@
 			The result of running ConceptMapper are UIMA annotations, and there are two configuration parameters that are used to map the attributes from the dictionary (see <xref linkend="ConceptMapper.param.attributelist"/>) to features of UIMA annotations (see <xref linkend="ConceptMapper.param.featurelist"/>).
 		</para>
 		<para>
-			The entire dictionary is loaded into memory, which, in conjunction with an efficient data structure, provides very fast lookups. As stated earlier, dictionaries with millions of entries have been used without any performance issues. The obvious drawback to storing the dictionary in memory is that large dictionaries require large amounts of memory; this is partially mitigated by the fact that the dictionary is implemented as a UIMA shared resource (see <xref linkend="ConceptMapper.res.dictionaryfile"/>). This means that multiple annotators, such as multiple instances of ConceptMapper that are set up using different parameters, can all access it without having to load it more than once. The dictionary loader is specified in the external resource section of the descriptor, and is expected to implement the interface <interfacename>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource</interfacename>. Two implementations are included in the distribution, <classname>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</classname>, the standard implementation, which loads an XML version of a dictionary, and <classname>org.apache.uima.conceptMapper.support.dictionaryResource.CompiledDictionaryResource_impl</classname> which loads a pre-compiled version, for faster loading. The compiler is supplied as <classname>org.apache.uima.conceptMapper.dictionaryCompiler.CompileDictionary</classname>, which takes two arguments, a ConceptMapper analysis engine descriptor that loads the dictionary using the standard dictionary loader, and the name of the output file into which to write the compiled dictionary.
+			The entire dictionary is loaded into memory, which, in conjunction with an efficient data structure, provides very fast lookups. 
+			As stated earlier, dictionaries with millions of entries have been used without any performance issues. 
+			The obvious drawback to storing the dictionary in memory is that large dictionaries require large amounts of memory; 
+			this is partially mitigated by the fact that the dictionary is implemented as a UIMA shared resource 
+			(see <xref linkend="ConceptMapper.res.dictionaryfile"/>). 
+			This means that multiple annotators, such as multiple instances of ConceptMapper that are set up using different parameters, 
+			can all access it without having to load it more than once. 
+			The dictionary loader is specified in the external resource section of the descriptor, 
+			and is expected to implement the interface <interfacename>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource</interfacename>. 
+			Two implementations are included in the distribution, 
+			<classname>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</classname>, 
+			the standard implementation, which loads an XML version of a dictionary, 
+			and <classname>org.apache.uima.conceptMapper.support.dictionaryResource.CompiledDictionaryResource_impl</classname> 
+			which loads a pre-compiled version, for faster loading. 
+			The compiler is supplied as <classname>org.apache.uima.conceptMapper.dictionaryCompiler.CompileDictionary</classname>, 
+			which takes two arguments, a ConceptMapper analysis engine descriptor that loads the dictionary using the standard dictionary loader, 
+			and the name of the output file into which to write the compiled dictionary.
 		</para>
 		</section>
 		<section id="tokenizer">

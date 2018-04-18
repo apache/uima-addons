@@ -46,13 +46,19 @@ public class DictTerm_Type extends Annotation_Type {
   final Feature casFeat_DictCanon;
   /** @generated */
   final int     casFeatCode_DictCanon;
-  /** @generated */ 
+  /** @generated
+   * @param addr -
+   * @return -
+   */
   public String getDictCanon(int addr) {
         if (featOkTst && casFeat_DictCanon == null)
       jcas.throwFeatMissing("DictCanon", "org.apache.uima.conceptMapper.DictTerm");
     return ll_cas.ll_getStringValue(addr, casFeatCode_DictCanon);
   }
-  /** @generated */    
+  /** @generated 
+   * @param addr -
+   * @param v -
+   */
   public void setDictCanon(int addr, String v) {
         if (featOkTst && casFeat_DictCanon == null)
       jcas.throwFeatMissing("DictCanon", "org.apache.uima.conceptMapper.DictTerm");
@@ -64,13 +70,19 @@ public class DictTerm_Type extends Annotation_Type {
   final Feature casFeat_enclosingSpan;
   /** @generated */
   final int     casFeatCode_enclosingSpan;
-  /** @generated */ 
+  /** @generated
+   * @param addr - 
+   * @return - 
+   */  
   public int getEnclosingSpan(int addr) {
         if (featOkTst && casFeat_enclosingSpan == null)
       jcas.throwFeatMissing("enclosingSpan", "org.apache.uima.conceptMapper.DictTerm");
     return ll_cas.ll_getRefValue(addr, casFeatCode_enclosingSpan);
   }
-  /** @generated */    
+  /** @generated 
+   * @param addr -
+   * @param v -
+   */    
   public void setEnclosingSpan(int addr, int v) {
         if (featOkTst && casFeat_enclosingSpan == null)
       jcas.throwFeatMissing("enclosingSpan", "org.apache.uima.conceptMapper.DictTerm");
@@ -82,13 +94,19 @@ public class DictTerm_Type extends Annotation_Type {
   final Feature casFeat_matchedText;
   /** @generated */
   final int     casFeatCode_matchedText;
-  /** @generated */ 
+  /** @generated
+   * @param addr -
+   * @return - 
+   */ 
   public String getMatchedText(int addr) {
         if (featOkTst && casFeat_matchedText == null)
       jcas.throwFeatMissing("matchedText", "org.apache.uima.conceptMapper.DictTerm");
     return ll_cas.ll_getStringValue(addr, casFeatCode_matchedText);
   }
-  /** @generated */    
+  /** @generated 
+   * @param addr -
+   * @param v -
+   */    
   public void setMatchedText(int addr, String v) {
         if (featOkTst && casFeat_matchedText == null)
       jcas.throwFeatMissing("matchedText", "org.apache.uima.conceptMapper.DictTerm");
@@ -100,19 +118,29 @@ public class DictTerm_Type extends Annotation_Type {
   final Feature casFeat_matchedTokens;
   /** @generated */
   final int     casFeatCode_matchedTokens;
-  /** @generated */ 
+  /** @generated 
+   * @param addr -
+   * @return -
+   */
   public int getMatchedTokens(int addr) {
         if (featOkTst && casFeat_matchedTokens == null)
       jcas.throwFeatMissing("matchedTokens", "org.apache.uima.conceptMapper.DictTerm");
     return ll_cas.ll_getRefValue(addr, casFeatCode_matchedTokens);
   }
-  /** @generated */    
+  /** @generated
+   * @param addr -
+   * @param v -
+   */
   public void setMatchedTokens(int addr, int v) {
         if (featOkTst && casFeat_matchedTokens == null)
       jcas.throwFeatMissing("matchedTokens", "org.apache.uima.conceptMapper.DictTerm");
     ll_cas.ll_setRefValue(addr, casFeatCode_matchedTokens, v);}
     
-   /** @generated */
+   /** @generated 
+    * @param addr -
+    * @param i  the index
+    * @return -
+    */
   public int getMatchedTokens(int addr, int i) {
         if (featOkTst && casFeat_matchedTokens == null)
       jcas.throwFeatMissing("matchedTokens", "org.apache.uima.conceptMapper.DictTerm");
@@ -122,7 +150,12 @@ public class DictTerm_Type extends Annotation_Type {
   return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_matchedTokens), i);
   }
    
-  /** @generated */ 
+  /** @generated 
+   *  
+   * @param addr -
+   * @param i -
+   * @param v -
+   */
   public void setMatchedTokens(int addr, int i, int v) {
         if (featOkTst && casFeat_matchedTokens == null)
       jcas.throwFeatMissing("matchedTokens", "org.apache.uima.conceptMapper.DictTerm");
@@ -136,7 +169,10 @@ public class DictTerm_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	* @generated
+   * @param jcas -
+   * @param casType -
+   */
   public DictTerm_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

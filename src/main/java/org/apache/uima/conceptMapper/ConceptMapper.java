@@ -28,13 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.ResultSpecification;
 import org.apache.uima.analysis_engine.annotator.AnnotatorConfigurationException;
-import org.apache.uima.analysis_engine.annotator.AnnotatorContext;
-import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.annotator.AnnotatorInitializationException;
-import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Feature;
@@ -43,15 +43,14 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
 import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.cas.text.AnnotationIndex;
-import org.apache.uima.cas.CAS;
 import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource;
-import org.apache.uima.conceptMapper.support.dictionaryResource.EntryProperties;
 import org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource.DictEntry;
+import org.apache.uima.conceptMapper.support.dictionaryResource.EntryProperties;
 import org.apache.uima.conceptMapper.support.tokens.TokenFilter;
 import org.apache.uima.conceptMapper.support.tokens.TokenNormalizer;
 import org.apache.uima.conceptMapper.support.tokens.UnknownTypeException;
-import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 
@@ -221,7 +220,7 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
 
   private Type spanFeatureStructureType;
 
-  private Logger logger;
+  public  Logger logger;
 
   private JCas jcas;
 
@@ -368,6 +367,8 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
    * 
    * @param typeSystem
    *          the current type system.
+   * @throws AnnotatorConfigurationException -
+   * @throws AnnotatorInitializationException - 
    * @see org.apache.uima.analysis_engine.annotator.TextAnnotator#typeSystemInit(TypeSystem)
    */
   public void typeSystemInit(TypeSystem typeSystem) throws AnnotatorConfigurationException,
@@ -482,10 +483,9 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
    * Perform the actual analysis. Iterate over the document content looking for any matching words
    * or phrases in the loaded dictionary and post an annotation for each match found.
    * 
-   * @param tcas
+   * @param jCas
    *          the current CAS to process.
-   * @param aResultSpec
-   *          a specification of the result annotation that should be created by this annotator
+   * @throws AnalysisEngineProcessException -
    * 
    * @see org.apache.uima.analysis_engine.annotator.TextAnnotator#process(CAS,ResultSpecification)
    */
@@ -844,10 +844,11 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
   }
 
   /**
-   * @param searchStrategy
-   * @param tcas
-   * @param tokens
-   * @param spanAnnotation
+   * @param searchStrategy -
+   * @param findAllMatches true to find all matches
+   * @param tcas the Cas
+   * @param tokens -
+   * @param spanAnnotation -
    */
   protected void processTokenList(int searchStrategy, boolean findAllMatches, CAS tcas,
           ArrayList<AnnotationFS> tokens, Annotation spanAnnotation) {
@@ -961,10 +962,15 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
   }
 
   /**
-   * @param start
-   * @param end
-   * @param properties
-   * @param matched
+   * @param tcas -
+   * @param start -
+   * @param end -
+   * @param properties -
+   * @param spanAnnotation -
+   * @param matchedText -
+   * @param matched -
+   * @param log -
+
    */
   protected void makeAnnotation(CAS tcas, int start, int end, EntryProperties properties,
           Annotation spanAnnotation, String matchedText, Collection<AnnotationFS> matched,

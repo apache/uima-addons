@@ -137,6 +137,7 @@ public class OffsetTokenizer  extends JCasAnnotator_ImplBase {
    * {@link #nextToken(JCas) nextToken} will return the first token from the input string
    * as a TokenAnnotation; you can get the text by using
    * {@link TokenAnnotation#getText()}
+   * @param text -
    */
   public void setText(String text) {
     this.text = text;
@@ -374,8 +375,6 @@ public class OffsetTokenizer  extends JCasAnnotator_ImplBase {
    * 
    * @param jcas
    *          the current CAS to process.
-   * @param aResultSpec
-   *          a specification of the result annotation that should be created by this annotator
    * 
    * @see org.apache.uima.analysis_engine.annotator.JTextAnnotator#process(JCas, ResultSpecification)
    */
@@ -400,9 +399,9 @@ public class OffsetTokenizer  extends JCasAnnotator_ImplBase {
   }
 
   /**
-   * @param jcas
-   * @param documentText
-   * @param delimiters
+   * @param jcas -
+   * @param documentText -
+   * @param delimiters -
    */
   protected void doTokenization(JCas jcas, String documentText, String delimiters) {
 
@@ -421,8 +420,8 @@ public class OffsetTokenizer  extends JCasAnnotator_ImplBase {
   }
 
   /**
-   * @param configParameterName
-   * @param configParameterValue
+   * @param configParameterName -
+   * @param configParameterValue -
    */
   public void processConfigurationParameter(String configParameterName, Object configParameterValue) {
     if (configParameterName.equals(PARAM_CASE_MATCH)) {

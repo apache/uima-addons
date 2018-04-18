@@ -18,11 +18,16 @@
  */
 package org.apache.uima.conceptMapper.support.dictionaryResource;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -60,6 +65,24 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 
 public class DictionaryResource_impl implements DictionaryResource, SharedResourceObject {
+  
+  /** 
+   * support making a compiled dictionary as a side effect of loading
+   *   - trigger: the existence of a file path in the property 
+   *       uima.conceptmapper.compiled_dictionary_directory
+   *   - this is interpreted as a path to a writable directory where
+   *     the compiled version of this is written after loading
+   *     
+   */
+  
+  public final static String SAVE_COMPILED = "uima.conceptmapper.compiled_dictionary_directory";
+  
+  private final static File compDictDir;
+  static {
+    String p = System.getProperty(SAVE_COMPILED);
+    compDictDir = (p == null) ? null : new File(p);
+  }
+  
 /** Dictionary file loader. Uses an XML parser. */
   protected DictLoader dictLoader;
 
@@ -170,7 +193,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
    * @param unsorted
    * 		  an unsorted string representation of the entry, if the contents of 'elements' has been sorted
    * @param length
-   *          the number of words in the phrase (>=1)
+   *          the number of words in the phrase (&gt;=1)
    * @param props
    *          the EntryProperties object for the dictionary entry
    */
@@ -271,11 +294,36 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
       // System.out.print ("Loading Dictionary: '" + dictLoader.dataResource.getUri().toString() +
       // "'...");
       // System.out.print ("Loading Dictionary...");
-      logger.logInfo("Loading Dictionary...");
+      URL dictUrl = dictLoader.dataResource.getUrl();
+      String loadPath = (null != dictUrl) 
+                          ? (" from " + dictLoader.dataResource.getUrl().toString())
+                          : "";
+      logger.logInfo("Loading Dictionary" + loadPath);
       dictLoader.setDictionary(dictStream, NumOfInitialDictEntries, tokenAnnotationName,
               tokenTypeFeatureName, tokenClassFeatureName, tokenizerDescriptor, tokenFilter,
               tokenNormalizer, langID, entryPropertiesRoot);
-      logger.logInfo("...done");
+      logger.logInfo("...done loading dictionary" + loadPath);
+      
+      do { // to establish break boundary
+        if (compDictDir != null) {
+          if (!compDictDir.exists()) {
+            if (!compDictDir.mkdirs()) {
+              logger.logError("Cannot create compiled dictionary output directory: " + compDictDir.toString());
+              break;
+            }
+          }
+          
+          // get the last part of the file source name - this will be the name of the compiled dictioary
+          String n = dictUrl.getPath();
+          int i = n.lastIndexOf(File.separator);
+          n = (i >= 0) ? n.substring(i + 1) : n;
+          
+          BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(new File(compDictDir, n)));
+          serializeEntries(output);
+          output.close();
+        }
+      } while (false);  // of do establishing break boundary
+      
       // System.out.println ("done");
       // System.err.println("NEW DICT:\n" + toString());
       setLoaded(true);
@@ -458,9 +506,9 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     EntryProperties properties;
 
     /**
-     * @param elements
-     * @param unsorted
-     * @param properties
+     * @param elements -
+     * @param unsorted -
+     * @param properties -
      */
     public DictEntryImpl(String[] elements, String unsorted,
             EntryProperties properties) {
@@ -954,7 +1002,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     }
 
     public InputStream getInputStream() throws IOException {
-      return dataResource.getInputStream();
+      return new BufferedInputStream(dataResource.getInputStream());
     }
 
   }
@@ -1006,7 +1054,7 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
     return result.toString();
   }
 
-  public void serializeEntries(FileOutputStream output) throws IOException {
+  public void serializeEntries(OutputStream output) throws IOException {
     ObjectOutputStream oos = new ObjectOutputStream(output);
     oos.writeObject(this.entryPropertiesRoot);
     oos.writeObject(this.dictImpl);

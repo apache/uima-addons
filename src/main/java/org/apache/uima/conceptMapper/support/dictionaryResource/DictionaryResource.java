@@ -53,9 +53,9 @@ public interface DictionaryResource {
   public interface DictEntries extends Serializable {
 
     /**
-     * @param elements
-     * @param unsorted
-     * @param props
+     * @param elements -
+     * @param unsorted -
+     * @param props -
      */
     void putEntry(String[] elements, String unsorted, EntryProperties props);
 
@@ -87,7 +87,7 @@ public interface DictionaryResource {
   /**
    * return data structure containing a list of dictionary entries, sorted by number of tokens
    * 
-   * @param key
+   * @param key -
    * @return data structure containing a list of dictionary entries, sorted by number of tokens
    */
   public DictEntriesByLength getEntries(String key);
@@ -113,13 +113,13 @@ public interface DictionaryResource {
   public String toString();
 
   /**
-   * @param context
-   * @param logger
-   * @param tokenAnnotationName
-   * @param tokenTypeFeatureName
-   * @param tokenClassFeatureName
-   * @param tokenizerDescriptor
-   * @throws ResourceInitializationException
+   * @param context -
+   * @param logger -
+   * @param tokenAnnotationName -
+   * @param tokenTypeFeatureName -
+   * @param tokenClassFeatureName -
+   * @param tokenizerDescriptor -
+   * @throws ResourceInitializationException -
    */
   public void loadDictionaryContents(UimaContext context, Logger logger,
           String tokenAnnotationName, String tokenTypeFeatureName, String tokenClassFeatureName,
