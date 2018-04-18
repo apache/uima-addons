@@ -18,7 +18,9 @@
  */
 package org.apache.uima.conceptMapper.support.dictionaryResource;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -33,6 +35,7 @@ import org.apache.uima.resource.SharedResourceObject;
  */
 
 public class CompiledDictionaryResource_impl implements DictionaryResource, SharedResourceObject {
+  
   /**
    * Hashtable of first words. Contains a DictEntries object keyed on word string for the first word
    * of every entry in the specified dictionary.
@@ -43,6 +46,8 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
   public DictionaryResource newDictionaryResource(int initialSize) {
     throw new UnsupportedOperationException();
   }
+  
+  
 
   public DictEntriesByLength getEntries(String key) {
     return dictImpl.get(key);
@@ -59,10 +64,12 @@ public class CompiledDictionaryResource_impl implements DictionaryResource, Shar
   @SuppressWarnings("unchecked")
   public void load(DataResource data) throws ResourceInitializationException {
     try {
-      ObjectInputStream ois = new ObjectInputStream(data.getInputStream());
+      InputStream iStream = data.getInputStream();
+      BufferedInputStream bis = new BufferedInputStream(iStream);
+      ObjectInputStream ois = new ObjectInputStream(bis);
       entryPropertiesRoot = (EntryPropertiesRoot) ois.readObject();
       dictImpl = (Hashtable) ois.readObject();
-      ois.close();
+      ois.close();          
     } catch (IOException e) {
       throw new ResourceInitializationException(e);
     } catch (ClassNotFoundException e) {

@@ -44,6 +44,9 @@ public interface Stemmer {
 
   /**
    * Initialize the stemmer with a dictionary
+   * @param dictionary -
+   * @throws FileNotFoundException -
+   * @throws ParseException -
    */
   public void initialize(String dictionary) throws FileNotFoundException, ParseException;
 

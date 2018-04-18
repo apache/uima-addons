@@ -18,7 +18,9 @@
  */
 package org.apache.uima.conceptMapper.support.dictionaryResource.annotatorAdaptor;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.Vector;
 
@@ -40,6 +42,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceManager;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.InvalidXMLException;
+import org.apache.uima.util.Level;
 import org.apache.uima.util.XMLInputSource;
 
 public class AnnotatorAdaptor {
@@ -71,15 +74,28 @@ public class AnnotatorAdaptor {
           throws DictionaryLoaderException {
     super();
     try {
-      aeSpecifier = UIMAFramework.getXMLParser().parseResourceSpecifier(
-              new XMLInputSource(analysisEngineDescriptorPath));
+      this.logger = logger;
+//      aeSpecifier = UIMAFramework.getXMLParser().parseResourceSpecifier(
+//              new XMLInputSource(analysisEngineDescriptorPath));
+      
+      XMLInputSource descriptorSource = null;
+      if (new File(analysisEngineDescriptorPath).exists()) {
+        logger.logConfig("Loading the analysisEngineDescriptorPath from file system path: "+ analysisEngineDescriptorPath);
+        descriptorSource = new XMLInputSource(analysisEngineDescriptorPath);
+      } else {
+        logger.logConfig("Loading the analysisEngineDescriptorPath from class path: "+ analysisEngineDescriptorPath);
+        InputStream is = this.getClass().getResourceAsStream(analysisEngineDescriptorPath);
+        descriptorSource = new XMLInputSource(is, null);
+      }
+      aeSpecifier = UIMAFramework.getXMLParser().parseResourceSpecifier(descriptorSource);
+      
       this.tokenTypeName = tokenTypeName;
       this.tokenTypeFeature = tokenFilter.getTokenTypeFeature();
       this.tokenClassFeature = tokenFilter.getTokenClassFeature();
       this.tokenFilter = tokenFilter;
       this.langID = langID;
       this.result = result;
-      this.logger = logger;
+
     } catch (InvalidXMLException e) {
       throw new DictionaryLoaderException(e);
     } catch (IOException e) {

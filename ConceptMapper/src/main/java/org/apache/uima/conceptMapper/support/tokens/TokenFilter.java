@@ -270,7 +270,7 @@ public class TokenFilter {
   }
 
   /**
-   * @param token
+   * @param token -
    * @return false if tokenTypeFeature is set, and the token's tokenTypeFeature slot is set, but the value is not OK
    */
   public boolean checkTokenType(AnnotationFS token) {
@@ -318,12 +318,12 @@ public class TokenFilter {
   }
 
   /**
-   * @param typeSystem
+   * @param typeSystem =
    * @param requireFeatureExistence -
    *          if true, if the tokenType and/or tokenClass features of the tokenAnnotation are
    *          specified, they must exist. This is to allow for the situation where these features
    *          might not exist during dictionary loading, but are needed at annotator runtime
-   * @throws UnknownTypeException
+   * @throws UnknownTypeException -
    */
   public void initTypes(TypeSystem typeSystem, boolean requireFeatureExistence)
           throws UnknownTypeException {

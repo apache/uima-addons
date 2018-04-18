@@ -31,19 +31,28 @@ public class TokenAnnotation extends Annotation {
   protected TokenAnnotation() {}
     
   /** Internal - constructor used by generator 
-   * @generated */
+   * @generated 
+   * @param addr -
+   * @param type -
+   */
   public TokenAnnotation(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
   
-  /** @generated */
+  /** @generated 
+   * @param jcas -
+   */
   public TokenAnnotation(JCas jcas) {
     super(jcas);
     readObject();   
   } 
 
-  /** @generated */  
+  /** @generated 
+   * @param jcas -
+   * @param begin -
+   * @param end -
+   */
   public TokenAnnotation(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);

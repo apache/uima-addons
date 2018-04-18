@@ -44,13 +44,19 @@ public class TokenAnnotation_Type extends uima.tt.TokenAnnotation_Type {
   final Feature casFeat_text;
   /** @generated */
   final int     casFeatCode_text;
-  /** @generated */ 
+  /** @generated 
+   * @param addr -
+   * @return -
+   */
   public String getText(int addr) {
         if (featOkTst && casFeat_text == null)
       jcas.throwFeatMissing("text", "org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation");
     return ll_cas.ll_getStringValue(addr, casFeatCode_text);
   }
-  /** @generated */    
+  /** @generated 
+   * @param addr -
+   * @param v -
+   */
   public void setText(int addr, String v) {
         if (featOkTst && casFeat_text == null)
       jcas.throwFeatMissing("text", "org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation");
@@ -62,13 +68,19 @@ public class TokenAnnotation_Type extends uima.tt.TokenAnnotation_Type {
   final Feature casFeat_tokenType;
   /** @generated */
   final int     casFeatCode_tokenType;
-  /** @generated */ 
+  /** @generated 
+   * @param addr -
+   * @return -
+   */
   public int getTokenType(int addr) {
         if (featOkTst && casFeat_tokenType == null)
       jcas.throwFeatMissing("tokenType", "org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation");
     return ll_cas.ll_getIntValue(addr, casFeatCode_tokenType);
   }
-  /** @generated */    
+  /** @generated 
+   * @param addr -
+   * @param v -
+   */
   public void setTokenType(int addr, int v) {
         if (featOkTst && casFeat_tokenType == null)
       jcas.throwFeatMissing("tokenType", "org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation");
@@ -80,13 +92,19 @@ public class TokenAnnotation_Type extends uima.tt.TokenAnnotation_Type {
   final Feature casFeat_tokenClass;
   /** @generated */
   final int     casFeatCode_tokenClass;
-  /** @generated */ 
+  /** @generated 
+   * @param addr -
+   * @return -
+   */
   public String getTokenClass(int addr) {
         if (featOkTst && casFeat_tokenClass == null)
       jcas.throwFeatMissing("tokenClass", "org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation");
     return ll_cas.ll_getStringValue(addr, casFeatCode_tokenClass);
   }
-  /** @generated */    
+  /** @generated 
+   * @param addr -
+   * @param v -
+   */
   public void setTokenClass(int addr, String v) {
         if (featOkTst && casFeat_tokenClass == null)
       jcas.throwFeatMissing("tokenClass", "org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation");
@@ -97,7 +115,10 @@ public class TokenAnnotation_Type extends uima.tt.TokenAnnotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	* @generated 
+   * @param jcas -
+   * @param casType -
+   */
   public TokenAnnotation_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

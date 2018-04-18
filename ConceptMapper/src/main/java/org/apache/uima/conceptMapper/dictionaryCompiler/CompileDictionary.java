@@ -18,7 +18,9 @@
  */
 package org.apache.uima.conceptMapper.dictionaryCompiler;
 
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -45,7 +47,7 @@ public class CompileDictionary {
     DictionaryResource_impl dict = (DictionaryResource_impl) ae.getResourceManager().getResource(
     		dictionaryResourceName);
 
-    FileOutputStream output = new FileOutputStream(args[1]);
+    OutputStream output = new BufferedOutputStream(new FileOutputStream(args[1]));
     dict.serializeEntries(output);
     output.close();
     ae.destroy();

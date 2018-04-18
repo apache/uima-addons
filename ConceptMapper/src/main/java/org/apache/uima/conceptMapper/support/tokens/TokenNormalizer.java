@@ -66,9 +66,9 @@ public class TokenNormalizer {
   private boolean replaceCommaWithAND;
 
   /**
-   * @param annotatorContext
-   * @param logger
-   * @throws AnnotatorContextException
+   * @param uimaContext -
+   * @param logger -
+   * @throws AnnotatorContextException -
    */
   public TokenNormalizer(UimaContext uimaContext, Logger logger)
           throws AnnotatorContextException {

@@ -42,7 +42,10 @@ public class TokenAnnotation_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	* @generated
+   * @param jcas -
+   * @param casType -
+   */
   public TokenAnnotation_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

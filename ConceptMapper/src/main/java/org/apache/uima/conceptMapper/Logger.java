@@ -47,6 +47,10 @@ public class Logger {
     }
   }
 
+  public void logConfig(String message) {
+    log(Level.CONFIG, message);
+  }
+  
   public void logError(String message) {
     log(Level.SEVERE, message);
   }
@@ -65,5 +69,9 @@ public class Logger {
 
   public void logFinest(String message) {
     log(Level.FINEST, message);
+  }
+  
+  public boolean isLoggable(Level level) {
+    return logger.isLoggable(level);
   }
 }
