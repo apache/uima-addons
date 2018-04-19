@@ -28,7 +28,7 @@
   </parent>
   
   <artifactId>ConceptMapper</artifactId>
-  <version>2.10.3-SNAPSHOT</version>
+  <version>2.10.2-SNAPSHOT</version>
   <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>Extracts concepts from a CAS</description>
   <url>${uimaWebsiteUrl}</url>
