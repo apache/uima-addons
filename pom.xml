@@ -28,7 +28,7 @@
   </parent>
   
   <artifactId>ConceptMapper</artifactId>
-  <version>2.10.3-SNAPSHOT</version>
+  <version>2.10.2-SNAPSHOT</version>
   <name>Apache UIMA Annotator: ${project.artifactId}</name>
   <description>Extracts concepts from a CAS</description>
   <url>${uimaWebsiteUrl}</url>
@@ -199,4 +199,117 @@
     </pluginManagement> 
        
   </build>
+  
+  <profiles>
+    <profile>
+      <id>apache-release</id>
+      
+      <build>
+        <!-- Run jira report -->
+        <!-- depends on having -DjiraVersion set -->
+        <plugins>
+          <plugin>
+            <artifactId>maven-changes-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-cli</id>
+                <configuration>
+                  <fixVersionIds>${jiraVersion}</fixVersionIds>
+                </configuration>
+              </execution>
+            </executions>  
+          </plugin>
+        </plugins>     
+      </build>
+    </profile>
+    
+        <!-- **********  Backwards compatibility report generation profile ************** -->
+    <profile>
+      <id>enforce-compatibility</id>
+      <activation>
+        <file>
+          <exists>marker-file-identifying-api-compatibility-check</exists>
+        </file>
+      </activation>
+      <build>
+        
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.rat</groupId>
+              <artifactId>apache-rat-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>default-cli</id>
+                  <configuration>
+                    <excludes combine.children="append">
+                      <exclude>**/api-change-report/**/*.*</exclude>
+                    </excludes>
+                  </configuration>
+                </execution>
+            </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement> 
+        
+        <plugins>
+          <!-- https://siom79.github.io/japicmp/MavenPlugin.html -->
+          <plugin>              
+            <groupId>com.github.siom79.japicmp</groupId>
+            <artifactId>japicmp-maven-plugin</artifactId>
+            <version>0.9.4</version>
+            <configuration>
+              <oldVersion>
+                <dependency>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <version>${api_check_oldVersion}</version>
+                </dependency>
+              </oldVersion>
+              <parameter>
+                <onlyModified>true</onlyModified>
+                <!-- filter out classes with impl in their package or class name -->
+                <postAnalysisScript>${project.basedir}/src/main/groovy/api-report.groovy</postAnalysisScript>                  
+              </parameter>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>cmp</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <!-- This copy is to have the api change report included in the source distribution -->
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-API-change-report</id>
+                <phase>install</phase>  <!-- must follow verify -->
+                <goals><goal>run</goal></goals>
+                <configuration>
+                  <target>
+                    <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" />
+                    <if>
+                      <available file="${project.build.directory}/japicmp/" />
+                      <then>
+                        <copy toDir="${basedir}/api-change-report">
+                          <fileset dir="${project.build.directory}/japicmp" />
+                        </copy>
+                      </then>
+                    </if>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+            
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+  </profiles>
 </project>
