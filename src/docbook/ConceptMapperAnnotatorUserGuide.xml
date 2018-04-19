@@ -29,7 +29,8 @@
 	<preface id="intro">
 		<title>Introduction</title>
 		<para>
-			ConceptMapper is a highly configurable, high performance dictionary lookup tool, implemented as a UIMA (Unstructured Information Management Architecture) component. Using one of several matching algorithms, it maps entries in a dictionary onto input documents, producing UIMA annotations.
+			ConceptMapper is a highly configurable, high performance dictionary lookup tool, implemented as a UIMA (Unstructured Information Management Architecture) component. 
+			Using one of several matching algorithms, it maps entries in a dictionary onto input documents, producing UIMA annotations.
 		</para>
 	</preface>
 	<chapter id="usingcm">
@@ -104,17 +105,33 @@
 			this is partially mitigated by the fact that the dictionary is implemented as a UIMA shared resource 
 			(see <xref linkend="ConceptMapper.res.dictionaryfile"/>). 
 			This means that multiple annotators, such as multiple instances of ConceptMapper that are set up using different parameters, 
-			can all access it without having to load it more than once. 
+			can all access it without having to load it more than once.
+	  </para>
+	  <para> 
 			The dictionary loader is specified in the external resource section of the descriptor, 
 			and is expected to implement the interface <interfacename>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource</interfacename>. 
-			Two implementations are included in the distribution, 
-			<classname>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</classname>, 
-			the standard implementation, which loads an XML version of a dictionary, 
-			and <classname>org.apache.uima.conceptMapper.support.dictionaryResource.CompiledDictionaryResource_impl</classname> 
-			which loads a pre-compiled version, for faster loading. 
-			The compiler is supplied as <classname>org.apache.uima.conceptMapper.dictionaryCompiler.CompileDictionary</classname>, 
-			which takes two arguments, a ConceptMapper analysis engine descriptor that loads the dictionary using the standard dictionary loader, 
-			and the name of the output file into which to write the compiled dictionary.
+			Two implementations are included in the distribution.
+			<itemizedlist>
+			  <listitem>
+			    <para><classname>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</classname>, 
+               the standard implementation, which loads an XML version of a dictionary. 
+			    </para>
+			  </listitem>
+			  <listitem>
+			    <para><classname>org.apache.uima.conceptMapper.support.dictionaryResource.CompiledDictionaryResource_impl</classname> 
+             which loads a pre-compiled version, for faster loading.    
+			    </para>
+			    <para>The compiler is supplied as <classname>org.apache.uima.conceptMapper.dictionaryCompiler.CompileDictionary</classname>, 
+             which takes two arguments, a ConceptMapper analysis engine descriptor that loads the dictionary using the standard dictionary loader, 
+             and the name of the output file into which to write the compiled dictionary.
+			    </para>
+			    <para>A compiled version of the dictionary can optionally be created while loading the non-compiled version, by
+			      specifying the Java property <code>uima.conceptmapper.compiled_dictionary_directory</code>, 
+			      giving it the value of a path to a writable directory.  
+			    </para>
+			  </listitem>
+			</itemizedlist> 
+			
 		</para>
 		</section>
 		<section id="tokenizer">
@@ -255,6 +272,7 @@
 						<varname id="ConceptMapper.param.tokenizerdescriptorpath" xreflabel="TokenizerDescriptorPath">TokenizerDescriptorPath</varname>: <emphasis>[Required]</emphasis> <type>String</type>
 					</para>
 					<para>Path to tokenizer Analysis Engine descriptor, which is used to tokenize dictionary entries.
+					  This path may be a reference to a file in the file system, or a reference to an item in the classpath.
 					</para>
 				</listitem>
 				<listitem>
