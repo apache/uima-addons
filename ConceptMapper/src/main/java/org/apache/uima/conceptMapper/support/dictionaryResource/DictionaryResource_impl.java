@@ -872,10 +872,9 @@ public class DictionaryResource_impl implements DictionaryResource, SharedResour
 
           String[] elements = (String[]) tokens.toArray(new String[tokens.size()]);
 
-          String unsorted = null;
+          String unsorted = stringTogetherTokens(elements);
 
           if (sortElements) {
-            unsorted = stringTogetherTokens(elements);
             Arrays.sort(elements);
           }
 
