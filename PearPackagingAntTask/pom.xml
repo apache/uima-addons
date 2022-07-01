@@ -56,7 +56,7 @@
   <properties>
     <uimaScmProject>${project.artifactId}</uimaScmProject>
     <bookNameRoot>PearPackagingAntTaskUserGuide</bookNameRoot>
-    <uimaDependencyVersion>2.3.1</uimaDependencyVersion>
+    <uimaDependencyVersion>2.10.2</uimaDependencyVersion>
   </properties>
         
 	<dependencies>
